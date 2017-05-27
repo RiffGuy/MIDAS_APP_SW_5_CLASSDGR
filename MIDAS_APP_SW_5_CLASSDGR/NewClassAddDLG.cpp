@@ -56,6 +56,8 @@ BEGIN_MESSAGE_MAP(NewClassAddDLG, CDialogEx)
 	ON_BN_CLICKED(ID_ADD_NEW_CLASS_PRMT_CANCEL, &NewClassAddDLG::OnBnClickedAddNewClassPrmtCancel)
 	ON_BN_CLICKED(ID_ADD_NEW_CLASS_OP_OK, &NewClassAddDLG::OnBnClickedAddNewClassOpOk)
 	ON_BN_CLICKED(ID_ADD_NEW_CLASS_OP_CANCEL, &NewClassAddDLG::OnBnClickedAddNewClassOpCancel)
+	ON_BN_CLICKED(ID_ADD_NEW_CLASS_CANCEL, &NewClassAddDLG::OnBnClickedAddNewClassCancel)
+	ON_BN_CLICKED(ID_ADD_NEW_CLASS_OK, &NewClassAddDLG::OnBnClickedAddNewClassOk)
 END_MESSAGE_MAP()
 
 
@@ -137,10 +139,34 @@ void NewClassAddDLG::OnBnClickedAddNewClassOpOk()
 	operation += ")";
 
 	m_AddNewOpList.AddString(operation);
+	operationList.push_back(operation);
 }
 
 
 void NewClassAddDLG::OnBnClickedAddNewClassOpCancel()
 {
+	// remove from list
+	int rmvIndex = m_AddNewOpList.GetCurSel();
+	if (rmvIndex >= 0) {
+		m_AddNewOpList.DeleteString(rmvIndex);
+		operationList.erase(operationList.begin() + rmvIndex);
+	}
+}
 
+// 클래스 추가 최종 확인 및 취소 버튼
+
+void NewClassAddDLG::OnBnClickedAddNewClassCancel()
+{
+	className = "";
+	while (attbList.size() != 0)attbList.pop_back();
+	while (prmtList.size() != 0)prmtList.pop_back();
+	while (operationList.size() != 0)operationList.pop_back();
+	CDialogEx::OnCancel();
+}
+
+
+void NewClassAddDLG::OnBnClickedAddNewClassOk()
+{
+	AddNewClass_classNameEdit.GetWindowTextW(className);
+	CDialogEx::OnOK();
 }
