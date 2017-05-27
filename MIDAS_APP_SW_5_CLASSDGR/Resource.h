@@ -12,7 +12,7 @@
 #define D_MODE_LINE                     20
 #define D_MODE_CLASSDIAGRAM             30
 #define D_MODE_RECT						30
-#define D_MODE_CIRCLE                   40
+#define D_MODE_DUMMY                    40
 #define D_MODE_ARC                      50
 #define D_MODE_PEN                      60
 #define D_MODE_ERASE                    70

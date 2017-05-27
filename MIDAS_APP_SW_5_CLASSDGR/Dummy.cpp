@@ -4,17 +4,19 @@
 #include "Brushs.h"
 
 Dummy::Dummy() {
-	startPoint = CPoint(0, 0);
-	endPoint = CPoint(0, 0);
+
 }
 Dummy::Dummy(M_Polygon* poly)
 {
-
 	drawMode = WAIT;
-	ptrPoly = poly;
-	dataPoly = *poly;
-	*poly = *(new Dummy());
+	//polyAt = at;
+//	ptrPoly = poly;
+//	dataPoly = *poly;
+//	*poly = *(new Dummy());
 
+	
+	mpoly = poly;
+	mpoly->isVisual = false;
 	/*
 	startPoint = poly->getStartPoint();
 	endPoint = poly->getEndPoint();
@@ -22,15 +24,19 @@ Dummy::Dummy(M_Polygon* poly)
 		dlg = ((DiagramClass*)poly)->getStatus();
 		((DiagramClass*)poly)->setStatus(NULL);
 	}
-	poly->setStartPoint(CPoint(0, 0));
-	poly->setEndPoint(CPoint(0, 0));
+	poly->startPoint.x = 0;
+	poly->startPoint.y = 0;
+	poly->setEndPoint(CPoint(-1, -1));
+	mpoly = poly;
 	*/
+	printf("dummy »ý¼º\n");
+	
 }
 
 
 Dummy::~Dummy()
 {
-	ptrPoly = new M_Polygon(dataPoly);
+	//ptrPoly = new M_Polygon(dataPoly);
 	/*
 	mpoly->setStartPoint(startPoint);
 	mpoly->setEndPoint(endPoint);
@@ -38,5 +44,20 @@ Dummy::~Dummy()
 		((DiagramClass*)mpoly)->setStatus(dlg);
 	}
 	*/
+	printf("dummy ¼Ò¸ê\n");
+	
+}
+
+void Dummy::reset(){
+	/*
+	mpoly->setStartPoint(startPoint);
+	mpoly->setEndPoint(endPoint);
+	if (mpoly->getType() == D_MODE_CLASSDIAGRAM) {
+		((DiagramClass*)mpoly)->setStatus(dlg);
+	}*/
+
+	mpoly->isVisual = true;
+	printf("dummy reset\n");
+
 }
 

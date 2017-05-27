@@ -11,6 +11,7 @@ public:
 	int START = 1;
 	int MOVE = 2;
 	int END = 3;
+	int polyAt;
 	M_Polygon* ptrPoly;
 	M_Polygon dataPoly;
 	M_Polygon* mpoly;
@@ -19,7 +20,9 @@ public:
 	Dummy(M_Polygon* poly);
 	~Dummy();
 
-	inline virtual int getType() { return D_MODE_NONE; }
+	void reset();
+
+	inline virtual int getType() { return D_MODE_DUMMY; }
 };
 
 
