@@ -43,6 +43,7 @@ BEGIN_MESSAGE_MAP(CMIDAS_APP_SW_5_CLASSDGRView, CView)
 	ON_COMMAND(IDD_REDO_CLASS, &CMIDAS_APP_SW_5_CLASSDGRView::OnIddRedoClass)
 	ON_COMMAND(IDD_UNDO_CLASS, &CMIDAS_APP_SW_5_CLASSDGRView::OnIddUndoClass)
 	ON_COMMAND(ID_EDIT_UNDO, &CMIDAS_APP_SW_5_CLASSDGRView::OnEditUndo)
+	ON_COMMAND(ID_EDIT_REDO, &CMIDAS_APP_SW_5_CLASSDGRView::OnEditRedo)
 END_MESSAGE_MAP()
 
 // CMIDAS_APP_SW_5_CLASSDGRView 생성/소멸
@@ -554,4 +555,12 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnEditUndo()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	OnUndo();
+}
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnEditRedo()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	OnRedo();
+
 }

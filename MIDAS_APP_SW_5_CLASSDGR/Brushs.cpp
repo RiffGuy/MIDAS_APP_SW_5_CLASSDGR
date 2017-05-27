@@ -73,6 +73,9 @@ void Brushs::ReDrawAll() {
 void Brushs::Redo() {
 	if (!polygonBackUp.empty()) {
 		polygonList.push_back(polygonBackUp.top());
+		if (polygonList.back()->mpoly != NULL) {
+			polygonList.back()->mpoly->isVisual = false;
+		}
 		polygonBackUp.pop();
 	}
 	else {

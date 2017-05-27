@@ -82,6 +82,7 @@ public:
 	afx_msg void OnIddRedoClass();
 	afx_msg void OnIddUndoClass();
 	afx_msg void OnEditUndo();
+	afx_msg void OnEditRedo();
 };
 
 #ifndef _DEBUG  // MIDAS_APP_SW_5_CLASSDGRView.cpp의 디버그 버전
