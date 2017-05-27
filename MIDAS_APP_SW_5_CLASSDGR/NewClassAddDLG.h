@@ -26,6 +26,11 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
+	CString getClassName() { return className; }
+	CString getAttrbute(int i) { return attbList[i]; }
+	int getAttrbuteSize() { return attbList.size(); }
+	CString getOperation(int i) { return operationList[i]; }
+	int getOperationSize() { return operationList.size(); }
 	// 클래스 이름을 입력 받는 EditBox 객체
 	CEdit AddNewClass_classNameEdit;
 	

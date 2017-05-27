@@ -26,7 +26,8 @@ DiagramClass::DiagramClass(CPoint start, CPoint end) {
 void DiagramClass::ReDraw(CDC* pDC) {
 	//printf("mRectangle ReDraw (%d,%d) , (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 	pDC->Rectangle(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-	//string text 출력
+
+	//start -> TopLeft, end -> BottomRight로 재설정 
 	CPoint newStartPos;
 	CPoint newEndPos;
 	if (endPoint.y < startPoint.y) {
@@ -37,9 +38,18 @@ void DiagramClass::ReDraw(CDC* pDC) {
 		newStartPos = startPoint;
 		newEndPos = endPoint;
 	}
-	int centerWidth = newStartPos.x + (newEndPos.x - newStartPos.x) / 2;
-	int textWidth = pDC->GetTextExtent(str).cx;
-	pDC->TextOutW(centerWidth - textWidth / 2, newStartPos.y, str);
+
+//status 표시
+	if (status != NULL) {
+		int curY = newStartPos.y;
+		int curX = newStartPos.x;
+		CString tmp = status->getClassName();
+
+		int centerWidth = newStartPos.x + (newEndPos.x - newStartPos.x) / 2;
+		int textWidth = pDC->GetTextExtent(tmp).cx;
+		
+	}
+//	pDC->TextOutW(centerWidth - textWidth / 2, newStartPos.y, str);
 	
 }
 
