@@ -47,7 +47,7 @@ public:
 	CPoint m_StartPos;
 	CPoint m_EndPos;
 
-	M_Polygon* m_SelectRect;
+	M_Polygon* m_CurSelectRect;
 	bool m_StartToMove;
 	bool m_SelectObject;
 

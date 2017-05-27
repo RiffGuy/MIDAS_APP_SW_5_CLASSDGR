@@ -89,7 +89,7 @@
     <ClCompile Include="M_Polygon.cpp">
       <Filter>소스 파일\Drawing_Tools</Filter>
     </ClCompile>
-    <ClCompile Include="mRectangle.cpp">
+    <ClCompile Include="DiagramClass.cpp">
       <Filter>소스 파일\Drawing_Tools</Filter>
     </ClCompile>
   </ItemGroup>

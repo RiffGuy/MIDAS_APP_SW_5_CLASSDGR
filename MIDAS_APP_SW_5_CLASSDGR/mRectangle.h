@@ -1,6 +1,6 @@
 #pragma once
 #include "M_Polygon.h"
-class mRectangle :
+class DiagramClass :
 	public M_Polygon
 {
 
@@ -10,9 +10,9 @@ public:
 	int START = 1;
 	int MOVE = 2;
 	int END = 3;
-	mRectangle();
-	mRectangle(CPoint start, CPoint end);
-	~mRectangle();
+	DiagramClass();
+	DiagramClass(CPoint start, CPoint end);
+	~DiagramClass();
 	virtual bool Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector<M_Polygon*>* saveList);
 	virtual void Draw(CPoint startPoint, CPoint endPoint, CDC* pDC);
 	virtual void ReDraw(CDC* pDC);

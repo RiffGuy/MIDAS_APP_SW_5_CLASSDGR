@@ -43,7 +43,7 @@ CMIDAS_APP_SW_5_CLASSDGRView::CMIDAS_APP_SW_5_CLASSDGRView()
 	m_Brush = new Brushs();
 	m_Brush->setBrushWnd(this);
 	m_StartToMove = false;
-	m_SelectRect = false;
+	m_CurSelectRect = false;
 }
 
 CMIDAS_APP_SW_5_CLASSDGRView::~CMIDAS_APP_SW_5_CLASSDGRView()
@@ -132,8 +132,8 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMouseMove(UINT nFlags, CPoint point)
 		m_EndPos = point;
 		CPoint pos = m_EndPos - m_StartPos;
 		m_StartPos = point;
-		m_SelectRect->setStartPoint(m_SelectRect->getStartPoint() + pos);
-		m_SelectRect->setEndPoint(m_SelectRect->getEndPoint() + pos);
+		m_CurSelectRect->setStartPoint(m_CurSelectRect->getStartPoint() + pos);
+		m_CurSelectRect->setEndPoint(m_CurSelectRect->getEndPoint() + pos);
 
 		m_Brush->Draw(point, nFlags, L_MOUSE_UP);
 		Invalidate();
@@ -169,17 +169,17 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 	
 	CView::OnLButtonDown(nFlags, point);
 
-//사각형 클릭시 움직이기 준비
 	if (m_Brush->polygonList.size() > 0) {
-		m_SelectRect = findrect(point);
+		m_CurSelectRect = findrect(point);
 	}
 
-	if (m_SelectRect != NULL) {
+	//사각형 클릭시 움직이기 준비
+	if (m_CurSelectRect != NULL) {
 		m_StartPos = point;
 		m_StartToMove = true;
 	}else{
 	//바탕화면 클릭시 그리기(나중에 수정할 부분)
-		m_SelectRect = NULL;
+		m_CurSelectRect = NULL;
 		OnDrawRect();
 		//OnDrawLine();
 		m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
@@ -232,7 +232,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawLine()
 
 void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawRect()
 {
-	mRectangle* c = new mRectangle();
+	DiagramClass* c = new DiagramClass();
 	M_Polygon* mp = c;
 	m_Brush->setDrawMode(D_MODE_RECT, mp);
 }
