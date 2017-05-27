@@ -24,9 +24,6 @@ DiagramClass::DiagramClass(CPoint start, CPoint end) {
 
 
 void DiagramClass::ReDraw(CDC* pDC) {
-	//printf("mRectangle ReDraw (%d,%d) , (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-
-//	pDC->Rectangle(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 //start -> TopLeft, end -> BottomRight로 재설정 
 	CPoint newStartPos;
 	CPoint newEndPos;
@@ -79,7 +76,7 @@ void DiagramClass::ReDraw(CDC* pDC) {
 			maxX = max(maxX, textWidth);
 		}
 		curY += linesize;
-
+//start, end point 재정의
 		if (endPoint.y < curY) {
 			newEndPos.y = curY;
 		}
@@ -103,26 +100,22 @@ void DiagramClass::ReDraw(CDC* pDC) {
 		int textHeight = pDC->GetTextExtent(tmp).cy;
 		pDC->TextOutW(centerWidth - textWidth / 2, curY + textHeight / 2, tmp);
 		curY += textHeight * 2;
-
-
-		//line 그리기
+//line 그리기
 		pDC->MoveTo(CPoint(newStartPos.x, curY));
 		pDC->LineTo(CPoint(newEndPos.x, curY));
 		curY += linesize;
-
-		//attrbute 출력
+//attrbute 출력
 		for (int i = 0; i < status->getAttrbuteSize(); i++) {
 			tmp = status->getAttrbute(i);
 			pDC->TextOutW(newStartPos.x + linesize, curY, tmp);
 			textWidth = pDC->GetTextExtent(tmp).cx;
 			curY += textHeight;
 		}
-		//line 그리기
+//line 그리기
 		pDC->MoveTo(CPoint(newStartPos.x, curY));
 		pDC->LineTo(CPoint(newEndPos.x, curY));
 		curY += linesize;
-
-		//opreation 출력
+//opreation 출력
 		for (int i = 0; i < status->getOperationSize(); i++) {
 			tmp = status->getOperation(i);
 			pDC->TextOutW(newStartPos.x + linesize, curY, tmp);
@@ -130,10 +123,6 @@ void DiagramClass::ReDraw(CDC* pDC) {
 			curY += linesize;
 		}
 	}
-	
-
-
-
 }
 
 void DiagramClass::Draw(CPoint startPoint, CPoint endPoint, CDC* pDC) {

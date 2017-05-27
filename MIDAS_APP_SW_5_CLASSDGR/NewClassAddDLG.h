@@ -31,7 +31,15 @@ public:
 	int getAttrbuteSize() { return attbList.size(); }
 	CString getOperation(int i) { return operationList[i]; }
 	int getOperationSize() { return operationList.size(); }
+	bool isEmpty() {
+		if ((className == "") && attbList.size() == 0 && prmtList.size() == 0 && operationList.size() == 0) {
+			return true;
+		}
+		return false;
+	}
+
 	void saveData(CArchive& ar);
+	
 	// 클래스 이름을 입력 받는 EditBox 객체
 	CEdit AddNewClass_classNameEdit;
 	void initData();

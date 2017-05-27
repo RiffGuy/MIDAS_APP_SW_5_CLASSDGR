@@ -57,6 +57,8 @@ public:
 	void setCPenColor();
 	void setCBrushColor();
 	void addPolygon(M_Polygon* newPoly);
+	void deletePolygon();
+
 	M_Polygon* getResentPolygon() {
 		if (polygonList.size() > 0) {
 			return polygonList[polygonList.size() - 1];

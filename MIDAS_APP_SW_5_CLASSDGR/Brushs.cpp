@@ -98,3 +98,6 @@ void Brushs::saveData(CArchive& ar) {
 void Brushs::addPolygon(M_Polygon* newPoly) {
 	polygonList.push_back(newPoly);
 }
+void Brushs::deletePolygon() {
+	polygonList.pop_back();
+}
