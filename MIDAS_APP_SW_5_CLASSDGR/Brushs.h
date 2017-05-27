@@ -69,7 +69,8 @@ public:
 
 	void saveData(CArchive& ar);
 
-	
+	void reConnectLinesForLoadData();
+	M_Polygon* findRect(CPoint point);
 };
 
 

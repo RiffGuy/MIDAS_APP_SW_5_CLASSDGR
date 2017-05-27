@@ -45,6 +45,7 @@ END_MESSAGE_MAP()
 
 CMIDAS_APP_SW_5_CLASSDGRView::CMIDAS_APP_SW_5_CLASSDGRView()
 {
+	
 	// TODO: 여기에 생성 코드를 추가합니다.
 	m_Brush = new Brushs();
 	m_Brush->setBrushWnd(this);
@@ -83,7 +84,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnDraw(CDC* /*pDC*/)
 
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 
-	
+	m_Brush->ReDrawAll();
 }
 
 

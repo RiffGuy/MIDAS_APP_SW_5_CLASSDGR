@@ -118,3 +118,51 @@ void Brushs::addPolygon(M_Polygon* newPoly) {
 void Brushs::deletePolygon() {
 	polygonList.pop_back();
 }
+
+M_Polygon*  Brushs::findRect(CPoint point) {
+	for (int i = 0; i < polygonList.size(); i++) {
+		if (polygonList[i]->getType() == D_MODE_CLASSDIAGRAM) {
+			CPoint startPos = polygonList[i]->getStartPoint();
+			CPoint endPos = polygonList[i]->getEndPoint();
+			CPoint tmp;
+			if (startPos.x > endPos.x) {
+				tmp = endPos;
+				endPos.x = startPos.x;
+				startPos.x = tmp.x;
+			}
+			if (startPos.y > endPos.y) {
+				tmp = endPos;
+				endPos.y = startPos.y;
+				startPos.y = tmp.y;
+			}
+
+			CRect rect(startPos, endPos);
+
+			if (rect.PtInRect(point)) {
+				return polygonList[i];
+			}
+		}
+	}
+	return NULL;
+}
+
+
+void Brushs::reConnectLinesForLoadData() {
+	for (int i = 0; i < polygonList.size(); i++) {
+		if (polygonList[i]->getType() == D_MODE_LINE_DEPENDENCY ||
+			polygonList[i]->getType() == D_MODE_LINE_INHERITANCE) {
+
+			// Start Line
+			M_Polygon* tempRect = findRect(polygonList[i]->startPoint);
+			if (tempRect != NULL) {
+				tempRect->addConnectedPoint(&(polygonList[i]->startPoint));
+			}
+			
+			// End Line
+			tempRect = findRect(polygonList[i]->endPoint);
+			if (tempRect != NULL)tempRect->addConnectedPoint(&(polygonList[i]->endPoint));
+			
+		}
+
+	}
+}

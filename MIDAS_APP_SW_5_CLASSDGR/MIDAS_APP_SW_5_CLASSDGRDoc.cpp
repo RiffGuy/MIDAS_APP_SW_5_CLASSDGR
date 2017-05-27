@@ -12,6 +12,8 @@
 #include "MIDAS_APP_SW_5_CLASSDGRDoc.h"
 #include "DiagramClass.h"
 #include "Line.h"
+#include "InheritanceLine.h"
+#include "dependencyLine.h"
 #include <propkey.h>
 
 #ifdef _DEBUG
@@ -31,7 +33,7 @@ END_MESSAGE_MAP()
 CMIDAS_APP_SW_5_CLASSDGRDoc::CMIDAS_APP_SW_5_CLASSDGRDoc()
 {
 	// TODO: 여기에 일회성 생성 코드를 추가합니다.
-
+	
 }
 
 CMIDAS_APP_SW_5_CLASSDGRDoc::~CMIDAS_APP_SW_5_CLASSDGRDoc()
@@ -65,6 +67,9 @@ void CMIDAS_APP_SW_5_CLASSDGRDoc::Serialize(CArchive& ar)
 		ar << listSize; // 폴리곤 리스트 개수를 저장
 		for (int i = 0; i < listSize; i++) {
 			ar << brush->polygonList[i]->getType();
+		}
+
+		for (int i = 0; i < listSize; i++) {
 			brush->polygonList[i]->saveData(ar);
 		}
 	}
@@ -72,10 +77,14 @@ void CMIDAS_APP_SW_5_CLASSDGRDoc::Serialize(CArchive& ar)
 	{
 		// TODO: 여기에 로딩 코드를 추가합니다.
 		int listSize = 0;
-		ar >> listSize;
+		
+		ar >> listSize; // 폴리곤 리스트 개수를 읽어옴
+
+		printf("Load : read list size : %d\n", listSize);
 		for (int i = 0; i < listSize; i++) {
 			int PolyType;
 			ar >> PolyType;
+			printf("Load : TYPE : %d\n", PolyType);
 			switch (PolyType) {
 			case D_MODE_CLASSDIAGRAM: {
 				printf("load ClassDiagram!\n");
@@ -89,14 +98,28 @@ void CMIDAS_APP_SW_5_CLASSDGRDoc::Serialize(CArchive& ar)
 				
 				break;
 			}
+			case D_MODE_LINE_INHERITANCE: {
+				printf("load InheritanceLine!\n");
+				brush->polygonList.push_back(new InheritanceLine());
+
+				break;
+			}
+			case D_MODE_LINE_DEPENDENCY: {
+				printf("load dependencyLine!\n");
+				brush->polygonList.push_back(new dependencyLine());
+				break;
+			}
 			}
 			
 		}
 		printf("PolygonListSize : %d\n", brush->polygonList.size());
 		for (int i = 0; i < brush->polygonList.size(); i++) {
 			brush->polygonList[i]->saveData(ar);
-			brush->polygonList[i]->printPoint();
+			//brush->polygonList[i]->printPoint();
 		}
+
+		brush->reConnectLinesForLoadData();
+		
 	}
 }
 
