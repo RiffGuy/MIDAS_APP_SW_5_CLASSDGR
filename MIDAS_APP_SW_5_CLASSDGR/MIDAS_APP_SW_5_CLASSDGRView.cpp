@@ -37,6 +37,7 @@ BEGIN_MESSAGE_MAP(CMIDAS_APP_SW_5_CLASSDGRView, CView)
 	ON_WM_RBUTTONDOWN()
 	ON_COMMAND(ID_MENU_PROPERTIES, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties)
 	ON_COMMAND(ID_MENU_INHERITANCE, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuInheritance)
+	ON_COMMAND(ID_MENU_DELETE, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDelete)
 END_MESSAGE_MAP()
 
 // CMIDAS_APP_SW_5_CLASSDGRView »ý¼º/¼Ò¸ê
@@ -194,12 +195,8 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 		m_MakeClass = true;
 		OnDrawRect();
 		m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
-
-
 	}
 
-
-	
 }
 
 M_Polygon* CMIDAS_APP_SW_5_CLASSDGRView::findrect(CPoint point) {
@@ -325,12 +322,22 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties()
 	// TODO: Add your command handler code here
 	NewClassAddDLG childDlg;
 	childDlg.DoModal();
-
 	childDlg.DestroyWindow();
 }
 
 
 void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuInheritance()
+{
+	// TODO: Add your command handler code here
+	CPoint start_point = m_CurSelectRect->getStartPoint();
+	CPoint end_point = m_CurSelectRect->getEndPoint();
+
+
+
+}
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDelete()
 {
 	// TODO: Add your command handler code here
 }
