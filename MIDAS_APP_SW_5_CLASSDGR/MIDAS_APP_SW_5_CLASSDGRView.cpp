@@ -251,7 +251,12 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 			m_Brush->addPolygon(new DiagramClass(*(DiagramClass*)m_CurSelectRect));
 			m_Brush->getResentPolygon()->mpoly = m_Brush->polygonList[m_CurSelectRectAt];
 			m_Brush->getResentPolygon()->mpoly->isVisual = false;
+			m_Brush->getResentPolygon()->parentPoly = m_Brush->getResentPolygon();
 			m_CurSelectRect = m_Brush->getResentPolygon();
+			for (; !(m_Brush->polygonBackUp.empty());) {
+				m_Brush->polygonBackUp.pop();
+				printf("a a a.\n");
+			}
 
 		}
 
@@ -489,7 +494,11 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties()
 
 			m_Brush->getResentPolygon()->mpoly = m_Brush->polygonList[m_CurSelectRectAt];
 			m_Brush->getResentPolygon()->mpoly->isVisual = false;
+			m_Brush->getResentPolygon()->parentPoly = m_Brush->getResentPolygon();
 			m_CurSelectRect = m_Brush->getResentPolygon();
+			for (; !m_Brush->polygonBackUp.empty();) {
+				m_Brush->polygonBackUp.pop();
+			}
 
 			m_CurSelectRect = NULL;
 			m_CurSelectRectAt = -1;
@@ -536,7 +545,12 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDelete()
 
 		m_Brush->getResentPolygon()->mpoly = m_Brush->polygonList[m_CurSelectRectAt];
 		m_Brush->getResentPolygon()->mpoly->isVisual = false;
+		m_Brush->getResentPolygon()->parentPoly = m_Brush->getResentPolygon();
 		m_CurSelectRect = m_Brush->getResentPolygon();
+		for (; !(m_Brush->polygonBackUp.empty());) {
+			m_Brush->polygonBackUp.pop();
+			printf("a a a.\n");
+		}
 
 		m_CurSelectRect = NULL;
 		m_CurSelectRectAt = -1;

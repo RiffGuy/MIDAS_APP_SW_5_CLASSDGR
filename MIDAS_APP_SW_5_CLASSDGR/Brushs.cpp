@@ -73,13 +73,15 @@ void Brushs::ReDrawAll() {
 void Brushs::Redo() {
 	if (!polygonBackUp.empty()) {
 		polygonList.push_back(polygonBackUp.top());
+		if (polygonList.back()->isVisual == true) {
+			polygonList.back()->isVisual = false;
+		}
+		else {
+			polygonList.back()->isVisual = true;
+		}
 		if (polygonList.back()->mpoly != NULL) {
-			if (polygonList.back()->mpoly->isVisual == true) {
-				polygonList.back()->mpoly->isVisual == false;
-			}
-			else {
-				polygonList.back()->mpoly->isVisual == true;
-			}
+			polygonList.back()->mpoly->isVisual = false;
+			polygonList.back()->isVisual = true;
 		}
 		polygonBackUp.pop();
 	}
@@ -92,9 +94,14 @@ void Brushs::Undo() {
 	if (polygonList.size() != 0) {
 		polygonBackUp.push(polygonList[polygonList.size() - 1]);
 		if (polygonList.back()->mpoly != NULL) {
-			polygonList.back()->mpoly->isVisual == true;
+			polygonList.back()->mpoly->isVisual = true;
+		}
+		else {
+			polygonList.back()->isVisual = false;
+
 		}
 		polygonList.pop_back();
+
 	}
 	else {
 		printf("더 이상 제거할 작업이 없습니다.\n");

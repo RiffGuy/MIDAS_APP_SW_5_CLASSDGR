@@ -14,6 +14,7 @@ public:
 	CPoint endPoint;
 	bool isVisual;
 	M_Polygon* mpoly;
+	M_Polygon* parentPoly;
 	M_Polygon();
 	~M_Polygon();
 	inline virtual void printPoint() { printf("-> (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y); }

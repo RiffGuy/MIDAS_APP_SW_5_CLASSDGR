@@ -8,6 +8,7 @@ M_Polygon::M_Polygon()
 	endPoint = CPoint(0, 0);
 	isVisual = true;
 	mpoly = NULL;
+	parentPoly = NULL;
 }
 
 
