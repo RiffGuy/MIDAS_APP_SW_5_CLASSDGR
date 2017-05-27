@@ -87,15 +87,17 @@ void Brushs::Undo() {
 void Brushs::setCPenColor() {
 	brushPen.DeleteObject();
 	brushPen.CreatePen(PS_SOLID, 1, RGB(0 , 0 , 0));
-
-	oldPen = brushCDC->SelectObject(&brushPen); // 이전에 선택되어 있던 펜 객체를 리턴한다.
+	//if (brushCDC != NULL) {
+		oldPen = brushCDC->SelectObject(&brushPen); // 이전에 선택되어 있던 펜 객체를 리턴한다.
+	//}
 }
 
 void Brushs::setPenMode(int MODE) {
 	brushPen.DeleteObject();
 	brushPen.CreatePen(MODE, 1, RGB(0, 0, 0));
-
-	oldPen = brushCDC->SelectObject(&brushPen);
+	//if (brushCDC != NULL) {
+		oldPen = brushCDC->SelectObject(&brushPen);
+	//}
 	printf("Penmode : %d\npsdot : %d\npssolid : %d", MODE, PS_DOT, PS_SOLID);
 }
 
@@ -104,7 +106,9 @@ void Brushs::setCBrushColor() {
 	brushBrush.DeleteObject();
 	//brushBrush.CreateStockObject(NULL_BRUSH); // 도형 속 색상이 투명색
 	brushBrush.CreateSolidBrush(RGB(255, 255, 153));
-	oldBrush = brushCDC->SelectObject(&brushBrush); // 이전에 선택되어 있던 브러시 객체를 리턴한다.
+	//if (brushCDC != NULL) {
+		oldBrush = brushCDC->SelectObject(&brushBrush); // 이전에 선택되어 있던 브러시 객체를 리턴한다.
+	//}
 }
 
 void Brushs::saveData(CArchive& ar) {
@@ -155,12 +159,12 @@ void Brushs::reConnectLinesForLoadData() {
 			// Start Line
 			M_Polygon* tempRect = findRect(polygonList[i]->startPoint);
 			if (tempRect != NULL) {
-				tempRect->addConnectedPoint(&(polygonList[i]->startPoint));
+				tempRect->addConnectedPoint(&(polygonList[i]->startPoint), &(polygonList[i]->endPoint));
 			}
 			
 			// End Line
 			tempRect = findRect(polygonList[i]->endPoint);
-			if (tempRect != NULL)tempRect->addConnectedPoint(&(polygonList[i]->endPoint));
+			if (tempRect != NULL)tempRect->addConnectedPoint(&(polygonList[i]->endPoint), &(polygonList[i]->startPoint));
 			
 		}
 

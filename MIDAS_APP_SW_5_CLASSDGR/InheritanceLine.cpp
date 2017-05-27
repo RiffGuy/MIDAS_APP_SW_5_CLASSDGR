@@ -55,7 +55,7 @@ InheritanceLine::~InheritanceLine()
 }
 
 
-void InheritanceLine::addConnectedPoint(CPoint* p) {
+void InheritanceLine::addConnectedPoint(CPoint* p, CPoint* q) {
 
 }
 

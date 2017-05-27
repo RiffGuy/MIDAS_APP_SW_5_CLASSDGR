@@ -18,6 +18,7 @@ IMPLEMENT_DYNCREATE(CChildFrame, CMDIChildWnd)
 
 BEGIN_MESSAGE_MAP(CChildFrame, CMDIChildWnd)
 	ON_COMMAND(ID_32781, &CChildFrame::OnPrint_BTM)
+	ON_COMMAND(ID_FILE_SAVE, &CChildFrame::OnFileSave)
 END_MESSAGE_MAP()
 
 // CChildFrame 생성/소멸
@@ -25,6 +26,7 @@ END_MESSAGE_MAP()
 CChildFrame::CChildFrame()
 {
 	// TODO: 여기에 멤버 초기화 코드를 추가합니다.
+	printf("Child 생성!\n");
 }
 
 CChildFrame::~CChildFrame()
@@ -126,4 +128,10 @@ void CChildFrame::OnPrint_BTM()
 	// 사용했던 비트맵과 DC 를 해제한다.
 	if (NULL != h_bitmap) DeleteObject(h_bitmap);
 	if (NULL != h_screen_dc) ::ReleaseDC(NULL, h_screen_dc);
+}
+
+
+void CChildFrame::OnFileSave()
+{
+	
 }

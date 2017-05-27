@@ -34,7 +34,7 @@ public:
 	}
 
 	inline void setCDC(CDC* pDC) {
-		brushCDC = pDC;
+		if(pDC != NULL)brushCDC = pDC;
 		setCPenColor();
 		setCBrushColor();
 	}

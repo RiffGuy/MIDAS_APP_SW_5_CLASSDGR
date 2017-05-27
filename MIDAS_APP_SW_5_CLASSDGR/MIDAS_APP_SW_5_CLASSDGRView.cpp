@@ -226,8 +226,14 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 				));
 
 				// 종료 지점과 연결된 사각형 객체는 이미 저장되어 있음.
-				tempClassRect->addConnectedPoint(&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->startPoint));
-				m_CurSelectRect->addConnectedPoint(&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->endPoint));
+				tempClassRect->addConnectedPoint(
+					&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->startPoint),
+					&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->endPoint)
+				);
+				m_CurSelectRect->addConnectedPoint(
+					&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->endPoint),
+					&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->startPoint)
+					);
 				Invalidate();
 				UpdateWindow();
 				m_Brush->ReDrawAll();
