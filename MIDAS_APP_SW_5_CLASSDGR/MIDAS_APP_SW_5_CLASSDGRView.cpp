@@ -36,6 +36,7 @@ BEGIN_MESSAGE_MAP(CMIDAS_APP_SW_5_CLASSDGRView, CView)
 	ON_COMMAND(ID_ADD_NEW_CLASS_ON_MENU, &CMIDAS_APP_SW_5_CLASSDGRView::OnAddNewClassOnMenu)
 	ON_WM_RBUTTONDOWN()
 	ON_COMMAND(ID_MENU_PROPERTIES, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties)
+	ON_COMMAND(ID_MENU_INHERITANCE, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuInheritance)
 END_MESSAGE_MAP()
 
 // CMIDAS_APP_SW_5_CLASSDGRView »ý¼º/¼Ò¸ê
@@ -318,4 +319,10 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties()
 	childDlg.DoModal();
 
 	childDlg.DestroyWindow();
+}
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuInheritance()
+{
+	// TODO: Add your command handler code here
 }
