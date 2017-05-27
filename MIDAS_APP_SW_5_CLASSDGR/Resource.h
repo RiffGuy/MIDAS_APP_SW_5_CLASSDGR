@@ -30,6 +30,7 @@
 #define IDB_BITMAP1                     311
 #define IDD_ADD_CLASS_DLG               312
 #define IDR_MENU1                       314
+#define IDR_MENU2                       321
 #define IDC_ADD_NEW_CLASS_CLASS_NAME    1000
 #define IDC_ADD_NEW_CLASS_ATTB_RANGE    1001
 #define IDC_ADD_NEW_CLASS_OP_RANGE      1002
@@ -63,13 +64,15 @@
 #define IDD_UNDO_CLASS                  32782
 #define ID_32783                        32783
 #define ID_RECONNECT                    32786
+#define ID_32786                        32786
+#define ID_DELETE_LINE                  32787
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        321
-#define _APS_NEXT_COMMAND_VALUE         32787
+#define _APS_NEXT_COMMAND_VALUE         32786
 #define _APS_NEXT_CONTROL_VALUE         1017
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

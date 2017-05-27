@@ -164,16 +164,17 @@ void DiagramClass::saveData(CArchive& ar) {
 		if (isVisual) {
 			printf("save DiagramClass (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 			ar << startPoint << endPoint;
+			status->saveData(ar);
 		}
 	}
 	else {
 		// load
 		if (isVisual) {
 			ar >> startPoint >> endPoint;
+			status->saveData(ar);
 			printf("load DiagramClass (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 		}
 	}
-	status->saveData(ar);
 }
 
 

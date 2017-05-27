@@ -191,6 +191,14 @@ BEGIN
     END
 END
 
+IDR_MENU2 MENU
+BEGIN
+    POPUP "menu"
+    BEGIN
+        MENUITEM "Áö¿ì±â",                         ID_DELETE_LINE
+    END
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
