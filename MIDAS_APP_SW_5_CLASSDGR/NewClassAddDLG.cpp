@@ -179,24 +179,28 @@ void NewClassAddDLG::OnBnClickedAddNewClassOk()
 }
 
 void NewClassAddDLG::saveData(CArchive& ar) {
-	printf("save Dialog !\n");
+	
 	if (ar.IsStoring()) {
 		// save
+		printf("save Dialog !\n");
 		int attbSize = attbList.size();
 		int prmtSize = prmtList.size();
 		int operationSize = operationList.size();
 		
 		ar << attbSize;
+		printf("save : attbSize : %d\n", attbSize);
 		for (int i = 0; i < attbSize; i++) {
 			ar << attbList[i];
 		}
 
 		ar << prmtSize;
+		printf("save : prmtSize : %d\n", prmtSize);
 		for (int i = 0; i < prmtSize; i++) {
 			ar << prmtSize;
 		}
 
 		ar << operationSize;
+		printf("save : operationSize : %d\n", operationSize);
 		for (int i = 0; i < operationSize; i++) {
 			ar << operationList[i];
 		}
@@ -206,11 +210,12 @@ void NewClassAddDLG::saveData(CArchive& ar) {
 	}
 	else {
 		// load
-
+		printf("Load Dialog !!\n");
 		int attbSize = 0;
 		int prmtSize =0;
 		int operationSize = 0;
 		ar >> attbSize;
+		printf("Load : attbSize : %d\n", attbSize);
 		for (int i = 0; i < attbSize; i++) {
 			CString attb;
 			ar >> attb;
@@ -218,6 +223,7 @@ void NewClassAddDLG::saveData(CArchive& ar) {
 		}
 
 		ar >> prmtSize;
+		printf("Load : prmtSize : %d\n", prmtSize);
 		for (int i = 0; i < prmtSize; i++) {
 			CString prmt;
 			ar >> prmt;
@@ -225,6 +231,7 @@ void NewClassAddDLG::saveData(CArchive& ar) {
 		}
 
 		ar >> operationSize;
+		printf("Load : operationSize : %d\n", operationSize);
 		for (int i = 0; i < operationSize; i++) {
 			CString operation;
 			ar >> operation;
@@ -232,6 +239,7 @@ void NewClassAddDLG::saveData(CArchive& ar) {
 		}
 
 		ar >> className;
+
 	}
 }
 

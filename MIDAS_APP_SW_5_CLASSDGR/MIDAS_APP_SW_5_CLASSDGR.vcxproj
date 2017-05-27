@@ -44,7 +44,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
@@ -185,6 +185,7 @@
     <ClInclude Include="Brushs.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="dependencyLine.h" />
+    <ClInclude Include="Dummy.h" />
     <ClInclude Include="InheritanceLine.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="MainFrm.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="Brushs.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="dependencyLine.cpp" />
+    <ClCompile Include="Dummy.cpp" />
     <ClCompile Include="InheritanceLine.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="MainFrm.cpp" />
@@ -225,10 +227,6 @@
     <None Include="res\MIDAS_APP_SW_5_CLASSDGR.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\Desktop\arrow_down.bmp" />
-    <Image Include="..\..\Desktop\arrow_left.bmp" />
-    <Image Include="..\..\Desktop\arrow_right.bmp" />
-    <Image Include="..\..\Desktop\arrow_up.bmp" />
     <Image Include="res\bitmap2.bmp" />
     <Image Include="res\MIDAS_APP_SW_5_CLASSDGR.ico" />
     <Image Include="res\MIDAS_APP_SW_5_CLASSDGRDoc.ico" />

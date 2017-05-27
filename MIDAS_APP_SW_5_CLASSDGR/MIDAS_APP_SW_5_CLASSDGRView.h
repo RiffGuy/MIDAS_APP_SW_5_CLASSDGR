@@ -8,6 +8,7 @@
 #include "DiagramClass.h"
 #include "InheritanceLine.h"
 #include "dependencyLine.h"
+#include "Dummy.h"
 class CMIDAS_APP_SW_5_CLASSDGRView : public CView
 {
 protected: // serialization에서만 만들어집니다.

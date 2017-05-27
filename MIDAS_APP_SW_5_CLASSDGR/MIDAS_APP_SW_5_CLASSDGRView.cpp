@@ -45,6 +45,7 @@ END_MESSAGE_MAP()
 
 CMIDAS_APP_SW_5_CLASSDGRView::CMIDAS_APP_SW_5_CLASSDGRView()
 {
+	
 	// TODO: 여기에 생성 코드를 추가합니다.
 	m_Brush = new Brushs();
 	m_Brush->setBrushWnd(this);
@@ -83,7 +84,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnDraw(CDC* /*pDC*/)
 
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 
-	
+	m_Brush->ReDrawAll();
 }
 
 
@@ -165,7 +166,6 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMouseMove(UINT nFlags, CPoint point)
 	}
 
 	
-	
 }
 
 
@@ -192,6 +192,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 
 	m_StartToMove = false;
 	m_MakeClass = false;
+	std::cout << m_Brush->polygonList.size() << std::endl;
 
 
 }
@@ -213,6 +214,8 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 		m_StartPos = point;
 		m_StartToMove = true;
 		
+
+
 		// 상속 혹은 의존 직선의 경우 클래스에 닿지 않으면 소멸되도록 함.
 		// 해당 경우는 선이 사각형에 포함된 경우
 		if (m_Brush->getDrawMode() == D_MODE_LINE_INHERITANCE || m_Brush->getDrawMode() == D_MODE_LINE_DEPENDENCY) {
@@ -224,7 +227,6 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 
 				// 종료 지점과 연결된 사각형 객체는 이미 저장되어 있음.
 				tempClassRect->addConnectedPoint(&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->startPoint));
-
 				m_CurSelectRect->addConnectedPoint(&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->endPoint));
 				Invalidate();
 				UpdateWindow();
@@ -232,6 +234,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 			}
 			m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
 			OnDrawRect();
+
 		}
 		
 	}
@@ -423,6 +426,11 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties()
 	
 	if (m_CurSelectRect != NULL) {
 		m_CurSelectRect->setContents();
+//DELETE Dummy 생성
+		if (((DiagramClass *)m_CurSelectRect)->isClassContentsEmpty()) {
+			Dummy* dummy = new Dummy(m_CurSelectRect);
+			m_Brush->polygonList.push_back(dummy);
+		}
 		Invalidate();
 		UpdateWindow();
 		m_Brush->ReDrawAll();
@@ -456,6 +464,14 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDependency()
 void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDelete()
 {
 	// TODO: Add your command handler code here
+	if (m_CurSelectRect != NULL) {
+//DELETE Dummy 생성
+		Dummy* dummy = new Dummy(m_CurSelectRect);
+		m_Brush->polygonList.push_back(dummy);
+		Invalidate();
+		UpdateWindow();
+		m_Brush->ReDrawAll();
+	}
 }
 
 

@@ -75,6 +75,9 @@
     <ClInclude Include="dependencyLine.h">
       <Filter>헤더 파일\Drawing_Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Dummy.h">
+      <Filter>헤더 파일\Drawing_Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MIDAS_APP_SW_5_CLASSDGR.cpp">
@@ -116,6 +119,9 @@
     <ClCompile Include="dependencyLine.cpp">
       <Filter>소스 파일\Drawing_Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Dummy.cpp">
+      <Filter>소스 파일\Drawing_Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MIDAS_APP_SW_5_CLASSDGR.rc">
@@ -141,18 +147,6 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="res\bitmap2.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\Desktop\arrow_down.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\Desktop\arrow_left.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\Desktop\arrow_up.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\Desktop\arrow_right.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
