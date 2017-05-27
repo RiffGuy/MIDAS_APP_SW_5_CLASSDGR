@@ -5,7 +5,8 @@
 #pragma once
 #include "Brushs.h"
 #include "Line.h"
-#include "mRectangle.h"
+#include "DiagramClass.h"
+
 class CMIDAS_APP_SW_5_CLASSDGRView : public CView
 {
 protected: // serialization에서만 만들어집니다.
@@ -50,7 +51,7 @@ public:
 	M_Polygon* m_CurSelectRect;
 	bool m_StartToMove;
 	bool m_SelectObject;
-
+	bool m_MakeClass;
 	M_Polygon* findrect(CPoint);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);

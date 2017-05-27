@@ -63,11 +63,11 @@
     <ClInclude Include="M_Polygon.h">
       <Filter>헤더 파일\Drawing_Tools</Filter>
     </ClInclude>
-    <ClInclude Include="mRectangle.h">
-      <Filter>헤더 파일\Drawing_Tools</Filter>
-    </ClInclude>
     <ClInclude Include="NewClassAddDLG.h">
       <Filter>헤더 파일\다이얼로그 클래스</Filter>
+    </ClInclude>
+    <ClInclude Include="DiagramClass.h">
+      <Filter>헤더 파일\Drawing_Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

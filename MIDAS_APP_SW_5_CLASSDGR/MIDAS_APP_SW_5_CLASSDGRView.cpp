@@ -45,6 +45,7 @@ CMIDAS_APP_SW_5_CLASSDGRView::CMIDAS_APP_SW_5_CLASSDGRView()
 	m_Brush->setBrushWnd(this);
 	m_StartToMove = false;
 	m_CurSelectRect = false;
+	m_MakeClass = false;
 }
 
 CMIDAS_APP_SW_5_CLASSDGRView::~CMIDAS_APP_SW_5_CLASSDGRView()
@@ -161,6 +162,11 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 		m_StartToMove = false;
 	}
 	m_Brush->Draw(point, nFlags, L_MOUSE_UP);
+
+	if (m_MakeClass == true) {
+		m_Brush->polygonList[m_Brush->polygonList.size() - 1]->setClassContents();
+		m_MakeClass = false;
+	}
 }
 
 
@@ -181,9 +187,10 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 	}else{
 	//바탕화면 클릭시 그리기(나중에 수정할 부분)
 		m_CurSelectRect = NULL;
+		m_MakeClass = true;
 		OnDrawRect();
-		//OnDrawLine();
 		m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
+
 
 	}
 
