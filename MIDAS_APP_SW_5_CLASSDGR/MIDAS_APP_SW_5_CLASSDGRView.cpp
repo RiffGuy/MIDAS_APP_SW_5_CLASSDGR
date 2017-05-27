@@ -141,7 +141,6 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMouseMove(UINT nFlags, CPoint point)
 		m_CurSelectRect->setStartPoint(m_CurSelectRect->getStartPoint() + pos);
 		m_CurSelectRect->setEndPoint(m_CurSelectRect->getEndPoint() + pos);
 
-		m_Brush->Draw(point, nFlags, L_MOUSE_UP);
 		Invalidate();
 		UpdateWindow();
 		m_Brush->ReDrawAll();
@@ -166,6 +165,9 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	if (m_MakeClass == true && m_Brush->polygonList.size() > 0) {
 		m_Brush->polygonList[m_Brush->polygonList.size() - 1]->setClassContents();
+		Invalidate();
+		UpdateWindow();
+		m_Brush->ReDrawAll();
 	}
 	m_Brush->Draw(point, nFlags, L_MOUSE_UP);
 
@@ -296,12 +298,15 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnAddClass()
 void CMIDAS_APP_SW_5_CLASSDGRView::OnAddNewClassOnMenu()
 {
 	DiagramClass* dc;
-
+	OnDrawRect();
 	m_Brush->addPolygon(new DiagramClass(CPoint(0,0),CPoint(100,100)));
 	dc = (DiagramClass *)m_Brush->getResentPolygon();
 	dc->setClassContents();
-
-
+	Invalidate();
+	UpdateWindow();
+	m_Brush->ReDrawAll();
+	
+	
 }
 
 
@@ -334,6 +339,9 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties()
 	
 	if (m_CurSelectRect != NULL) {
 		m_CurSelectRect->setClassContents();
+		Invalidate();
+		UpdateWindow();
+		m_Brush->ReDrawAll();
 	}
 	/*
 	NewClassAddDLG childDlg;
