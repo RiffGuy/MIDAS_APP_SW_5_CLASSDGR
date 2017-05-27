@@ -50,9 +50,16 @@ void Brushs::ReDrawAll() {
 	for (int i = 0; i < polygonList.size(); i++) {
 		//printf("redrawing.. %d\n", i+1);
 		//polygonList[i]->printPoint();
-		polygonList[i]->ReDraw(brushCDC);
-		//brushCDC->SelectObject(oldPen);
+		
+		if (polygonList[i]->getType() == D_MODE_LINE_DEPENDENCY || polygonList[i]->getType() == D_MODE_LINE_INHERITANCE) {
+			polygonList[i]->ReDraw(brushCDC);
+		}//brushCDC->SelectObject(oldPen);
 		//brushCDC->SelectObject(oldBrush);
+	}
+	for (int i = 0; i < polygonList.size(); i++) {
+		if (polygonList[i]->getType() == D_MODE_CLASSDIAGRAM) {
+			polygonList[i]->ReDraw(brushCDC);
+		}
 	}
 }
 

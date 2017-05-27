@@ -134,7 +134,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMouseMove(UINT nFlags, CPoint point)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	//printf("mode : %d\n", m_Brush->getDrawMode());
 	CView::OnMouseMove(nFlags, point);
-	if (m_Brush->getDrawMode() == D_MODE_RECT) {
+	if (m_Brush->getDrawMode() == D_MODE_CLASSDIAGRAM) {
 		//사각형 클릭시 움직이기
 		if (m_StartToMove) {
 			m_EndPos = point;
@@ -172,6 +172,9 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	if (m_MakeClass == true && m_Brush->polygonList.size() > 0) {
 		m_Brush->polygonList[m_Brush->polygonList.size() - 1]->setContents();
+		if (((DiagramClass *)m_Brush->polygonList[m_Brush->polygonList.size() - 1])->isClassContentsEmpty()) {
+			m_Brush->polygonList.pop_back();
+		}
 
 		Invalidate();
 		UpdateWindow();
@@ -243,7 +246,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 M_Polygon* CMIDAS_APP_SW_5_CLASSDGRView::findrect(CPoint point) {
 	
 	for (int i = 0; i < m_Brush->polygonList.size(); i++) {
-		if (m_Brush->polygonList[i]->getPolygonType() == 'C') {
+		if (m_Brush->polygonList[i]->getType() == D_MODE_CLASSDIAGRAM) {
 			CPoint startPos = m_Brush->polygonList[i]->getStartPoint();
 			CPoint endPos = m_Brush->polygonList[i]->getEndPoint();
 			CPoint tmp;
@@ -329,7 +332,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawRect()
 	printf("OnDrawRect!\n");
 	DiagramClass* c = new DiagramClass();
 	M_Polygon* mp = c;
-	m_Brush->setDrawMode(D_MODE_RECT, mp);
+	m_Brush->setDrawMode(D_MODE_CLASSDIAGRAM, mp);
 }
 
 
@@ -405,10 +408,6 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties()
 		UpdateWindow();
 		m_Brush->ReDrawAll();
 	}
-
-	NewClassAddDLG childDlg;
-	childDlg.DoModal();
-	childDlg.DestroyWindow();
 }
 
 

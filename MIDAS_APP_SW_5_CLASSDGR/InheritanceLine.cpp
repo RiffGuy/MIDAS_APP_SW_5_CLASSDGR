@@ -16,7 +16,6 @@ InheritanceLine::InheritanceLine(CPoint start, CPoint end) {
 	drawMode = START;
 	startPoint.SetPoint(start.x, start.y);
 	endPoint.SetPoint(end.x, end.y);
-	type = 'L';
 }
 void InheritanceLine::ReDraw(CDC* pDC) {
 	//printf("InheritanceLine Line ReDraw (%d,%d) , (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);

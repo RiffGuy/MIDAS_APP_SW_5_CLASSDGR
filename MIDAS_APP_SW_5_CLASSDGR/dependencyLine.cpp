@@ -13,7 +13,6 @@ dependencyLine::dependencyLine(CPoint centerPoint)
 dependencyLine::dependencyLine(CPoint start, CPoint end) {
 	startPoint.SetPoint(start.x, start.y);
 	endPoint.SetPoint(end.x, end.y);
-	type = 'L';
 }
 
 dependencyLine::~dependencyLine()
