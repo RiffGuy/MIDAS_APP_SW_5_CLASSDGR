@@ -178,10 +178,12 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 		UpdateWindow();
 		m_Brush->ReDrawAll();
 	}
-	m_Brush->Draw(point, nFlags, L_MOUSE_UP);
+	if(m_drawline == false)
+		m_Brush->Draw(point, nFlags, L_MOUSE_UP);
 
 	m_StartToMove = false;
 	m_MakeClass = false;
+
 
 }
 
@@ -198,17 +200,22 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	//다른 사각형으로 선을 긋는다.
 	if (m_drawline) {
-		m_drawline = false;
-		
-		CPoint start_point = m_CurSelectRect->getStartPoint();
-		CPoint end_point = m_CurSelectRect->getEndPoint();
-		CPoint center_point;
-		center_point.x = (start_point.x + end_point.x) / 2;
-		center_point.y = (start_point.y + end_point.y) / 2;
-		m_Brush->Draw(center_point, 1, L_MOUSE_UP);
+		if (m_CurSelectRect != NULL) {
+			CPoint start_point = m_CurSelectRect->getStartPoint();
+			CPoint end_point = m_CurSelectRect->getEndPoint();
+			CPoint center_point;
+			center_point.x = (start_point.x + end_point.x) / 2;
+			center_point.y = (start_point.y + end_point.y) / 2;
+			m_Brush->Draw(center_point, 1, L_MOUSE_UP);
+		}
+		else {
+			m_Brush->Draw(point, 1, L_MOUSE_UP);
+		}
+		printf("선그리기\n");
 		Invalidate();
 		UpdateWindow();
 		m_Brush->ReDrawAll();
+		m_drawline = false;
 	}
 
 	
