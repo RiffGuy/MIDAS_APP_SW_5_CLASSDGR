@@ -21,6 +21,12 @@ NewClassAddDLG::~NewClassAddDLG()
 {
 }
 
+BOOL NewClassAddDLG::OnInitDialog() {
+	CDialogEx::OnInitDialog();
+	printf("OninitDialog!\n");
+	initData();
+	return TRUE;
+}
 void NewClassAddDLG::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);

@@ -25,7 +25,6 @@ public:
 		if (status == NULL) {
 			status = new NewClassAddDLG();
 		}
-		status->initData();
 		status->DoModal();
 	}
 	virtual void saveData(CArchive& ar);
