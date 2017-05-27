@@ -35,7 +35,7 @@ public:
 	}
 
 	inline void setCDC(CDC* pDC) {
-		brushCDC = pDC;
+		if(pDC != NULL)brushCDC = pDC;
 		setCPenColor();
 		setCBrushColor();
 	}
@@ -70,7 +70,8 @@ public:
 
 	void saveData(CArchive& ar);
 
-	
+	void reConnectLinesForLoadData();
+	M_Polygon* findRect(CPoint point);
 };
 
 

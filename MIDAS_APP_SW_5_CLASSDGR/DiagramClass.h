@@ -16,10 +16,11 @@ public:
 	int END = 3;
 	NewClassAddDLG* status;
 	std::vector<CPoint*> lineList;
+	std::vector<CPoint*> conntList;
 	DiagramClass();
 	DiagramClass(CPoint start, CPoint end);
 	~DiagramClass();
-	virtual void addConnectedPoint(CPoint* p);
+	virtual void addConnectedPoint(CPoint* p, CPoint* q);
 	virtual void removeConnectedPoint();
 	virtual void reConnectedPoint();
 	inline virtual void printPoint() { printf("Diagram -> (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y); }
@@ -44,5 +45,6 @@ public:
 	void setStatus(NewClassAddDLG* s) { status = s; }
 
 	virtual void saveData(CArchive& ar);
+	CPoint* getCurPoint(CPoint* p, CPoint* q);
 };
 

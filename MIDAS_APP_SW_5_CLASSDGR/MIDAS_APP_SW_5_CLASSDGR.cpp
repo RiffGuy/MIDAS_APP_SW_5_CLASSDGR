@@ -48,6 +48,7 @@ CMIDAS_APP_SW_5_CLASSDGRApp::CMIDAS_APP_SW_5_CLASSDGRApp()
 
 	// TODO: 여기에 생성 코드를 추가합니다.
 	// InitInstance에 모든 중요한 초기화 작업을 배치합니다.
+	
 }
 
 // 유일한 CMIDAS_APP_SW_5_CLASSDGRApp 개체입니다.
@@ -71,7 +72,7 @@ BOOL CMIDAS_APP_SW_5_CLASSDGRApp::InitInstance()
 
 	CWinApp::InitInstance();
 
-
+	
 	// OLE 라이브러리를 초기화합니다.
 	if (!AfxOleInit())
 	{
@@ -99,7 +100,7 @@ BOOL CMIDAS_APP_SW_5_CLASSDGRApp::InitInstance()
 
 	// 응용 프로그램의 문서 템플릿을 등록합니다.  문서 템플릿은
 	//  문서, 프레임 창 및 뷰 사이의 연결 역할을 합니다.
-	CMultiDocTemplate* pDocTemplate;
+	// pDocTemplate;
 	pDocTemplate = new CMultiDocTemplate(IDR_MIDAS_APP_SW_5_TYPE,
 		RUNTIME_CLASS(CMIDAS_APP_SW_5_CLASSDGRDoc),
 		RUNTIME_CLASS(CChildFrame), // 사용자 지정 MDI 자식 프레임입니다.
@@ -139,7 +140,7 @@ int CMIDAS_APP_SW_5_CLASSDGRApp::ExitInstance()
 {
 	//TODO: 추가한 추가 리소스를 처리합니다.
 	AfxOleTerm(FALSE);
-
+	
 	return CWinApp::ExitInstance();
 }
 

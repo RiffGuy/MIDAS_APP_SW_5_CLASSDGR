@@ -39,14 +39,16 @@ BEGIN_MESSAGE_MAP(CMIDAS_APP_SW_5_CLASSDGRView, CView)
 	ON_COMMAND(ID_MENU_INHERITANCE, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuInheritance)
 	ON_COMMAND(ID_MENU_DELETE, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDelete)
 	ON_COMMAND(ID_MENU_DEPENDENCY, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDependency)
-//	ON_WM_SHOWWINDOW()
-ON_COMMAND(ID_EDIT_UNDO, &CMIDAS_APP_SW_5_CLASSDGRView::OnEditUndo)
+	ON_COMMAND(ID_MOVE_CLASS, &CMIDAS_APP_SW_5_CLASSDGRView::OnMoveClass)
+	ON_COMMAND(IDD_REDO_CLASS, &CMIDAS_APP_SW_5_CLASSDGRView::OnIddRedoClass)
+	ON_COMMAND(IDD_UNDO_CLASS, &CMIDAS_APP_SW_5_CLASSDGRView::OnIddUndoClass)
 END_MESSAGE_MAP()
 
 // CMIDAS_APP_SW_5_CLASSDGRView 생성/소멸
 
 CMIDAS_APP_SW_5_CLASSDGRView::CMIDAS_APP_SW_5_CLASSDGRView()
 {
+	
 	// TODO: 여기에 생성 코드를 추가합니다.
 	m_Brush = new Brushs();
 	m_Brush->setBrushWnd(this);
@@ -86,7 +88,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnDraw(CDC* /*pDC*/)
 
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 
-	
+	m_Brush->ReDrawAll();
 }
 
 
@@ -249,8 +251,14 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 				));
 
 				// 종료 지점과 연결된 사각형 객체는 이미 저장되어 있음.
-				tempClassRect->addConnectedPoint(&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->startPoint));
-				m_CurSelectRect->addConnectedPoint(&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->endPoint));
+				tempClassRect->addConnectedPoint(
+					&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->startPoint),
+					&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->endPoint)
+				);
+				m_CurSelectRect->addConnectedPoint(
+					&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->endPoint),
+					&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->startPoint)
+					);
 				Invalidate();
 				UpdateWindow();
 				m_Brush->ReDrawAll();
@@ -522,8 +530,20 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDelete()
 }
 
 
-void CMIDAS_APP_SW_5_CLASSDGRView::OnEditUndo()
+
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnMoveClass()
 {
-	// TODO: 여기에 명령 처리기 코드를 추가합니다.
-	OnUndo();
+	OnDrawRect();
+}
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnIddRedoClass()
+{
+}
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnIddUndoClass()
+{
 }

@@ -56,7 +56,7 @@ bool dependencyLine::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vect
 }
 
 
-void dependencyLine::addConnectedPoint(CPoint* p) {
+void dependencyLine::addConnectedPoint(CPoint* p, CPoint* q) {
 
 }
 
@@ -70,13 +70,15 @@ void dependencyLine::reConnectedPoint() {
 }
 
 void dependencyLine::saveData(CArchive& ar) {
-	printf("Save Line ! \n");
+	printf("Save dependencyLine ! \n");
 	if (ar.IsStoring()) {
 		// save
+		printf("save dependencyLine (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 		ar << startPoint << endPoint;
 	}
 	else {
 		// load
+		printf("load dependencyLine (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 		ar >> startPoint >> endPoint;
 	}
 }

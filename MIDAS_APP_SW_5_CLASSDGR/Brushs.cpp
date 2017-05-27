@@ -96,15 +96,17 @@ void Brushs::Undo() {
 void Brushs::setCPenColor() {
 	brushPen.DeleteObject();
 	brushPen.CreatePen(PS_SOLID, 1, RGB(0 , 0 , 0));
-
-	oldPen = brushCDC->SelectObject(&brushPen); // 이전에 선택되어 있던 펜 객체를 리턴한다.
+	//if (brushCDC != NULL) {
+		oldPen = brushCDC->SelectObject(&brushPen); // 이전에 선택되어 있던 펜 객체를 리턴한다.
+	//}
 }
 
 void Brushs::setPenMode(int MODE) {
 	brushPen.DeleteObject();
 	brushPen.CreatePen(MODE, 1, RGB(0, 0, 0));
-
-	oldPen = brushCDC->SelectObject(&brushPen);
+	//if (brushCDC != NULL) {
+		oldPen = brushCDC->SelectObject(&brushPen);
+	//}
 	printf("Penmode : %d\npsdot : %d\npssolid : %d", MODE, PS_DOT, PS_SOLID);
 }
 
@@ -113,7 +115,9 @@ void Brushs::setCBrushColor() {
 	brushBrush.DeleteObject();
 	//brushBrush.CreateStockObject(NULL_BRUSH); // 도형 속 색상이 투명색
 	brushBrush.CreateSolidBrush(RGB(255, 255, 153));
-	oldBrush = brushCDC->SelectObject(&brushBrush); // 이전에 선택되어 있던 브러시 객체를 리턴한다.
+	//if (brushCDC != NULL) {
+		oldBrush = brushCDC->SelectObject(&brushBrush); // 이전에 선택되어 있던 브러시 객체를 리턴한다.
+	//}
 }
 
 void Brushs::saveData(CArchive& ar) {
@@ -126,4 +130,52 @@ void Brushs::addPolygon(M_Polygon* newPoly) {
 }
 void Brushs::deletePolygon() {
 	polygonList.pop_back();
+}
+
+M_Polygon*  Brushs::findRect(CPoint point) {
+	for (int i = 0; i < polygonList.size(); i++) {
+		if (polygonList[i]->getType() == D_MODE_CLASSDIAGRAM) {
+			CPoint startPos = polygonList[i]->getStartPoint();
+			CPoint endPos = polygonList[i]->getEndPoint();
+			CPoint tmp;
+			if (startPos.x > endPos.x) {
+				tmp = endPos;
+				endPos.x = startPos.x;
+				startPos.x = tmp.x;
+			}
+			if (startPos.y > endPos.y) {
+				tmp = endPos;
+				endPos.y = startPos.y;
+				startPos.y = tmp.y;
+			}
+
+			CRect rect(startPos, endPos);
+
+			if (rect.PtInRect(point)) {
+				return polygonList[i];
+			}
+		}
+	}
+	return NULL;
+}
+
+
+void Brushs::reConnectLinesForLoadData() {
+	for (int i = 0; i < polygonList.size(); i++) {
+		if (polygonList[i]->getType() == D_MODE_LINE_DEPENDENCY ||
+			polygonList[i]->getType() == D_MODE_LINE_INHERITANCE) {
+
+			// Start Line
+			M_Polygon* tempRect = findRect(polygonList[i]->startPoint);
+			if (tempRect != NULL) {
+				tempRect->addConnectedPoint(&(polygonList[i]->startPoint), &(polygonList[i]->endPoint));
+			}
+			
+			// End Line
+			tempRect = findRect(polygonList[i]->endPoint);
+			if (tempRect != NULL)tempRect->addConnectedPoint(&(polygonList[i]->endPoint), &(polygonList[i]->startPoint));
+			
+		}
+
+	}
 }
