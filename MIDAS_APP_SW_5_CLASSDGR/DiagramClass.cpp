@@ -23,32 +23,13 @@ DiagramClass::DiagramClass(CPoint start, CPoint end) {
 
 
 void DiagramClass::ReDraw(CDC* pDC) {
-//start -> TopLeft, end -> BottomRight로 재설정 
-	CPoint newStartPos;
-	CPoint newEndPos;
-	if (endPoint.y < startPoint.y) {
-		newStartPos.y = endPoint.y;
-		newEndPos.y = startPoint.y;
-	}
-	else {
-		newStartPos.y = startPoint.y;
-		newEndPos.y = endPoint.y;
-	}
-	if (endPoint.x < startPoint.x) {
-		newStartPos.x = endPoint.x;
-		newEndPos.x = startPoint.x;
-	}
-	else {
-		newStartPos.x = startPoint.x;
-		newEndPos.x = endPoint.x;
-	}
 
 //line size (나중에 구해야함)
-	int linesize = 1;
+	int lineSize = 1;
 
 //status 최소 넓이 구하기
 	if (status != NULL) {
-		int curY = newStartPos.y;
+		int curY = startPoint.y;
 		int maxX = 0;
 //className
 		CString tmp = status->getClassName();
@@ -57,7 +38,7 @@ void DiagramClass::ReDraw(CDC* pDC) {
 		curY += textHeight * 2;
 		maxX = max(maxX, textWidth);
 //line
-		curY += linesize;
+		curY += lineSize*3;
 //attrbute
 		for (int i = 0; i < status->getAttrbuteSize(); i++) {
 			tmp = status->getAttrbute(i);
@@ -66,7 +47,7 @@ void DiagramClass::ReDraw(CDC* pDC) {
 			maxX = max(maxX, textWidth);
 		}
 //line
-		curY += linesize;
+		curY += lineSize*3;
 //opreation
 		for (int i = 0; i < status->getOperationSize(); i++) {
 			tmp = status->getOperation(i);
@@ -74,25 +55,22 @@ void DiagramClass::ReDraw(CDC* pDC) {
 			curY += textHeight;
 			maxX = max(maxX, textWidth);
 		}
-		curY += linesize;
+		curY += lineSize;
 //start, end point 재정의
 		if (endPoint.y < curY) {
-			newEndPos.y = curY;
+			endPoint.y = curY;
 		}
-		if (endPoint.x < newStartPos.x + maxX + linesize) {
-			newEndPos.x = newStartPos.x + maxX + linesize*2;
+		if (endPoint.x < startPoint.x + maxX + lineSize) {
+			endPoint.x = startPoint.x + maxX + lineSize*2;
 		}
-
-		startPoint = newStartPos;
-		endPoint = newEndPos;
 		
 	}
 	pDC->Rectangle(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 
 //status 표시
 	if (status != NULL) {
-		int curY = newStartPos.y;
-		int centerWidth = newStartPos.x + (newEndPos.x - newStartPos.x) / 2;
+		int curY = startPoint.y;
+		int centerWidth = startPoint.x + (endPoint.x - startPoint.x) / 2;
 //className 출력
 		CString tmp = status->getClassName();
 		pDC->SetBkColor(RGB(255, 255, 153));
@@ -101,26 +79,28 @@ void DiagramClass::ReDraw(CDC* pDC) {
 		pDC->TextOutW(centerWidth - textWidth / 2, curY + textHeight / 2, tmp);
 		curY += textHeight * 2;
 //line 그리기
-		pDC->MoveTo(CPoint(newStartPos.x, curY));
-		pDC->LineTo(CPoint(newEndPos.x, curY));
-		curY += linesize;
+		curY += lineSize;
+		pDC->MoveTo(CPoint(startPoint.x, curY));
+		pDC->LineTo(CPoint(endPoint.x, curY));
+		curY += lineSize;
 //attrbute 출력
 		for (int i = 0; i < status->getAttrbuteSize(); i++) {
 			tmp = status->getAttrbute(i);
-			pDC->TextOutW(newStartPos.x + linesize, curY, tmp);
+			pDC->TextOutW(startPoint.x + lineSize, curY, tmp);
 			textWidth = pDC->GetTextExtent(tmp).cx;
 			curY += textHeight;
 		}
 //line 그리기
-		pDC->MoveTo(CPoint(newStartPos.x, curY));
-		pDC->LineTo(CPoint(newEndPos.x, curY));
-		curY += linesize;
+		curY += lineSize;
+		pDC->MoveTo(CPoint(startPoint.x, curY));
+		pDC->LineTo(CPoint(endPoint.x, curY));
+		curY += lineSize;
 //opreation 출력
 		for (int i = 0; i < status->getOperationSize(); i++) {
 			tmp = status->getOperation(i);
-			pDC->TextOutW(newStartPos.x + linesize, curY, tmp);
+			pDC->TextOutW(startPoint.x + lineSize, curY, tmp);
 			textWidth = pDC->GetTextExtent(tmp).cx;
-			curY += linesize;
+			curY += lineSize;
 		}
 	}
 }
@@ -136,7 +116,6 @@ bool DiagramClass::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector
 	switch (dmode) {
 	case L_MOUSE_UP: {
 		drawMode = WAIT;
-
 		break;
 	}
 	case L_MOUSE_DOWN: {
@@ -147,7 +126,28 @@ bool DiagramClass::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector
 	case MOUSE_MOVE: {
 		if (drawMode == START || drawMode == MOVE) {
 			if ((drawMode == MOVE) && (saveList->size() != 0))saveList->pop_back();
-			saveList->push_back(new DiagramClass(startPoint, point));// save Polygon
+
+			//start -> TopLeft, end -> BottomRight로 재설정 
+			CPoint newStartPos;
+			CPoint newEndPos;
+			if (point.y < startPoint.y) {
+				newStartPos.y = point.y;
+				newEndPos.y = startPoint.y;
+			}
+			else {
+				newStartPos.y = startPoint.y;
+				newEndPos.y = point.y;
+			}
+			if (point.x < startPoint.x) {
+				newStartPos.x = point.x;
+				newEndPos.x = startPoint.x;
+			}
+			else {
+				newStartPos.x = startPoint.x;
+				newEndPos.x = point.x;
+			}
+
+			saveList->push_back(new DiagramClass(newStartPos, newEndPos));// save Polygon
 			drawMode = MOVE;
 			return true;
 		}

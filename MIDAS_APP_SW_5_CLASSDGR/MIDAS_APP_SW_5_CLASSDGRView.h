@@ -52,6 +52,7 @@ public:
 
 	M_Polygon* m_CurSelectRect;
 	M_Polygon* m_CurSelectRect_Temp;
+	int m_CurSelectRectAt;
 	bool m_StartToMove;
 	bool m_SelectObject;
 	bool m_MakeClass;
@@ -77,6 +78,8 @@ public:
 	afx_msg void OnMenuInheritance();
 	afx_msg void OnMenuDelete();
 	afx_msg void OnMenuDependency();
+//	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
+	afx_msg void OnEditUndo();
 };
 
 #ifndef _DEBUG  // MIDAS_APP_SW_5_CLASSDGRView.cpp의 디버그 버전

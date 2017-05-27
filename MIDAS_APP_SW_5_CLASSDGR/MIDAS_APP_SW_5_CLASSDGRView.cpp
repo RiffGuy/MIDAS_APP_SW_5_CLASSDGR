@@ -39,6 +39,8 @@ BEGIN_MESSAGE_MAP(CMIDAS_APP_SW_5_CLASSDGRView, CView)
 	ON_COMMAND(ID_MENU_INHERITANCE, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuInheritance)
 	ON_COMMAND(ID_MENU_DELETE, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDelete)
 	ON_COMMAND(ID_MENU_DEPENDENCY, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDependency)
+//	ON_WM_SHOWWINDOW()
+ON_COMMAND(ID_EDIT_UNDO, &CMIDAS_APP_SW_5_CLASSDGRView::OnEditUndo)
 END_MESSAGE_MAP()
 
 // CMIDAS_APP_SW_5_CLASSDGRView 생성/소멸
@@ -51,6 +53,7 @@ CMIDAS_APP_SW_5_CLASSDGRView::CMIDAS_APP_SW_5_CLASSDGRView()
 	theApp.viewBrushPtr = m_Brush;
 	m_StartToMove = false;
 	m_CurSelectRect = NULL;
+	m_CurSelectRectAt = -1;
 	m_CurSelectRect_Temp = NULL;
 	m_MakeClass = false;
 	m_drawline = false;
@@ -141,7 +144,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMouseMove(UINT nFlags, CPoint point)
 
 	if (m_Brush->getDrawMode() == D_MODE_CLASSDIAGRAM) {
 		//사각형 클릭시 움직이기
-		if (m_StartToMove) {
+		if ((m_MakeClass == false) && (m_StartToMove == true)) {
 			m_EndPos = point;
 			CPoint pos = m_EndPos - m_StartPos;
 			m_StartPos = point;
@@ -208,13 +211,12 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 	
 	// 사각형 클릭시 움직이기 준비
-	if (m_CurSelectRect != NULL) {
+	if ((m_MakeClass == false) && (m_CurSelectRect != NULL)) {
 		printf("선택된 사각형이 있습니다.\n");
 		m_StartPos = point;
 		m_StartToMove = true;
+		
 
-		Dummy* dummy = new Dummy(m_CurSelectRect);
-		m_Brush->polygonList.push_back(dummy);
 		// 상속 혹은 의존 직선의 경우 클래스에 닿지 않으면 소멸되도록 함.
 		// 해당 경우는 선이 사각형에 포함된 경우
 		if (m_Brush->getDrawMode() == D_MODE_LINE_INHERITANCE || m_Brush->getDrawMode() == D_MODE_LINE_DEPENDENCY) {
@@ -226,7 +228,6 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 
 				// 종료 지점과 연결된 사각형 객체는 이미 저장되어 있음.
 				tempClassRect->addConnectedPoint(&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->startPoint));
-
 				m_CurSelectRect->addConnectedPoint(&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->endPoint));
 				Invalidate();
 				UpdateWindow();
@@ -234,8 +235,9 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 			}
 			m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
 			OnDrawRect();
+
 		}
-		
+
 	}
 	else if (m_MakeClass){
 		//바탕화면 클릭시 그리기(나중에 수정할 부분)
@@ -280,6 +282,7 @@ M_Polygon* CMIDAS_APP_SW_5_CLASSDGRView::findrect(CPoint point) {
 			CRect rect(startPos, endPos);
 
 			if (rect.PtInRect(point)) {
+				m_CurSelectRectAt = i;
 				return m_Brush->polygonList[i];
 			}
 		}
@@ -464,7 +467,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDelete()
 {
 	// TODO: Add your command handler code here
 	if (m_CurSelectRect != NULL) {
-//DELETE Dummy 생성
+		//DELETE Dummy 생성
 		Dummy* dummy = new Dummy(m_CurSelectRect);
 		m_Brush->polygonList.push_back(dummy);
 		Invalidate();
@@ -474,4 +477,8 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDelete()
 }
 
 
-
+void CMIDAS_APP_SW_5_CLASSDGRView::OnEditUndo()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	OnUndo();
+}

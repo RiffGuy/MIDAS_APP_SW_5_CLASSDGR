@@ -3,12 +3,17 @@
 #include "DiagramClass.h"
 #include "Brushs.h"
 
+Dummy::Dummy() {
+	startPoint = CPoint(0, 0);
+	endPoint = CPoint(0, 0);
+}
 Dummy::Dummy(M_Polygon* poly)
 {
+
 	drawMode = WAIT;
-	deletePoly = poly;
-	poly = new M_Polygon();
-	resetPoly = poly;
+	ptrPoly = poly;
+	dataPoly = *poly;
+	*poly = *(new Dummy());
 
 	/*
 	startPoint = poly->getStartPoint();
@@ -25,7 +30,7 @@ Dummy::Dummy(M_Polygon* poly)
 
 Dummy::~Dummy()
 {
-	resetPoly = deletePoly;
+	ptrPoly = new M_Polygon(dataPoly);
 	/*
 	mpoly->setStartPoint(startPoint);
 	mpoly->setEndPoint(endPoint);
