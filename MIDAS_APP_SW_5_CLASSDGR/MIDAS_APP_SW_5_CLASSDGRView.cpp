@@ -134,7 +134,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMouseMove(UINT nFlags, CPoint point)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	//printf("mode : %d\n", m_Brush->getDrawMode());
 	CView::OnMouseMove(nFlags, point);
-	if (m_Brush->getDrawMode() == D_MODE_RECT) {
+	if (m_Brush->getDrawMode() == D_MODE_CLASSDIAGRAM) {
 		//사각형 클릭시 움직이기
 		if (m_StartToMove) {
 			m_EndPos = point;
@@ -171,7 +171,11 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 		m_EndPos = point;
 	}
 	if (m_MakeClass == true && m_Brush->polygonList.size() > 0) {
-		m_Brush->polygonList[m_Brush->polygonList.size() - 1]->setClassContents();
+		m_Brush->polygonList[m_Brush->polygonList.size() - 1]->setContents();
+		if (((DiagramClass *)m_Brush->polygonList[m_Brush->polygonList.size() - 1])->isClassContentsEmpty()) {
+			m_Brush->polygonList.pop_back();
+		}
+
 		Invalidate();
 		UpdateWindow();
 		m_Brush->ReDrawAll();
@@ -180,6 +184,17 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 
 	m_StartToMove = false;
 	m_MakeClass = false;
+
+	/*if (m_Brush->getDrawMode() == D_MODE_LINE_INHERITANCE || m_Brush->getDrawMode() == D_MODE_LINE_DEPENDENCY) {
+		
+		if (m_CurSelectRect == NULL) {
+			m_Brush->polygonList.pop_back();
+			Invalidate();
+			UpdateWindow();
+			m_Brush->ReDrawAll();
+			OnDrawNone();
+		}
+	}*/
 
 }
 
@@ -194,18 +209,35 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 		m_CurSelectRect = findrect(point);
 	}
 	
-	//사각형 클릭시 움직이기 준비
+	// 사각형 클릭시 움직이기 준비
 	if (m_CurSelectRect != NULL) {
 		printf("선택된 사각형이 있습니다.\n");
 		m_StartPos = point;
 		m_StartToMove = true;
-	}else{
-	//바탕화면 클릭시 그리기(나중에 수정할 부분)
+		
+		// 상속 혹은 의존 직선의 경우 클래스에 닿지 않으면 소멸되도록 함.
+		if (m_Brush->getDrawMode() == D_MODE_LINE_INHERITANCE || m_Brush->getDrawMode() == D_MODE_LINE_DEPENDENCY) {
+			m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
+			OnDrawRect();
+		}
+		
+	}
+	else if (m_MakeClass){
+		//바탕화면 클릭시 그리기(나중에 수정할 부분)
 		printf("선택된 사각형이 없습니다.\n");
-		m_CurSelectRect = NULL;
-		m_MakeClass = true;
 		OnDrawRect();
+		m_CurSelectRect = NULL;
 		m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
+		
+	}
+	else { // 상속 선 혹은 의존 선 -> 클래스에 선택되지 않은 경우
+		if (m_Brush->getDrawMode() == D_MODE_LINE_INHERITANCE || m_Brush->getDrawMode() == D_MODE_LINE_DEPENDENCY) {
+			m_Brush->polygonList.pop_back();
+			Invalidate();
+			UpdateWindow();
+			m_Brush->ReDrawAll();
+			OnDrawNone();
+		}
 	}
 
 }
@@ -214,7 +246,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 M_Polygon* CMIDAS_APP_SW_5_CLASSDGRView::findrect(CPoint point) {
 	
 	for (int i = 0; i < m_Brush->polygonList.size(); i++) {
-		if (m_Brush->polygonList[i]->getPolygonType() == 'C') {
+		if (m_Brush->polygonList[i]->getType() == D_MODE_CLASSDIAGRAM) {
 			CPoint startPos = m_Brush->polygonList[i]->getStartPoint();
 			CPoint endPos = m_Brush->polygonList[i]->getEndPoint();
 			CPoint tmp;
@@ -266,7 +298,12 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnRButtonDown(UINT nFlags, CPoint point)
 툴바 도형 버튼 이벤트 처리기
 */
 
-
+void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawNone()
+{
+	M_Polygon* c = new M_Polygon();
+	M_Polygon* mp = c;
+	m_Brush->setDrawMode(D_MODE_NONE, mp);
+}
 void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawLine()
 {
 	
@@ -295,7 +332,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawRect()
 	printf("OnDrawRect!\n");
 	DiagramClass* c = new DiagramClass();
 	M_Polygon* mp = c;
-	m_Brush->setDrawMode(D_MODE_RECT, mp);
+	m_Brush->setDrawMode(D_MODE_CLASSDIAGRAM, mp);
 }
 
 
@@ -336,6 +373,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnUndo()
 
 void CMIDAS_APP_SW_5_CLASSDGRView::OnAddClass()
 {
+	m_MakeClass = true;
 	OnDrawRect();
 }
 
@@ -347,7 +385,10 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnAddNewClassOnMenu()
 	OnDrawRect();
 	m_Brush->addPolygon(new DiagramClass(CPoint(0,0),CPoint(100,100)));
 	dc = (DiagramClass *)m_Brush->getResentPolygon();
-	dc->setClassContents();
+	dc->setContents();
+	if (dc->isClassContentsEmpty()) {
+		m_Brush->deletePolygon();
+	}
 	Invalidate();
 	UpdateWindow();
 	m_Brush->ReDrawAll();
@@ -362,15 +403,11 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties()
 	// TODO: Add your command handler code here
 	
 	if (m_CurSelectRect != NULL) {
-		m_CurSelectRect->setClassContents();
+		m_CurSelectRect->setContents();
 		Invalidate();
 		UpdateWindow();
 		m_Brush->ReDrawAll();
 	}
-
-	NewClassAddDLG childDlg;
-	childDlg.DoModal();
-	childDlg.DestroyWindow();
 }
 
 

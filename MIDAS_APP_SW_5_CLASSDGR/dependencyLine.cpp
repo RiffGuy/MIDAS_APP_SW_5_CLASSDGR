@@ -13,7 +13,6 @@ dependencyLine::dependencyLine(CPoint centerPoint)
 dependencyLine::dependencyLine(CPoint start, CPoint end) {
 	startPoint.SetPoint(start.x, start.y);
 	endPoint.SetPoint(end.x, end.y);
-	type = 'L';
 }
 
 dependencyLine::~dependencyLine()
@@ -30,7 +29,7 @@ bool dependencyLine::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vect
 	//printf("DRAW - Line\n");
 	switch (dmode) {
 	case L_MOUSE_UP: {
-
+		
 		break;
 	}
 	case L_MOUSE_DOWN: {

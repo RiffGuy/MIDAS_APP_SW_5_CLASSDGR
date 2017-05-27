@@ -13,6 +13,7 @@ public:
 	int MOVE = 2;
 	int END = 3;
 	NewClassAddDLG* status;
+	
 	DiagramClass();
 	DiagramClass(CPoint start, CPoint end);
 	~DiagramClass();
@@ -20,13 +21,26 @@ public:
 	virtual bool Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector<M_Polygon*>* saveList);
 	virtual void Draw(CPoint startPoint, CPoint endPoint, CDC* pDC);
 	virtual void ReDraw(CDC* pDC);
-	inline virtual int getType() { return D_MODE_RECT; }
-	inline virtual void setClassContents() {
+	inline virtual int getType() { return D_MODE_CLASSDIAGRAM; }
+	inline virtual void setContents() {
 		if (status == NULL) {
 			status = new NewClassAddDLG();
 		}
 		status->DoModal();
 	}
+
+
+	bool isClassContentsEmpty() {
+
+		if (status->isEmpty()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+
+	}
+
 	virtual void saveData(CArchive& ar);
 };
 
