@@ -232,6 +232,7 @@ CPoint* DiagramClass::getCurPoint(CPoint* p, CPoint* q) {
 	else if (defX >= 0 && defY < 0) {
 		// 4 »çºÐ¸é
 		defY = defY*(-1);
+		
 		if (defX > defY) {
 			p->x = p->x - dx;
 		}
