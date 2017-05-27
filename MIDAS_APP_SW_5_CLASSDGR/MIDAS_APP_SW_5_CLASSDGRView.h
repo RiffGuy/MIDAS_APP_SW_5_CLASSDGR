@@ -3,8 +3,9 @@
 //
 
 #pragma once
-
-
+#include "Brushs.h"
+#include "Line.h"
+#include "mRectangle.h"
 class CMIDAS_APP_SW_5_CLASSDGRView : public CView
 {
 protected: // serialization에서만 만들어집니다.
@@ -17,11 +18,7 @@ public:
 
 // 작업입니다.
 public:
-	CPoint m_StartPos, m_EndPos;
-	CRect m_rect;
-	
-	bool m_StartToMove;
-	bool m_rectSelect;
+
 // 재정의입니다.
 public:
 	virtual void OnDraw(CDC* pDC);  // 이 뷰를 그리기 위해 재정의되었습니다.
@@ -45,10 +42,18 @@ protected:
 protected:
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-	afx_msg void OnPaint();
+	//Brush
+	Brushs* m_Brush;
+
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnDrawRect();
+	afx_msg void OnDrawLine();
+	afx_msg void OnEraseAll();
+	afx_msg void OnEraser();
+	afx_msg void OnRedo();
+	afx_msg void OnUndo();
 };
 
 #ifndef _DEBUG  // MIDAS_APP_SW_5_CLASSDGRView.cpp의 디버그 버전

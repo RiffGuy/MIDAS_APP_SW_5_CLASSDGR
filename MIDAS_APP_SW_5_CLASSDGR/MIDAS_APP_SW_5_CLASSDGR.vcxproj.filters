@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="헤더 파일\Drawing_Tools">
+      <UniqueIdentifier>{be1b15d4-63bb-425c-84f5-fb741d71f155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Drawing_Tools">
+      <UniqueIdentifier>{970808de-0c2d-4044-a9ec-4858569ea090}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -42,6 +48,18 @@
     <ClInclude Include="Resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Brushs.h">
+      <Filter>헤더 파일\Drawing_Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>헤더 파일\Drawing_Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="M_Polygon.h">
+      <Filter>헤더 파일\Drawing_Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="mRectangle.h">
+      <Filter>헤더 파일\Drawing_Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MIDAS_APP_SW_5_CLASSDGR.cpp">
@@ -62,6 +80,18 @@
     <ClCompile Include="MIDAS_APP_SW_5_CLASSDGRView.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Brushs.cpp">
+      <Filter>소스 파일\Drawing_Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>소스 파일\Drawing_Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="M_Polygon.cpp">
+      <Filter>소스 파일\Drawing_Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="mRectangle.cpp">
+      <Filter>소스 파일\Drawing_Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MIDAS_APP_SW_5_CLASSDGR.rc">
@@ -81,6 +111,9 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="res\Toolbar.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="res\toolbar1.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

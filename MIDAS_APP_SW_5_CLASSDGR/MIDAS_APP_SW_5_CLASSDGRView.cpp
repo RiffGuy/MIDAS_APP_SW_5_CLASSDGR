@@ -26,10 +26,9 @@ BEGIN_MESSAGE_MAP(CMIDAS_APP_SW_5_CLASSDGRView, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
-	ON_WM_LBUTTONDOWN()
-	ON_WM_PAINT()
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONUP()
+	ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 // CMIDAS_APP_SW_5_CLASSDGRView 생성/소멸
@@ -37,11 +36,8 @@ END_MESSAGE_MAP()
 CMIDAS_APP_SW_5_CLASSDGRView::CMIDAS_APP_SW_5_CLASSDGRView()
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
-
-	m_rect.SetRect(10, 10, 110, 110);
-	m_StartToMove = false;
-	m_rectSelect = false;
-
+	m_Brush = new Brushs();
+	m_Brush->setBrushWnd(this);
 }
 
 CMIDAS_APP_SW_5_CLASSDGRView::~CMIDAS_APP_SW_5_CLASSDGRView()
@@ -60,12 +56,18 @@ BOOL CMIDAS_APP_SW_5_CLASSDGRView::PreCreateWindow(CREATESTRUCT& cs)
 
 void CMIDAS_APP_SW_5_CLASSDGRView::OnDraw(CDC* /*pDC*/)
 {
+
+	CDC* pDC2 = GetDC(); // Brush 측으로 넘기는 CDC객체는 새로 얻어와야 한다.(해당 함수 매개변수 CDC는 소멸됨)
+	m_Brush->setCDC(pDC2);
+
 	CMIDAS_APP_SW_5_CLASSDGRDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
 
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
+
+	
 }
 
 
@@ -102,7 +104,8 @@ void CMIDAS_APP_SW_5_CLASSDGRView::Dump(CDumpContext& dc) const
 }
 
 CMIDAS_APP_SW_5_CLASSDGRDoc* CMIDAS_APP_SW_5_CLASSDGRView::GetDocument() const // 디버그되지 않은 버전은 인라인으로 지정됩니다.
-{
+{	
+
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CMIDAS_APP_SW_5_CLASSDGRDoc)));
 	return (CMIDAS_APP_SW_5_CLASSDGRDoc*)m_pDocument;
 }
@@ -112,50 +115,17 @@ CMIDAS_APP_SW_5_CLASSDGRDoc* CMIDAS_APP_SW_5_CLASSDGRView::GetDocument() const /
 // CMIDAS_APP_SW_5_CLASSDGRView 메시지 처리기
 
 
-void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
-{
-	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	
-	// 클릭시 사각형 생성 버튼이 클릭되어 있는 경우
-
-	// 클릭시 사각형이 범위안에 있는 경우 -> 사각형을 선택한다 (8방위에 네모 클릭 생성)
-	if (m_rect.PtInRect(point)) {
-		m_StartPos = point;
-		m_StartToMove = true;
-	}
-	// 클릭시 사각형이 없는 경우
-
-	SetCapture();
-
-	CView::OnLButtonDown(nFlags, point);
-}
-
-
-void CMIDAS_APP_SW_5_CLASSDGRView::OnPaint()
-{
-	CPaintDC dc(this); // device context for painting
-					   // TODO: 여기에 메시지 처리기 코드를 추가합니다.
-					   // 그리기 메시지에 대해서는 CView::OnPaint()을(를) 호출하지 마십시오.
-
-	dc.Rectangle(m_rect);
-}
-
-
 void CMIDAS_APP_SW_5_CLASSDGRView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-
-	if (m_StartToMove) {
-		m_EndPos = point;
-
-		CPoint pos = m_EndPos - m_StartPos;
-
-		m_StartPos = point;
-
-		m_rect.SetRect(m_rect.TopLeft() + pos, m_rect.BottomRight() + pos);
-		Invalidate();
-	}
+	
 	CView::OnMouseMove(nFlags, point);
+	
+	if (m_Brush->Draw(point, nFlags, MOUSE_MOVE)) {
+		Invalidate();
+		UpdateWindow();
+		m_Brush->ReDrawAll();
+	}
 }
 
 
@@ -163,18 +133,71 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 
-	if (m_StartToMove == true) {
-		m_EndPos = point;
-		m_rectSelect = true;
-		
-		CRect point;
-		CPaintDC dc(&m_rect);
-		dc.Rectangle(m_rect);
-
-		Invalidate();
-	}
-
-	ReleaseCapture();
-	m_StartToMove = false;
 	CView::OnLButtonUp(nFlags, point);
+
+	m_Brush->Draw(point, nFlags, L_MOUSE_UP);
+}
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	OnDrawLine();
+	CView::OnLButtonDown(nFlags, point);
+
+	m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
+}
+/*
+툴바 도형 버튼 이벤트 처리기
+*/
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawLine()
+{
+	Line* c = new Line();
+	M_Polygon* mp = c;
+	m_Brush->setDrawMode(D_MODE_LINE, mp);
+}
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawRect()
+{
+	mRectangle* c = new mRectangle();
+	M_Polygon* mp = c;
+	m_Brush->setDrawMode(D_MODE_RECT, mp);
+}
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnEraseAll()
+{
+	// Erase All Screen
+	while (m_Brush->polygonList.size() != 0)m_Brush->polygonList.pop_back();
+	Invalidate();
+}
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnEraser()
+{
+	// Eraser mode
+
+}
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnRedo()
+{
+	m_Brush->Redo();
+	//eraseInvalidate();
+	Invalidate();
+	UpdateWindow();
+	m_Brush->ReDrawAll();
+}
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnUndo()
+{
+	m_Brush->Undo();
+	//eraseInvalidate();
+	Invalidate();
+	UpdateWindow();
+	m_Brush->ReDrawAll();
 }
