@@ -18,6 +18,7 @@ public:
 	virtual void Draw(CPoint startPoint, CPoint endPoint, CDC* pDC);
 	virtual void ReDraw(CDC* pDC);
 	inline virtual int getType() { return D_MODE_LINE; }
+	virtual void saveData(CArchive& ar);
 };
 #endif // !LINE_H
 

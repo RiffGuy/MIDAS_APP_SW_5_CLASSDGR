@@ -6,6 +6,7 @@
 DiagramClass::DiagramClass()
 {
 	drawMode = WAIT;
+	status = new NewClassAddDLG;
 }
 
 
@@ -18,7 +19,6 @@ DiagramClass::DiagramClass(CPoint start, CPoint end) {
 	startPoint.SetPoint(start.x, start.y);
 	endPoint.SetPoint(end.x, end.y);
 	type = 'C';
-	str = "hello";
 	status = NULL;
 }
 
@@ -69,22 +69,7 @@ void DiagramClass::ReDraw(CDC* pDC) {
 }
 
 void DiagramClass::Draw(CPoint startPoint, CPoint endPoint, CDC* pDC) {
-
-	if (startPoint == endPoint) { return; }
-
 	pDC->Rectangle(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-	//string text Ãâ·Â
-	CPoint newStartPos;
-	CPoint newEndPos;
-	if (endPoint.y < startPoint.y) {
-		newStartPos = endPoint;
-		newEndPos = startPoint;
-	}else { newStartPos = startPoint;
-			newEndPos = endPoint;
-	}
-	int centerWidth = newStartPos.x + (newEndPos.x - newStartPos.x) / 2;
-	int textWidth = pDC->GetTextExtent(str).cx;
-	pDC->TextOutW(centerWidth - textWidth / 2, newStartPos.y, str);
 
 
 }
@@ -114,4 +99,16 @@ bool DiagramClass::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector
 	}
 
 	return false;
+}
+void DiagramClass::saveData(CArchive& ar) {
+	
+	if (ar.IsStoring()) {
+		// save
+		ar << startPoint << endPoint;
+	}
+	else {
+		// load
+		ar >> startPoint >> endPoint;
+	}
+	status->saveData(ar);
 }

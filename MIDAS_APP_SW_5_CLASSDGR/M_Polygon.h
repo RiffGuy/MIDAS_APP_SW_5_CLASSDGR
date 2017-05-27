@@ -14,7 +14,7 @@ protected:
 public:
 	M_Polygon();
 	~M_Polygon();
-	inline void printPoint() { printf("-> (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y); }
+	inline virtual void printPoint() { printf("-> (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y); }
 	inline void setCDC(CDC* _pDC) { pDC = _pDC; }
 	virtual bool Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector<M_Polygon*>* saveList);
 	virtual void Draw(CPoint startPoint, CPoint endPoint, CDC* pDC);
@@ -27,6 +27,7 @@ public:
 	inline void setStartPoint(CPoint point) { startPoint = point; }
 	inline void setEndPoint(CPoint point) { endPoint = point; }
 	inline virtual void setClassContents() {}
+	virtual void saveData(CArchive& ar);
 };
 #endif // !M_POLYGON_H
 

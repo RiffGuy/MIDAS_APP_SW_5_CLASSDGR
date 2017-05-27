@@ -21,6 +21,12 @@ NewClassAddDLG::~NewClassAddDLG()
 {
 }
 
+BOOL NewClassAddDLG::OnInitDialog() {
+	CDialogEx::OnInitDialog();
+	printf("OninitDialog!\n");
+	initData();
+	return TRUE;
+}
 void NewClassAddDLG::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
@@ -74,7 +80,7 @@ void NewClassAddDLG::OnBnClickedAddNewClassAttbOk()
 	m_AddNewAttbName.GetWindowTextW(attbName);
 	m_AddNewAttbType.GetWindowTextW(attbType);
 	
-	CString attb = attbRange + " " + attbType + " " + attbName;
+	CString attb = attbName + _T(" : ") + attbRange + " " + attbType + " " + attbName;
 	
 	// add to List
 	m_AddNewAttbList.AddString(attb);
@@ -131,12 +137,13 @@ void NewClassAddDLG::OnBnClickedAddNewClassOpOk()
 	m_AddNewOpName.GetWindowTextW(opName);
 	m_OperationRangeComboBox.GetLBText(m_OperationRangeComboBox.GetCurSel(), opRange);
 
-	CString operation = opRange + " " + opType + " " + opName + "(";
+	CString operation = opName + "(";
 	for (int i = 0; i < prmtList.size(); i++) {
 		operation += prmtList[i];
 		if (i + 1 != prmtList.size())operation += ",";
 	}
-	operation += ")";
+	operation += ") : ";
+	operation += opRange + " " + opType;
 
 	m_AddNewOpList.AddString(operation);
 	operationList.push_back(operation);
@@ -169,4 +176,81 @@ void NewClassAddDLG::OnBnClickedAddNewClassOk()
 {
 	AddNewClass_classNameEdit.GetWindowTextW(className);
 	CDialogEx::OnOK();
+}
+
+void NewClassAddDLG::saveData(CArchive& ar) {
+	printf("save Dialog !\n");
+	if (ar.IsStoring()) {
+		// save
+		int attbSize = attbList.size();
+		int prmtSize = prmtList.size();
+		int operationSize = operationList.size();
+		
+		ar << attbSize;
+		for (int i = 0; i < attbSize; i++) {
+			ar << attbList[i];
+		}
+
+		ar << prmtSize;
+		for (int i = 0; i < prmtSize; i++) {
+			ar << prmtSize;
+		}
+
+		ar << operationSize;
+		for (int i = 0; i < operationSize; i++) {
+			ar << operationList[i];
+		}
+
+		ar << className;
+
+	}
+	else {
+		// load
+
+		int attbSize = 0;
+		int prmtSize =0;
+		int operationSize = 0;
+		ar >> attbSize;
+		for (int i = 0; i < attbSize; i++) {
+			CString attb;
+			ar >> attb;
+			attbList.push_back(attb);
+		}
+
+		ar >> prmtSize;
+		for (int i = 0; i < prmtSize; i++) {
+			CString prmt;
+			ar >> prmt;
+			prmtList.push_back(prmt);
+		}
+
+		ar >> operationSize;
+		for (int i = 0; i < operationSize; i++) {
+			CString operation;
+			ar >> operation;
+			operationList.push_back(operation);
+		}
+
+		ar >> className;
+	}
+}
+
+void NewClassAddDLG::initData() {
+	int attbSize = attbList.size();
+	int prmtSize = prmtList.size();
+	int operationSize = operationList.size();
+	printf("Size %d %d %d\n", attbSize, prmtSize, operationSize);
+	for (int i = 0; i < attbSize; i++) {
+		m_AddNewAttbList.AddString( attbList[i]);
+	}
+
+	
+	for (int i = 0; i < prmtSize; i++) {
+		m_AddNewPrmtList.AddString(prmtList[i]);
+	}
+
+	
+	for (int i = 0; i < operationSize; i++) {
+		m_AddNewOpList.AddString(operationList[i]);
+	}
 }

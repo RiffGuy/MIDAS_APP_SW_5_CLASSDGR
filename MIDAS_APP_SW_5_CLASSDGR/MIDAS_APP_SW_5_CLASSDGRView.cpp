@@ -143,7 +143,6 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMouseMove(UINT nFlags, CPoint point)
 		m_CurSelectRect->setStartPoint(m_CurSelectRect->getStartPoint() + pos);
 		m_CurSelectRect->setEndPoint(m_CurSelectRect->getEndPoint() + pos);
 
-		m_Brush->Draw(point, nFlags, L_MOUSE_UP);
 		Invalidate();
 		UpdateWindow();
 		m_Brush->ReDrawAll();
@@ -175,6 +174,9 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	if (m_MakeClass == true && m_Brush->polygonList.size() > 0) {
 		m_Brush->polygonList[m_Brush->polygonList.size() - 1]->setClassContents();
+		Invalidate();
+		UpdateWindow();
+		m_Brush->ReDrawAll();
 	}
 	m_Brush->Draw(point, nFlags, L_MOUSE_UP);
 
@@ -317,13 +319,16 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnAddClass()
 // 메뉴에서 편집 > 새 클래스 추가 버튼 클릭시 발생 이벤트 함수
 void CMIDAS_APP_SW_5_CLASSDGRView::OnAddNewClassOnMenu()
 {
-	NewClassAddDLG dlg = new NewClassAddDLG();
-	dlg.DoModal();
-
+	DiagramClass* dc;
 	OnDrawRect();
-	m_Brush->Draw(CPoint(0, 0), NULL, L_MOUSE_DOWN);
-	m_Brush->Draw(CPoint(100,100), NULL, L_MOUSE_UP);
-
+	m_Brush->addPolygon(new DiagramClass(CPoint(0,0),CPoint(100,100)));
+	dc = (DiagramClass *)m_Brush->getResentPolygon();
+	dc->setClassContents();
+	Invalidate();
+	UpdateWindow();
+	m_Brush->ReDrawAll();
+	
+	
 }
 
 
@@ -356,6 +361,9 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties()
 	
 	if (m_CurSelectRect != NULL) {
 		m_CurSelectRect->setClassContents();
+		Invalidate();
+		UpdateWindow();
+		m_Brush->ReDrawAll();
 	}
 
 	NewClassAddDLG childDlg;

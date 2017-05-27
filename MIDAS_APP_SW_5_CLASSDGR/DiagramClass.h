@@ -1,6 +1,7 @@
 #pragma once
 #include "M_Polygon.h"
 #include "NewClassAddDLG.h"
+#include <iostream>
 class DiagramClass :
 	public M_Polygon
 {
@@ -11,11 +12,11 @@ public:
 	int START = 1;
 	int MOVE = 2;
 	int END = 3;
-	CString str;
 	NewClassAddDLG* status;
 	DiagramClass();
 	DiagramClass(CPoint start, CPoint end);
 	~DiagramClass();
+	inline virtual void printPoint() { printf("Diagram -> (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y); }
 	virtual bool Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector<M_Polygon*>* saveList);
 	virtual void Draw(CPoint startPoint, CPoint endPoint, CDC* pDC);
 	virtual void ReDraw(CDC* pDC);
@@ -25,8 +26,7 @@ public:
 			status = new NewClassAddDLG();
 		}
 		status->DoModal();
-
 	}
-
+	virtual void saveData(CArchive& ar);
 };
 

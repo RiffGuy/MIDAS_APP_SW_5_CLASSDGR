@@ -40,13 +40,13 @@ void Brushs::Draw(CPoint startPoint, CPoint endPoint) {
 void Brushs::setDrawMode(int MODE, M_Polygon *dPoly) {
 	DrawMode = MODE;
 	mpoly = dPoly;
-	printf("DRAW MODE : %d\n", MODE);
-	printf("+ polygonList Size : %d\n", polygonList.size());
+	//intf("DRAW MODE : %d\n", MODE);
+	//intf("+ polygonList Size : %d\n", polygonList.size());
 }
 
 void Brushs::ReDrawAll() {
 	if (brushCDC == NULL)return;
-	printf("Brushs RedrawAll & PolygonList Size : %d\n", polygonList.size());
+	//intf("Brushs RedrawAll & PolygonList Size : %d\n", polygonList.size());
 	for (int i = 0; i < polygonList.size(); i++) {
 		//printf("redrawing.. %d\n", i+1);
 		//polygonList[i]->printPoint();
@@ -78,14 +78,23 @@ void Brushs::Undo() {
 
 void Brushs::setCPenColor() {
 	brushPen.DeleteObject();
-	brushPen.CreatePen(PS_DOT, 3, RGB(255, 0, 0));
+	brushPen.CreatePen(PS_SOLID, 1, RGB(0 , 0 , 0));
 
 	oldPen = brushCDC->SelectObject(&brushPen); // 이전에 선택되어 있던 펜 객체를 리턴한다.
 }
 
 void Brushs::setCBrushColor() {
 	brushBrush.DeleteObject();
-	brushBrush.CreateStockObject(NULL_BRUSH);
+	//brushBrush.CreateStockObject(NULL_BRUSH); // 도형 속 색상이 투명색
+	brushBrush.CreateSolidBrush(RGB(255, 255, 153));
 	oldBrush = brushCDC->SelectObject(&brushBrush); // 이전에 선택되어 있던 브러시 객체를 리턴한다.
 }
 
+void Brushs::saveData(CArchive& ar) {
+	for (int i = 0; i < polygonList.size(); i++) {
+		polygonList[i]->saveData(ar);
+	}
+}
+void Brushs::addPolygon(M_Polygon* newPoly) {
+	polygonList.push_back(newPoly);
+}

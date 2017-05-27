@@ -56,7 +56,15 @@ public:
 
 	void setCPenColor();
 	void setCBrushColor();
+	void addPolygon(M_Polygon* newPoly);
+	M_Polygon* getResentPolygon() {
+		if (polygonList.size() > 0) {
+			return polygonList[polygonList.size() - 1];
+		}
+		return NULL;
+	};
 
+	void saveData(CArchive& ar);
 };
 
 

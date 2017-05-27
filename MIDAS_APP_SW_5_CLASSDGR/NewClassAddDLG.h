@@ -11,7 +11,7 @@ class NewClassAddDLG : public CDialogEx
 public:
 	NewClassAddDLG(CWnd* pParent = NULL);   // 표준 생성자입니다.
 	virtual ~NewClassAddDLG();
-
+	BOOL virtual OnInitDialog();
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_ADD_CLASS_DLG };
@@ -31,9 +31,10 @@ public:
 	int getAttrbuteSize() { return attbList.size(); }
 	CString getOperation(int i) { return operationList[i]; }
 	int getOperationSize() { return operationList.size(); }
+	void saveData(CArchive& ar);
 	// 클래스 이름을 입력 받는 EditBox 객체
 	CEdit AddNewClass_classNameEdit;
-	
+	void initData();
 
 	/************************ 속성 ************************/
 
