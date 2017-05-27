@@ -193,24 +193,26 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 M_Polygon* CMIDAS_APP_SW_5_CLASSDGRView::findrect(CPoint point) {
 	
 	for (int i = 0; i < m_Brush->polygonList.size(); i++) {
-		CPoint startPos = m_Brush->polygonList[i]->getStartPoint();
-		CPoint endPos = m_Brush->polygonList[i]->getEndPoint();
-		CPoint tmp;
-		if (startPos.x > endPos.x) {
-			tmp = endPos;
-			endPos.x = startPos.x;
-			startPos.x = tmp.x;
-		}
-		if (startPos.y > endPos.y) {
-			tmp = endPos;
-			endPos.y = startPos.y;
-			startPos.y = tmp.y;
-		}
-		
-		CRect rect(startPos, endPos);
+		if (m_Brush->polygonList[i]->getPolygonType() == 'R') {
+			CPoint startPos = m_Brush->polygonList[i]->getStartPoint();
+			CPoint endPos = m_Brush->polygonList[i]->getEndPoint();
+			CPoint tmp;
+			if (startPos.x > endPos.x) {
+				tmp = endPos;
+				endPos.x = startPos.x;
+				startPos.x = tmp.x;
+			}
+			if (startPos.y > endPos.y) {
+				tmp = endPos;
+				endPos.y = startPos.y;
+				startPos.y = tmp.y;
+			}
 
-		if (rect.PtInRect(point)) {
-			return m_Brush->polygonList[i];
+			CRect rect(startPos, endPos);
+
+			if (rect.PtInRect(point)) {
+				return m_Brush->polygonList[i];
+			}
 		}
 	}
 	return NULL;
