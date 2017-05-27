@@ -64,14 +64,26 @@ void CMIDAS_APP_SW_5_CLASSDGRDoc::Serialize(CArchive& ar)
 	if (ar.IsStoring())
 	{
 		// TODO: 여기에 저장 코드를 추가합니다.
-		int listSize = brush->polygonList.size();
-		ar << listSize; // 폴리곤 리스트 개수를 저장
-		for (int i = 0; i < listSize; i++) {
-			ar << brush->polygonList[i]->getType();
+		int listSize =0;
+
+		for (int i = 0; i < brush->polygonList.size(); i++) {
+			if (brush->polygonList[i]->isVisual) {
+				listSize++;
+			}
 		}
 
-		for (int i = 0; i < listSize; i++) {
+		ar << listSize; // 폴리곤 리스트 개수를 저장
+
+		for (int i = 0; i <  brush->polygonList.size(); i++) {
+			if (brush->polygonList[i]->isVisual) {
+			ar << brush->polygonList[i]->getType();
+			}
+		}
+
+		for (int i = 0; i <  brush->polygonList.size(); i++) {
+			if (brush->polygonList[i]->isVisual) {
 			brush->polygonList[i]->saveData(ar);
+			}
 		}
 	}
 	else
