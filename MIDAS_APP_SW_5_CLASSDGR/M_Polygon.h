@@ -23,7 +23,6 @@ public:
 	inline CPoint getStartPoint() { return startPoint; }
 	inline CPoint getEndPoint() { return endPoint; }
 	inline char getPolygonType() { return type; }
-
 	inline void setStartPoint(CPoint point) { startPoint = point; }
 	inline void setEndPoint(CPoint point) { endPoint = point; }
 	inline virtual void setClassContents() {}

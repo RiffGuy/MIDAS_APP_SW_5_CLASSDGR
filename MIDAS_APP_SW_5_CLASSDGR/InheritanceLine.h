@@ -4,7 +4,10 @@ class InheritanceLine : public Line
 {
 private:
 	CPoint center;
-	bool IsFirst = true;
+	int drawMode;
+	int START = 0;
+	int MOVE = 1;
+	int END = 2;
 public:
 	InheritanceLine();
 	InheritanceLine(CPoint centerPoint);

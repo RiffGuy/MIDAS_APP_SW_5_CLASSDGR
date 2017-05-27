@@ -4,13 +4,16 @@
 
 InheritanceLine::InheritanceLine()
 {
+	drawMode = START;
 }
 
 InheritanceLine::InheritanceLine(CPoint centerPoint)
 {
 	startPoint = centerPoint;
+	drawMode = START;
 }
 InheritanceLine::InheritanceLine(CPoint start, CPoint end) {
+	drawMode = START;
 	startPoint.SetPoint(start.x, start.y);
 	endPoint.SetPoint(end.x, end.y);
 	type = 'L';
@@ -25,18 +28,18 @@ bool InheritanceLine::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vec
 	//printf("DRAW - Line\n");
 	switch (dmode) {
 	case L_MOUSE_UP: {
-		
+		//drawMode = START;
 		break;
 	}
 	case L_MOUSE_DOWN: {
 		// nothing
-		IsFirst = true;
+		drawMode = END;
 		break;
 	}
 	case MOUSE_MOVE: {
 		//printf("now..in inheritance draw line, move mouse ! \n");
-		if (!IsFirst && (saveList->size() != 0))saveList->pop_back();
-		IsFirst = false;
+		if (drawMode != START && (saveList->size() != 0))saveList->pop_back();
+		drawMode = MOVE;
 		saveList->push_back(new InheritanceLine(startPoint, point));// save Polygon
 		return true;
 	}default: {
