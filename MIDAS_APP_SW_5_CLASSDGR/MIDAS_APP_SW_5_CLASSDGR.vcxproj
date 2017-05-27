@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{4335B122-987F-48F5-8E31-2C60CF1B82F2}</ProjectGuid>
     <RootNamespace>MIDAS_APP_SW_5_CLASSDGR</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
     <Keyword>MFCProj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -191,6 +191,7 @@
     <ClInclude Include="MIDAS_APP_SW_5_CLASSDGRView.h" />
     <ClInclude Include="mRectangle.h" />
     <ClInclude Include="M_Polygon.h" />
+    <ClInclude Include="NewClassAddDLG.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -205,6 +206,7 @@
     <ClCompile Include="MIDAS_APP_SW_5_CLASSDGRView.cpp" />
     <ClCompile Include="DiagramClass.cpp" />
     <ClCompile Include="M_Polygon.cpp" />
+    <ClCompile Include="NewClassAddDLG.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
