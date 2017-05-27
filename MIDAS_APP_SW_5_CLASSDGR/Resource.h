@@ -15,6 +15,8 @@
 #define D_MODE_ARC                      50
 #define D_MODE_PEN                      60
 #define D_MODE_ERASE                    70
+#define D_MODE_LINE_INHERITANCE			80
+#define D_MODE_LINE_DEPENDENCY			90
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
 #define L_MOUSE_UP                      100

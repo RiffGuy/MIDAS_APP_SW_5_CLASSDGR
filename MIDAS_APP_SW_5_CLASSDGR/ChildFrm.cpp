@@ -70,8 +70,11 @@ void CChildFrame::OnPrint_BTM()
 	//int width = ::GetDeviceCaps(h_screen_dc, HORZRES);
 	//int height = ::GetDeviceCaps(h_screen_dc, VERTRES);
 	GetClientRect(rec);
+
 	int width = rec.Width();
 	int height = rec.Height();
+	//int x = width - rec.CenterPoint().x;
+	//int y = height - rec.CenterPoint().y;
 
 	// DIB의 형식을 정의한다.
 	BITMAPINFO dib_define;
@@ -102,8 +105,8 @@ void CChildFrame::OnPrint_BTM()
 
 	// 현재 스크린 화면을 캡쳐한다.
 	Sleep(1000);
-	printf("%d %d !!!!!!!!!!!!!!", rec.TopLeft().x, rec.TopLeft().y);
-	::BitBlt(h_memory_dc, rec.TopLeft().x, rec.TopLeft().y, width, height, h_screen_dc, 0, 0, SRCCOPY);
+	//printf("%d %d !!!!!!!!!!!!!!", x, y);
+	::BitBlt(h_memory_dc, 0, 0, width, height, h_screen_dc, 0, 0, SRCCOPY);
 
 	// 본래의 비트맵으로 복구한다.
 	::SelectObject(h_memory_dc, h_old_bitmap);
