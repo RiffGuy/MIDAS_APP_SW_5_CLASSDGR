@@ -7,10 +7,11 @@ class M_Polygon
 {
 
 protected:
-	CPoint startPoint;
-	CPoint endPoint;
+	
 	CDC* pDC;
 public:
+	CPoint startPoint;
+	CPoint endPoint;
 	M_Polygon();
 	~M_Polygon();
 	inline virtual void printPoint() { printf("-> (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y); }

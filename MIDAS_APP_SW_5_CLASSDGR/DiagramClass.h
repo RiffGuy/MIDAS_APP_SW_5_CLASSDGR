@@ -2,9 +2,11 @@
 #include "M_Polygon.h"
 #include "NewClassAddDLG.h"
 #include <iostream>
+#include <vector>
 class DiagramClass :
 	public M_Polygon
 {
+private:
 
 public:
 	int drawMode = 0;
@@ -13,7 +15,7 @@ public:
 	int MOVE = 2;
 	int END = 3;
 	NewClassAddDLG* status;
-	
+	std::vector<CPoint*> lineList;
 	DiagramClass();
 	DiagramClass(CPoint start, CPoint end);
 	~DiagramClass();

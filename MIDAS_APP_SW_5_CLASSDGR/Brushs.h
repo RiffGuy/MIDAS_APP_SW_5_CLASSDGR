@@ -67,6 +67,8 @@ public:
 	};
 
 	void saveData(CArchive& ar);
+
+	
 };
 
 
