@@ -212,9 +212,9 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 		printf("선택된 사각형이 있습니다.\n");
 		m_StartPos = point;
 		m_StartToMove = true;
+		
 
-		Dummy* dummy = new Dummy(m_CurSelectRect);
-		m_Brush->polygonList.push_back(dummy);
+
 		// 상속 혹은 의존 직선의 경우 클래스에 닿지 않으면 소멸되도록 함.
 		// 해당 경우는 선이 사각형에 포함된 경우
 		if (m_Brush->getDrawMode() == D_MODE_LINE_INHERITANCE || m_Brush->getDrawMode() == D_MODE_LINE_DEPENDENCY) {
@@ -226,7 +226,6 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 
 				// 종료 지점과 연결된 사각형 객체는 이미 저장되어 있음.
 				tempClassRect->addConnectedPoint(&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->startPoint));
-
 				m_CurSelectRect->addConnectedPoint(&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->endPoint));
 				Invalidate();
 				UpdateWindow();
@@ -234,6 +233,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 			}
 			m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
 			OnDrawRect();
+
 		}
 		
 	}
