@@ -5,8 +5,8 @@
 #include "MIDAS_APP_SW_5_CLASSDGR.h"
 #include "NewClassAddDLG.h"
 #include "afxdialogex.h"
-
-
+#include <iostream>
+#include <cstring>
 // NewClassAddDLG 대화 상자입니다.
 
 IMPLEMENT_DYNAMIC(NewClassAddDLG, CDialogEx)
@@ -81,13 +81,15 @@ void NewClassAddDLG::OnBnClickedAddNewClassAttbOk()
 	m_AddNewAttbType.GetWindowTextW(attbType);
 	
 	//CString attb = attbName + _T(" : ") + attbRange + " " + attbType + " " + attbName;
-	CString attb = attbRange + " " + attbType + " " + attbName;
+	CString attb = attbRange + _T(":") + attbType + _T("::") + attbName;
 	// add to List
 	m_AddNewAttbList.AddString(attb);
 
 	// add to vector list
 	attbList.push_back(attb);
-	
+	attbRangeList.push_back(attbRange);
+	attbTypeList.push_back(attbType);
+	attbNameList.push_back(attbName);
 
 }
 
@@ -99,6 +101,9 @@ void NewClassAddDLG::OnBnClickedAddNewClassAttbCancel()
 	if (rmvIndex >= 0) {
 		m_AddNewAttbList.DeleteString(rmvIndex);
 		attbList.erase(attbList.begin() + rmvIndex);
+		attbRangeList.erase(attbRangeList.begin() + rmvIndex);
+		attbTypeList.erase(attbTypeList.begin() + rmvIndex);
+		attbNameList.erase(attbNameList.begin() + rmvIndex);
 	}
 }
 
@@ -137,14 +142,17 @@ void NewClassAddDLG::OnBnClickedAddNewClassOpOk()
 	m_AddNewOpName.GetWindowTextW(opName);
 	m_OperationRangeComboBox.GetLBText(m_OperationRangeComboBox.GetCurSel(), opRange);
 
-	CString operation = opRange + " " + opType +" " + opName + "(";
+	CString operation = opRange + _T(":") + opType +_T("::") + opName + _T("(");
 	for (int i = 0; i < prmtList.size(); i++) {
 		operation += prmtList[i];
-		if (i + 1 != prmtList.size())operation += ",";
+		if (i + 1 != prmtList.size())operation += _T(",");
 	}
-	operation += ")";
+	operation += _T(")");
 	m_AddNewOpList.AddString(operation);
 	operationList.push_back(operation);
+	operationNameList.push_back(opName);
+	operationTypeList.push_back(opType);
+	operationRangeList.push_back(opRange);
 }
 
 
@@ -155,6 +163,9 @@ void NewClassAddDLG::OnBnClickedAddNewClassOpCancel()
 	if (rmvIndex >= 0) {
 		m_AddNewOpList.DeleteString(rmvIndex);
 		operationList.erase(operationList.begin() + rmvIndex);
+		operationNameList.erase(operationNameList.begin() + rmvIndex);
+		operationTypeList.erase(operationTypeList.begin() + rmvIndex);
+		operationRangeList.erase(operationRangeList.begin() + rmvIndex);
 	}
 }
 
@@ -163,9 +174,21 @@ void NewClassAddDLG::OnBnClickedAddNewClassOpCancel()
 void NewClassAddDLG::OnBnClickedAddNewClassCancel()
 {
 	className = "";
-	while (attbList.size() != 0)attbList.pop_back();
-	while (prmtList.size() != 0)prmtList.pop_back();
-	while (operationList.size() != 0)operationList.pop_back();
+	while (attbList.size() != 0) {
+		attbList.pop_back();
+		attbNameList.pop_back();
+		attbTypeList.pop_back();
+		attbRangeList.pop_back();
+	}
+	while (prmtList.size() != 0) {
+		prmtList.pop_back();
+	}
+	while (operationList.size() != 0) {
+		operationList.pop_back();
+		operationNameList.pop_back();
+		operationRangeList.pop_back();
+		operationTypeList.pop_back();
+	}
 	CDialogEx::OnCancel();
 }
 
@@ -180,34 +203,46 @@ void NewClassAddDLG::saveData(CArchive& ar) {
 	
 	if (ar.IsStoring()) {
 		// save
-		// printf("save Dialog !\n");
+
+		ar << className;
+
 		int attbSize = attbList.size();
 		int prmtSize = prmtList.size();
 		int operationSize = operationList.size();
 		
 		ar << attbSize;
 		printf("save : attbSize : %d\n", attbSize);
-		for (int i = 0; i < attbSize; i++) {
-			ar << attbList[i];
+		for (int i = 0; i < attbSize; i++){
+			
+			ar << attbRangeList[i];
+			ar << attbTypeList[i];
+			ar << attbNameList[i];
+			
 		}
 
 		ar << prmtSize;
 		printf("save : prmtSize : %d\n", prmtSize);
 		for (int i = 0; i < prmtSize; i++) {
-			ar << prmtSize;
+			
+			ar << prmtList[i];
+			
 		}
 
 		ar << operationSize;
+		
 		printf("save : operationSize : %d\n", operationSize);
 		for (int i = 0; i < operationSize; i++) {
-			ar << operationList[i];
+			ar << operationRangeList[i];
+			ar << operationTypeList[i];
+			ar << operationNameList[i];
+			
 		}
-
-		ar << className;
 
 	}
 	else {
 		// load
+		ar >> className;
+
 		// printf("Load Dialog !!\n");
 		int attbSize = 0;
 		int prmtSize =0;
@@ -215,10 +250,21 @@ void NewClassAddDLG::saveData(CArchive& ar) {
 		ar >> attbSize;
 		printf("Load : attbSize : %d\n", attbSize);
 		for (int i = 0; i < attbSize; i++) {
-			CString attb;
-			ar >> attb;
+			CString attbName,attbType,attbRange;
+			ar >> attbRange;
+			ar >> attbType;
+			ar >> attbName;
+			attbRangeList.push_back(attbRange);
+			attbTypeList.push_back(attbType);
+			attbNameList.push_back(attbName);
+			CString attb = attbRange + " " + attbType + " " + attbName;
 			attbList.push_back(attb);
 		}
+
+		// Test
+		//for (int i = 0; i < attbSize; i++) {
+		//	std::cout << CT2CA(attbRangeList[i]) << CT2CA(attbTypeList[i]) << CT2CA(attbNameList[i]) << std::endl;
+		//}
 
 		ar >> prmtSize;
 		printf("Load : prmtSize : %d\n", prmtSize);
@@ -231,12 +277,15 @@ void NewClassAddDLG::saveData(CArchive& ar) {
 		ar >> operationSize;
 		printf("Load : operationSize : %d\n", operationSize);
 		for (int i = 0; i < operationSize; i++) {
-			CString operation;
-			ar >> operation;
-			operationList.push_back(operation);
+			CString opRange,opType,opName;
+			ar >> opRange;
+			ar >> opType;
+			ar >> opName;
+			operationRangeList.push_back(opRange);
+			operationTypeList.push_back(opType);
+			operationNameList.push_back(opName);
+			operationList.push_back(opRange + " " + opType + " " + opName);
 		}
-
-		ar >> className;
 
 	}
 }

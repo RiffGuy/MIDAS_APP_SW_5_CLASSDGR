@@ -96,12 +96,16 @@ void InheritanceLine::saveData(CArchive& ar) {
 	printf("Save InheritanceLine ! \n");
 	if (ar.IsStoring()) {
 		// save
-		printf("save InheritanceLine (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-		ar << startPoint << endPoint;
+		if (isVisual) {
+			printf("save InheritanceLine (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+			ar << startPoint << endPoint;
+		}
 	}
 	else {
 		// load
-		ar >> startPoint >> endPoint;
-		printf("Load InheritanceLine (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+		if (isVisual) {
+			ar >> startPoint >> endPoint;
+			printf("Load InheritanceLine (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+		}
 	}
 }
