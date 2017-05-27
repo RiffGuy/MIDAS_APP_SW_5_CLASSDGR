@@ -193,7 +193,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 M_Polygon* CMIDAS_APP_SW_5_CLASSDGRView::findrect(CPoint point) {
 	
 	for (int i = 0; i < m_Brush->polygonList.size(); i++) {
-		if (m_Brush->polygonList[i]->getPolygonType() == 'R') {
+		if (m_Brush->polygonList[i]->getPolygonType() == 'C') {
 			CPoint startPos = m_Brush->polygonList[i]->getStartPoint();
 			CPoint endPos = m_Brush->polygonList[i]->getEndPoint();
 			CPoint tmp;
