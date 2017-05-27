@@ -18,7 +18,7 @@
 #endif
 
 // printf 함수를 활용해서 표준 출력 결과를 콘솔에 출력 하기 위해 추가된 코드
-#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console") 
+//#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console") 
 
 // CMIDAS_APP_SW_5_CLASSDGRView
 
