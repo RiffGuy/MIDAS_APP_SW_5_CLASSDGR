@@ -20,5 +20,6 @@ public:
 	virtual void addConnectedPoint(CPoint* p);
 	virtual void removeConnectedPoint();
 	virtual void reConnectedPoint();
+	virtual void saveData(CArchive& ar);
 };
 
