@@ -50,7 +50,8 @@ CMIDAS_APP_SW_5_CLASSDGRView::CMIDAS_APP_SW_5_CLASSDGRView()
 	m_Brush->setBrushWnd(this);
 	theApp.viewBrushPtr = m_Brush;
 	m_StartToMove = false;
-	m_CurSelectRect = false;
+	m_CurSelectRect = NULL;
+	m_CurSelectRect_Temp = NULL;
 	m_MakeClass = false;
 	m_drawline = false;
 }
@@ -135,6 +136,9 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMouseMove(UINT nFlags, CPoint point)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	//printf("mode : %d\n", m_Brush->getDrawMode());
 	CView::OnMouseMove(nFlags, point);
+
+	
+
 	if (m_Brush->getDrawMode() == D_MODE_CLASSDIAGRAM) {
 		//사각형 클릭시 움직이기
 		if (m_StartToMove) {
@@ -143,6 +147,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMouseMove(UINT nFlags, CPoint point)
 			m_StartPos = point;
 			m_CurSelectRect->setStartPoint(m_CurSelectRect->getStartPoint() + pos);
 			m_CurSelectRect->setEndPoint(m_CurSelectRect->getEndPoint() + pos);
+			m_CurSelectRect->reConnectedPoint();
 			Invalidate();
 			UpdateWindow();
 			m_Brush->ReDrawAll();
@@ -158,6 +163,8 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMouseMove(UINT nFlags, CPoint point)
 		UpdateWindow();
 		m_Brush->ReDrawAll();
 	}
+
+	
 	
 }
 
@@ -186,16 +193,6 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 	m_StartToMove = false;
 	m_MakeClass = false;
 
-	/*if (m_Brush->getDrawMode() == D_MODE_LINE_INHERITANCE || m_Brush->getDrawMode() == D_MODE_LINE_DEPENDENCY) {
-		
-		if (m_CurSelectRect == NULL) {
-			m_Brush->polygonList.pop_back();
-			Invalidate();
-			UpdateWindow();
-			m_Brush->ReDrawAll();
-			OnDrawNone();
-		}
-	}*/
 
 }
 
@@ -217,7 +214,22 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 		m_StartToMove = true;
 		
 		// 상속 혹은 의존 직선의 경우 클래스에 닿지 않으면 소멸되도록 함.
+		// 해당 경우는 선이 사각형에 포함된 경우
 		if (m_Brush->getDrawMode() == D_MODE_LINE_INHERITANCE || m_Brush->getDrawMode() == D_MODE_LINE_DEPENDENCY) {
+			if (m_Brush->polygonList.size() - 1 >= 0) {
+				// 시작 지점과 연결된 사각형 객체를 찾는다.
+				M_Polygon* tempClassRect = findrect(CPoint(
+					m_Brush->polygonList[m_Brush->polygonList.size() - 1]->startPoint
+				));
+
+				// 종료 지점과 연결된 사각형 객체는 이미 저장되어 있음.
+				tempClassRect->addConnectedPoint(&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->startPoint));
+
+				m_CurSelectRect->addConnectedPoint(&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->endPoint));
+				Invalidate();
+				UpdateWindow();
+				m_Brush->ReDrawAll();
+			}
 			m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
 			OnDrawRect();
 		}
@@ -233,6 +245,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 	else { // 상속 선 혹은 의존 선 -> 클래스에 선택되지 않은 경우
 		if (m_Brush->getDrawMode() == D_MODE_LINE_INHERITANCE || m_Brush->getDrawMode() == D_MODE_LINE_DEPENDENCY) {
+			m_Brush->mpoly->removeConnectedPoint();
 			m_Brush->polygonList.pop_back();
 			Invalidate();
 			UpdateWindow();
@@ -292,6 +305,8 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnRButtonDown(UINT nFlags, CPoint point)
 		CPoint pos;
 		GetCursorPos(&pos);
 		pMenu->TrackPopupMenu(TPM_LEFTALIGN || TPM_RIGHTBUTTON, pos.x, pos.y, this);
+
+
 	}
 }
 
@@ -307,22 +322,22 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawNone()
 }
 void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawLine()
 {
-	
 	Line* c = new Line();
 	M_Polygon* mp = c;
 	m_Brush->setDrawMode(D_MODE_LINE, mp);
 }
 
-void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawInheritaceLine(CPoint centerPoint) {
+void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawInheritaceLine(CPoint centerPoint){
 	m_drawline = true;
 	InheritanceLine* c = new InheritanceLine(centerPoint);
 	M_Polygon* mp = c;
 	m_Brush->setDrawMode(D_MODE_LINE_INHERITANCE, mp);
 	m_Brush->setPenMode(PS_SOLID);
 	printf("Inheritace draw mode on , (%d , %d)\n", centerPoint.x, centerPoint.y);
+	//m_CurSelectRect->addConnectedPoint(&(c->startPoint));
 }
 
-void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawDependencyLine(CPoint centerPoint) {
+void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawDependencyLine(CPoint centerPoint){
 	m_drawline = true;
 	dependencyLine* c = new dependencyLine(centerPoint);
 	M_Polygon* mp = c;

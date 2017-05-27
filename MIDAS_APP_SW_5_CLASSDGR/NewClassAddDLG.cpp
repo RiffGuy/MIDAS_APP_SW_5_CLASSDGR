@@ -253,4 +253,6 @@ void NewClassAddDLG::initData() {
 	for (int i = 0; i < operationSize; i++) {
 		m_AddNewOpList.AddString(operationList[i]);
 	}
+
+	AddNewClass_classNameEdit.SetWindowTextW(className);
 }

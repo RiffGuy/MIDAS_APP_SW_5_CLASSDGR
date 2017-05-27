@@ -46,3 +46,17 @@ bool dependencyLine::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vect
 	}
 	return false;
 }
+
+
+void dependencyLine::addConnectedPoint(CPoint* p) {
+
+}
+
+
+void dependencyLine::removeConnectedPoint() {
+	
+}
+
+void dependencyLine::reConnectedPoint() {
+
+}

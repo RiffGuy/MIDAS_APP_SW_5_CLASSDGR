@@ -95,6 +95,7 @@ void DiagramClass::ReDraw(CDC* pDC) {
 		int centerWidth = newStartPos.x + (newEndPos.x - newStartPos.x) / 2;
 //className 출력
 		CString tmp = status->getClassName();
+		pDC->SetBkColor(RGB(255, 255, 153));
 		int textWidth = pDC->GetTextExtent(tmp).cx;
 		int textHeight = pDC->GetTextExtent(tmp).cy;
 		pDC->TextOutW(centerWidth - textWidth / 2, curY + textHeight / 2, tmp);
@@ -167,4 +168,34 @@ void DiagramClass::saveData(CArchive& ar) {
 		ar >> startPoint >> endPoint;
 	}
 	status->saveData(ar);
+}
+
+
+void DiagramClass::addConnectedPoint(CPoint* p) {
+	if (p == NULL) {
+		printf("The Point is NULL\n");
+	}
+	else {
+		
+		// 센터 좌표로 보정
+		p->x = (startPoint.x + endPoint.x) / 2;
+		p->y = (startPoint.y + endPoint.y) / 2;
+
+		printf("Add Point(%d,%d)\n", p->x, p->y);
+	}
+	lineList.push_back(p);
+}
+
+
+void DiagramClass::removeConnectedPoint() { // Twice !
+	if(lineList.size() >= 0)lineList.pop_back();
+	if (lineList.size() >= 0)lineList.pop_back();
+	printf("Points removed!\n");
+}
+
+void DiagramClass::reConnectedPoint() {
+	for (int i = 0; i < lineList.size(); i++) {
+		lineList[i]->x = (startPoint.x + endPoint.x) / 2;
+		lineList[i]->y = (startPoint.y + endPoint.y) / 2;
+	}
 }

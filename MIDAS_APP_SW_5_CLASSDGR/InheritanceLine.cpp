@@ -53,3 +53,17 @@ bool InheritanceLine::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vec
 InheritanceLine::~InheritanceLine()
 {
 }
+
+
+void InheritanceLine::addConnectedPoint(CPoint* p) {
+
+}
+
+
+void InheritanceLine::removeConnectedPoint() {
+
+}
+
+void InheritanceLine::reConnectedPoint() {
+
+}
