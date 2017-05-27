@@ -64,6 +64,7 @@ public:
 	afx_msg void OnAddClass();
 	afx_msg void OnAddNewClassOnMenu();
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnMenuProperties();
 };
 
 #ifndef _DEBUG  // MIDAS_APP_SW_5_CLASSDGRView.cpp의 디버그 버전
