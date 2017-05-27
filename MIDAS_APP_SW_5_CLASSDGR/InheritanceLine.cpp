@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "InheritanceLine.h"
+#include <math.h>
+#define PI 3.141592265
 
-
+CPoint transformation(CPoint centerP, CPoint moveP, double angle);
 InheritanceLine::InheritanceLine()
 {
 	drawMode = START;
@@ -21,6 +23,25 @@ void InheritanceLine::ReDraw(CDC* pDC) {
 	//printf("InheritanceLine Line ReDraw (%d,%d) , (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 	pDC->MoveTo(startPoint.x, startPoint.y);
 	pDC->LineTo(endPoint.x, endPoint.y);
+
+	CPoint p1(endPoint.x - 20, endPoint.y + 20);
+	CPoint p2(endPoint.x - 20, endPoint.y - 20);
+	int x = endPoint.x - startPoint.x;
+	int y = endPoint.y - startPoint.y;
+	double angle = atan2(y, x);
+
+	CPoint p1_new = transformation(endPoint, p1, angle);
+	CPoint p2_new = transformation(endPoint, p2, angle);
+	pDC->LineTo(p1_new.x, p1_new.y);
+	pDC->MoveTo(endPoint.x, endPoint.y);
+	pDC->LineTo(p2_new.x, p2_new.y);
+}
+
+CPoint transformation(CPoint centerP, CPoint moveP, double angle)
+{
+	double rx = (moveP.x - centerP.x)*cos(angle) - (moveP.y - centerP.y)*sin(angle) + centerP.x;
+	double ry = (moveP.x - centerP.x)*sin(angle) + (moveP.y - centerP.y)*cos(angle) + centerP.y;
+	return CPoint(rx, ry);
 }
 
 bool InheritanceLine::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector<M_Polygon*>* saveList) {
@@ -41,6 +62,7 @@ bool InheritanceLine::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vec
 		if (drawMode != START && (saveList->size() != 0))saveList->pop_back();
 		drawMode = MOVE;
 		saveList->push_back(new InheritanceLine(startPoint, point));// save Polygon
+
 		return true;
 		
 	}default: {
@@ -49,6 +71,8 @@ bool InheritanceLine::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vec
 	}
 	return false;
 }
+
+
 
 InheritanceLine::~InheritanceLine()
 {
