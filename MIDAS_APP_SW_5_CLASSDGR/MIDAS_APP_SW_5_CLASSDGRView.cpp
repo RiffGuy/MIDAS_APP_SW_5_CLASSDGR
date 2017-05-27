@@ -171,7 +171,8 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 		m_EndPos = point;
 	}
 	if (m_MakeClass == true && m_Brush->polygonList.size() > 0) {
-		m_Brush->polygonList[m_Brush->polygonList.size() - 1]->setClassContents();
+		m_Brush->polygonList[m_Brush->polygonList.size() - 1]->setContents();
+
 		Invalidate();
 		UpdateWindow();
 		m_Brush->ReDrawAll();
@@ -205,9 +206,10 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 			m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
 		}
 	}
-	else{
+	else if (m_MakeClass){
 	//바탕화면 클릭시 그리기(나중에 수정할 부분)
 		printf("선택된 사각형이 없습니다.\n");
+		OnDrawRect();
 		m_CurSelectRect = NULL;
 		m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
 		
@@ -353,7 +355,10 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnAddNewClassOnMenu()
 	OnDrawRect();
 	m_Brush->addPolygon(new DiagramClass(CPoint(0,0),CPoint(100,100)));
 	dc = (DiagramClass *)m_Brush->getResentPolygon();
-	dc->setClassContents();
+	dc->setContents();
+	if (dc->isClassContentsEmpty()) {
+		m_Brush->deletePolygon();
+	}
 	Invalidate();
 	UpdateWindow();
 	m_Brush->ReDrawAll();
@@ -368,7 +373,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties()
 	// TODO: Add your command handler code here
 	
 	if (m_CurSelectRect != NULL) {
-		m_CurSelectRect->setClassContents();
+		m_CurSelectRect->setContents();
 		Invalidate();
 		UpdateWindow();
 		m_Brush->ReDrawAll();

@@ -25,7 +25,7 @@ public:
 	inline char getPolygonType() { return type; }
 	inline void setStartPoint(CPoint point) { startPoint = point; }
 	inline void setEndPoint(CPoint point) { endPoint = point; }
-	inline virtual void setClassContents() {}
+	inline virtual void setContents() {}
 	virtual void saveData(CArchive& ar);
 };
 #endif // !M_POLYGON_H
