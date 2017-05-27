@@ -182,6 +182,17 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 	m_StartToMove = false;
 	m_MakeClass = false;
 
+	/*if (m_Brush->getDrawMode() == D_MODE_LINE_INHERITANCE || m_Brush->getDrawMode() == D_MODE_LINE_DEPENDENCY) {
+		
+		if (m_CurSelectRect == NULL) {
+			m_Brush->polygonList.pop_back();
+			Invalidate();
+			UpdateWindow();
+			m_Brush->ReDrawAll();
+			OnDrawNone();
+		}
+	}*/
+
 }
 
 
@@ -195,7 +206,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 		m_CurSelectRect = findrect(point);
 	}
 	
-	//사각형 클릭시 움직이기 준비
+	// 사각형 클릭시 움직이기 준비
 	if (m_CurSelectRect != NULL) {
 		printf("선택된 사각형이 있습니다.\n");
 		m_StartPos = point;
@@ -204,15 +215,26 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 		// 상속 혹은 의존 직선의 경우 클래스에 닿지 않으면 소멸되도록 함.
 		if (m_Brush->getDrawMode() == D_MODE_LINE_INHERITANCE || m_Brush->getDrawMode() == D_MODE_LINE_DEPENDENCY) {
 			m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
+			OnDrawRect();
 		}
+		
 	}
 	else if (m_MakeClass){
-	//바탕화면 클릭시 그리기(나중에 수정할 부분)
+		//바탕화면 클릭시 그리기(나중에 수정할 부분)
 		printf("선택된 사각형이 없습니다.\n");
 		OnDrawRect();
 		m_CurSelectRect = NULL;
 		m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
 		
+	}
+	else { // 상속 선 혹은 의존 선 -> 클래스에 선택되지 않은 경우
+		if (m_Brush->getDrawMode() == D_MODE_LINE_INHERITANCE || m_Brush->getDrawMode() == D_MODE_LINE_DEPENDENCY) {
+			m_Brush->polygonList.pop_back();
+			Invalidate();
+			UpdateWindow();
+			m_Brush->ReDrawAll();
+			OnDrawNone();
+		}
 	}
 
 }
@@ -273,7 +295,12 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnRButtonDown(UINT nFlags, CPoint point)
 툴바 도형 버튼 이벤트 처리기
 */
 
-
+void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawNone()
+{
+	M_Polygon* c = new M_Polygon();
+	M_Polygon* mp = c;
+	m_Brush->setDrawMode(D_MODE_NONE, mp);
+}
 void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawLine()
 {
 	

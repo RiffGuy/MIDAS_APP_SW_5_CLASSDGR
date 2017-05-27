@@ -4,10 +4,11 @@ class dependencyLine : public Line
 {
 private:
 	CPoint center;
-	int drawMode;
-	int START = 0;
-	int MOVE = 1;
-	int END = 2;
+	int drawMode = 0;
+	int WAIT = 0;
+	int START = 1;
+	int MOVE = 2;
+	int END = 3;
 public:
 	dependencyLine();
 	dependencyLine(CPoint centerPoint);

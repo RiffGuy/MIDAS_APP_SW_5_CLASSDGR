@@ -60,6 +60,7 @@ public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnDrawRect();
 	afx_msg void OnDrawLine();
+	afx_msg void OnDrawNone();
 	afx_msg void OnDrawInheritaceLine(CPoint centerPoint);
 	afx_msg void OnDrawDependencyLine(CPoint centerPoint);
 	afx_msg void OnEraseAll();

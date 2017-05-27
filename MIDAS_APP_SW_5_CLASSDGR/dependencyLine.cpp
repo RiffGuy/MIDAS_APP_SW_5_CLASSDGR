@@ -30,7 +30,7 @@ bool dependencyLine::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vect
 	//printf("DRAW - Line\n");
 	switch (dmode) {
 	case L_MOUSE_UP: {
-
+		
 		break;
 	}
 	case L_MOUSE_DOWN: {
