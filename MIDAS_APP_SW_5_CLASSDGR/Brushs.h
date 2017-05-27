@@ -57,6 +57,7 @@ public:
 	void setCPenColor();
 	void setCBrushColor();
 
+	void saveData(CArchive& ar);
 };
 
 

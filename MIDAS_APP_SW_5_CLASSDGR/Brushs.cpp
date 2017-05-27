@@ -39,13 +39,13 @@ void Brushs::Draw(CPoint startPoint, CPoint endPoint) {
 void Brushs::setDrawMode(int MODE, M_Polygon *dPoly) {
 	DrawMode = MODE;
 	mpoly = dPoly;
-	printf("DRAW MODE : %d\n", MODE);
-	printf("+ polygonList Size : %d\n", polygonList.size());
+	//intf("DRAW MODE : %d\n", MODE);
+	//intf("+ polygonList Size : %d\n", polygonList.size());
 }
 
 void Brushs::ReDrawAll() {
 	if (brushCDC == NULL)return;
-	printf("Brushs RedrawAll & PolygonList Size : %d\n", polygonList.size());
+	//intf("Brushs RedrawAll & PolygonList Size : %d\n", polygonList.size());
 	for (int i = 0; i < polygonList.size(); i++) {
 		//printf("redrawing.. %d\n", i+1);
 		//polygonList[i]->printPoint();
@@ -88,3 +88,8 @@ void Brushs::setCBrushColor() {
 	oldBrush = brushCDC->SelectObject(&brushBrush); // 이전에 선택되어 있던 브러시 객체를 리턴한다.
 }
 
+void Brushs::saveData(CArchive& ar) {
+	for (int i = 0; i < polygonList.size(); i++) {
+		polygonList[i]->saveData(ar);
+	}
+}

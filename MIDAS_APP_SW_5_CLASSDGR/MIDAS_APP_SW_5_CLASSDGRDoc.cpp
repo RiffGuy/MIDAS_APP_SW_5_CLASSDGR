@@ -10,7 +10,8 @@
 #endif
 
 #include "MIDAS_APP_SW_5_CLASSDGRDoc.h"
-
+#include "DiagramClass.h"
+#include "Line.h"
 #include <propkey.h>
 
 #ifdef _DEBUG
@@ -56,13 +57,46 @@ BOOL CMIDAS_APP_SW_5_CLASSDGRDoc::OnNewDocument()
 
 void CMIDAS_APP_SW_5_CLASSDGRDoc::Serialize(CArchive& ar)
 {
+	Brushs* brush = theApp.viewBrushPtr;
 	if (ar.IsStoring())
 	{
 		// TODO: 여기에 저장 코드를 추가합니다.
+		int listSize = brush->polygonList.size();
+		ar << listSize; // 폴리곤 리스트 개수를 저장
+		for (int i = 0; i < listSize; i++) {
+			ar << brush->polygonList[i]->getType();
+			brush->polygonList[i]->saveData(ar);
+		}
 	}
 	else
 	{
 		// TODO: 여기에 로딩 코드를 추가합니다.
+		int listSize = 0;
+		ar >> listSize;
+		for (int i = 0; i < listSize; i++) {
+			int PolyType;
+			ar >> PolyType;
+			switch (PolyType) {
+			case D_MODE_RECT: {
+				printf("load ClassDiagram!\n");
+				brush->polygonList.push_back(new DiagramClass());
+				
+				break;
+			}
+			case D_MODE_LINE: {
+				printf("load Line!\n");
+				brush->polygonList.push_back(new Line());
+				
+				break;
+			}
+			}
+			
+		}
+		printf("PolygonListSize : %d\n", brush->polygonList.size());
+		for (int i = 0; i < brush->polygonList.size(); i++) {
+			brush->polygonList[i]->saveData(ar);
+			brush->polygonList[i]->printPoint();
+		}
 	}
 }
 

@@ -6,6 +6,7 @@
 DiagramClass::DiagramClass()
 {
 	drawMode = WAIT;
+	status = new NewClassAddDLG;
 }
 
 
@@ -96,4 +97,16 @@ bool DiagramClass::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector
 	}
 
 	return false;
+}
+void DiagramClass::saveData(CArchive& ar) {
+	
+	if (ar.IsStoring()) {
+		// save
+		ar << startPoint << endPoint;
+	}
+	else {
+		// load
+		ar >> startPoint >> endPoint;
+	}
+	status->saveData(ar);
 }

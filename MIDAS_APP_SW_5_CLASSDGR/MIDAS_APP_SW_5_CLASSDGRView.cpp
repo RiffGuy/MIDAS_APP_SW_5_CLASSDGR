@@ -168,6 +168,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 	m_Brush->Draw(point, nFlags, L_MOUSE_UP);
 
 	if (m_MakeClass == true) {
+		printf("setCOntents! on!\n");
 		m_Brush->polygonList[m_Brush->polygonList.size() - 1]->setClassContents();
 		m_MakeClass = false;
 	}
@@ -295,6 +296,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnAddClass()
 void CMIDAS_APP_SW_5_CLASSDGRView::OnAddNewClassOnMenu()
 {
 	NewClassAddDLG dlg = new NewClassAddDLG();
+	
 	dlg.DoModal();
 }
 
