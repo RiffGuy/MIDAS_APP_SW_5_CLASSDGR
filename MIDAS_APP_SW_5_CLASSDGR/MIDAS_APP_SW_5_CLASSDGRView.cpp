@@ -44,6 +44,7 @@ BEGIN_MESSAGE_MAP(CMIDAS_APP_SW_5_CLASSDGRView, CView)
 	ON_COMMAND(IDD_UNDO_CLASS, &CMIDAS_APP_SW_5_CLASSDGRView::OnIddUndoClass)
 	ON_COMMAND(ID_EDIT_UNDO, &CMIDAS_APP_SW_5_CLASSDGRView::OnEditUndo)
 	ON_COMMAND(ID_EDIT_REDO, &CMIDAS_APP_SW_5_CLASSDGRView::OnEditRedo)
+	ON_COMMAND(ID_DELETE_LINE, &CMIDAS_APP_SW_5_CLASSDGRView::OnDeleteLine)
 END_MESSAGE_MAP()
 
 // CMIDAS_APP_SW_5_CLASSDGRView 생성/소멸
@@ -61,6 +62,8 @@ CMIDAS_APP_SW_5_CLASSDGRView::CMIDAS_APP_SW_5_CLASSDGRView()
 	m_CurSelectRect_Temp = NULL;
 	m_MakeClass = false;
 	m_drawline = false;
+	m_CurSelectLine = NULL;
+	m_CurSelectLineAt = -1;
 }
 
 CMIDAS_APP_SW_5_CLASSDGRView::~CMIDAS_APP_SW_5_CLASSDGRView()
@@ -317,34 +320,30 @@ M_Polygon* CMIDAS_APP_SW_5_CLASSDGRView::findrect(CPoint point) {
 }
 
 M_Polygon* CMIDAS_APP_SW_5_CLASSDGRView::findLine(CPoint point) {
-	/*
+	
 	for (int i = 0; i < m_Brush->polygonList.size(); i++) {
 		if ((m_Brush->polygonList[i]->getType() == D_MODE_LINE_DEPENDENCY ||
 			m_Brush->polygonList[i]->getType() == D_MODE_LINE_INHERITANCE )&&
 			m_Brush->polygonList[i]->isVisual == true) {
 			CPoint startPos = m_Brush->polygonList[i]->getStartPoint();
 			CPoint endPos = m_Brush->polygonList[i]->getEndPoint();
-			CPoint tmp;
-			if (startPos.x > endPos.x) {
-				tmp = endPos;
-				endPos.x = startPos.x;
-				startPos.x = tmp.x;
-			}
-			if (startPos.y > endPos.y) {
-				tmp = endPos;
-				endPos.y = startPos.y;
-				startPos.y = tmp.y;
-			}
+			CRgn rgn;
 
-			
+			CPoint points[4];
+			points[0] = startPos + CPoint(10, 10);
+			points[1] = startPos + CPoint(-10, -10);
+			points[2] = endPos + CPoint(10, 10);
+			points[3] = endPos + CPoint(-10, -10);
+
+			rgn.CreatePolygonRgn(points, 4, WINDING);
 			printf("find start.x start.y %d %d\n", startPos.x, startPos.y);
 			printf("find end.x end.y %d %d\n", endPos.x, endPos.y);
-			if (rect.PtInRect(point)) {
-				m_CurSelectRectAt = i;
+			if ((rgn.PtInRegion(point))) {
+				m_CurSelectLineAt = i;
 				return m_Brush->polygonList[i];
 			}
 		}
-	}*/
+	}
 	return NULL;
 }
 
@@ -357,7 +356,9 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnRButtonDown(UINT nFlags, CPoint point)
 	if (m_Brush->polygonList.size() > 0) {
 		m_CurSelectRect = findrect(point);
 	}
-
+	if (m_Brush->polygonList.size() > 0) {
+		m_CurSelectLine = findLine(point);
+	}
 
 	if (m_CurSelectRect != NULL) {
 		CMenu popup;
@@ -367,8 +368,15 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnRButtonDown(UINT nFlags, CPoint point)
 		CPoint pos;
 		GetCursorPos(&pos);
 		pMenu->TrackPopupMenu(TPM_LEFTALIGN || TPM_RIGHTBUTTON, pos.x, pos.y, this);
-
-
+	}
+	if (m_CurSelectLine != NULL) {
+		CMenu popup;
+		CMenu* pMenu;
+		popup.LoadMenuW(IDR_MENU2);
+		pMenu = popup.GetSubMenu(0);
+		CPoint pos;
+		GetCursorPos(&pos);
+		pMenu->TrackPopupMenu(TPM_LEFTALIGN || TPM_RIGHTBUTTON, pos.x, pos.y, this);
 	}
 }
 
@@ -590,4 +598,30 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnEditRedo()
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	OnRedo();
 
+}
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnDeleteLine()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	if (m_CurSelectLine != NULL) {
+
+
+		m_Brush->addPolygon(new Line(*(Line*)m_CurSelectLine));
+		m_Brush->getResentPolygon()->isVisual = false;
+
+		m_Brush->getResentPolygon()->mpoly = m_Brush->polygonList[m_CurSelectLineAt];
+		m_Brush->getResentPolygon()->mpoly->isVisual = false;
+		m_Brush->getResentPolygon()->parentPoly = m_Brush->getResentPolygon();
+		m_CurSelectLine = m_Brush->getResentPolygon();
+		for (; !(m_Brush->polygonBackUp.empty());) {
+			m_Brush->polygonBackUp.pop();
+		}
+
+		m_CurSelectLine = NULL;
+		m_CurSelectLineAt = -1;
+		Invalidate();
+		UpdateWindow();
+		m_Brush->ReDrawAll();
+	}
 }

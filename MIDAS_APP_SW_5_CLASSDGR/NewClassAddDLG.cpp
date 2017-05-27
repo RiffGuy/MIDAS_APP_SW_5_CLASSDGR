@@ -278,7 +278,6 @@ void NewClassAddDLG::saveData(CArchive& ar) {
 			operationTypeList.push_back(opType);
 			operationNameList.push_back(opName);
 		}
-
 	}
 }
 
