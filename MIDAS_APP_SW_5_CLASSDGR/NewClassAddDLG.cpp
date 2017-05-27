@@ -214,7 +214,9 @@ void NewClassAddDLG::saveData(CArchive& ar) {
 		printf("save : attbSize : %d\n", attbSize);
 		for (int i = 0; i < attbSize; i++){
 			
-			ar << attbRangeList[i] << attbTypeList[i] << attbNameList[i];
+			ar << attbRangeList[i];
+			ar << attbTypeList[i];
+			ar << attbNameList[i];
 			
 		}
 
@@ -230,7 +232,9 @@ void NewClassAddDLG::saveData(CArchive& ar) {
 		
 		printf("save : operationSize : %d\n", operationSize);
 		for (int i = 0; i < operationSize; i++) {
-			ar << operationRangeList[i] << operationTypeList[i] << operationNameList[i] ;
+			ar << operationRangeList[i];
+			ar << operationTypeList[i];
+			ar << operationNameList[i];
 			
 		}
 
@@ -247,7 +251,9 @@ void NewClassAddDLG::saveData(CArchive& ar) {
 		printf("Load : attbSize : %d\n", attbSize);
 		for (int i = 0; i < attbSize; i++) {
 			CString attbName,attbType,attbRange;
-			ar >> attbRange >> attbType >> attbName;
+			ar >> attbRange;
+			ar >> attbType;
+			ar >> attbName;
 			attbRangeList.push_back(attbRange);
 			attbTypeList.push_back(attbType);
 			attbNameList.push_back(attbName);
@@ -265,7 +271,9 @@ void NewClassAddDLG::saveData(CArchive& ar) {
 		printf("Load : operationSize : %d\n", operationSize);
 		for (int i = 0; i < operationSize; i++) {
 			CString opRange,opType,opName;
-			ar >> opRange >> opType >> opName;
+			ar >> opRange;
+			ar >> opType;
+			ar >> opName;
 			operationRangeList.push_back(opRange);
 			operationTypeList.push_back(opType);
 			operationNameList.push_back(opName);
