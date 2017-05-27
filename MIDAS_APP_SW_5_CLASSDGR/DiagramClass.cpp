@@ -95,6 +95,7 @@ void DiagramClass::ReDraw(CDC* pDC) {
 		int centerWidth = newStartPos.x + (newEndPos.x - newStartPos.x) / 2;
 //className Ãâ·Â
 		CString tmp = status->getClassName();
+		pDC->SetBkColor(RGB(255, 255, 153));
 		int textWidth = pDC->GetTextExtent(tmp).cx;
 		int textHeight = pDC->GetTextExtent(tmp).cy;
 		pDC->TextOutW(centerWidth - textWidth / 2, curY + textHeight / 2, tmp);
