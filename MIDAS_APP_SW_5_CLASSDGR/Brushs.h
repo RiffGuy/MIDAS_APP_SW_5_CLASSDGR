@@ -10,7 +10,7 @@ class Brushs
 {
 private:
 	int DrawMode = D_MODE_NONE;
-	
+	bool undoFlag = false;
 	CDC* brushCDC = NULL; // 그림을 그려주는 객체 , Brush 내에서 독자적으로 갖게 하여 색상 , 선 종류를 변경하기 용이하게 함
 	CPen brushPen; // 선 종류를 결정
 	CPen* oldPen;
