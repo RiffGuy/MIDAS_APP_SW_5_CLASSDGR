@@ -63,6 +63,8 @@ public:
 		}
 		return NULL;
 	};
+
+	void saveData(CArchive& ar);
 };
 
 

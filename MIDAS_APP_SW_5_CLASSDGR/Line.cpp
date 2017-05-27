@@ -60,3 +60,15 @@ bool Line::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector<M_Polyg
 	}
 	return false;
 }
+
+void Line::saveData(CArchive& ar) {
+	printf("Save Line ! \n");
+	if (ar.IsStoring()) {
+		// save
+		ar << startPoint << endPoint;
+	}
+	else {
+		// load
+		ar >> startPoint >> endPoint;
+	}
+}

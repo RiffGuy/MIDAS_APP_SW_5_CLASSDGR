@@ -25,3 +25,8 @@ bool M_Polygon::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector<M_
 void M_Polygon::ReDraw(CDC* pDC) {
 	//printf("HI? \n");
 }
+
+void M_Polygon::saveData(CArchive& ar) {
+	// nothing
+	printf("saveData in Polygon..\n");
+}
