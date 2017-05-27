@@ -1,6 +1,7 @@
 #pragma once
 #include "M_Polygon.h"
 #include "NewClassAddDLG.h"
+#include <iostream>
 class DiagramClass :
 	public M_Polygon
 {
@@ -11,7 +12,6 @@ public:
 	int START = 1;
 	int MOVE = 2;
 	int END = 3;
-	CString str;
 	NewClassAddDLG* status;
 	DiagramClass();
 	DiagramClass(CPoint start, CPoint end);

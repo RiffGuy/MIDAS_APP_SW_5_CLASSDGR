@@ -19,8 +19,7 @@ DiagramClass::DiagramClass(CPoint start, CPoint end) {
 	startPoint.SetPoint(start.x, start.y);
 	endPoint.SetPoint(end.x, end.y);
 	type = 'C';
-	str = "hello";
-	status = new NewClassAddDLG;
+	status = NULL;
 }
 
 
@@ -28,7 +27,7 @@ void DiagramClass::ReDraw(CDC* pDC) {
 	//printf("mRectangle ReDraw (%d,%d) , (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 	pDC->Rectangle(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 
-	//start -> TopLeft, end -> BottomRight로 재설정 
+//start -> TopLeft, end -> BottomRight로 재설정 
 	CPoint newStartPos;
 	CPoint newEndPos;
 	if (endPoint.y < startPoint.y) {
@@ -44,10 +43,25 @@ void DiagramClass::ReDraw(CDC* pDC) {
 	if (status != NULL) {
 		int curY = newStartPos.y;
 		int curX = newStartPos.x;
-		CString tmp = status->getClassName();
-
 		int centerWidth = newStartPos.x + (newEndPos.x - newStartPos.x) / 2;
+
+		CString tmp = status->getClassName();
 		int textWidth = pDC->GetTextExtent(tmp).cx;
+
+		pDC->TextOutW(centerWidth - textWidth / 2, curY, tmp);
+
+		curY += 20;
+		for (int i = 0; i < status->getAttrbuteSize(); i++) {
+			tmp = status->getAttrbute(i);
+			pDC->TextOutW(newStartPos.x, curY, tmp);
+			curY += 20;
+		}
+		
+		for (int i = 0; i < status->getOperationSize(); i++) {
+			tmp = status->getOperation(i);
+			pDC->TextOutW(newStartPos.x, curY, tmp);
+			curY += 20;
+		}
 		
 	}
 //	pDC->TextOutW(centerWidth - textWidth / 2, newStartPos.y, str);
@@ -56,18 +70,6 @@ void DiagramClass::ReDraw(CDC* pDC) {
 
 void DiagramClass::Draw(CPoint startPoint, CPoint endPoint, CDC* pDC) {
 	pDC->Rectangle(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-	//string text 출력
-	CPoint newStartPos;
-	CPoint newEndPos;
-	if (endPoint.y < startPoint.y) {
-		newStartPos = endPoint;
-		newEndPos = startPoint;
-	}else { newStartPos = startPoint;
-			newEndPos = endPoint;
-	}
-	int centerWidth = newStartPos.x + (newEndPos.x - newStartPos.x) / 2;
-	int textWidth = pDC->GetTextExtent(str).cx;
-	pDC->TextOutW(centerWidth - textWidth / 2, newStartPos.y, str);
 
 
 }

@@ -24,6 +24,7 @@ void Brushs::setBrushWnd(CWnd* pWnd) {
 
 bool Brushs::Draw(CPoint point, int flag, int dmode) {
 	bool rst = mpoly->Draw(point, flag, dmode, brushCDC, &polygonList);
+
 	//brushCDC->SelectObject(oldPen);
 	//brushCDC->SelectObject(oldBrush);
 	return rst;
