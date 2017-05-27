@@ -78,14 +78,15 @@ void Brushs::Undo() {
 
 void Brushs::setCPenColor() {
 	brushPen.DeleteObject();
-	brushPen.CreatePen(PS_DOT, 3, RGB(255, 0, 0));
+	brushPen.CreatePen(PS_SOLID, 1, RGB(0 , 0 , 0));
 
 	oldPen = brushCDC->SelectObject(&brushPen); // 이전에 선택되어 있던 펜 객체를 리턴한다.
 }
 
 void Brushs::setCBrushColor() {
 	brushBrush.DeleteObject();
-	brushBrush.CreateStockObject(NULL_BRUSH);
+	//brushBrush.CreateStockObject(NULL_BRUSH); // 도형 속 색상이 투명색
+	brushBrush.CreateSolidBrush(RGB(255, 255, 153));
 	oldBrush = brushCDC->SelectObject(&brushBrush); // 이전에 선택되어 있던 브러시 객체를 리턴한다.
 }
 

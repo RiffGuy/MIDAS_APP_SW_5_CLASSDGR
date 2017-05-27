@@ -80,7 +80,7 @@ void NewClassAddDLG::OnBnClickedAddNewClassAttbOk()
 	m_AddNewAttbName.GetWindowTextW(attbName);
 	m_AddNewAttbType.GetWindowTextW(attbType);
 	
-	CString attb = attbRange + " " + attbType + " " + attbName;
+	CString attb = attbName + _T(" : ") + attbRange + " " + attbType + " " + attbName;
 	
 	// add to List
 	m_AddNewAttbList.AddString(attb);
@@ -137,12 +137,13 @@ void NewClassAddDLG::OnBnClickedAddNewClassOpOk()
 	m_AddNewOpName.GetWindowTextW(opName);
 	m_OperationRangeComboBox.GetLBText(m_OperationRangeComboBox.GetCurSel(), opRange);
 
-	CString operation = opRange + " " + opType + " " + opName + "(";
+	CString operation = opName + "(";
 	for (int i = 0; i < prmtList.size(); i++) {
 		operation += prmtList[i];
 		if (i + 1 != prmtList.size())operation += ",";
 	}
-	operation += ")";
+	operation += ") : ";
+	operation += opRange + " " + opType;
 
 	m_AddNewOpList.AddString(operation);
 	operationList.push_back(operation);
