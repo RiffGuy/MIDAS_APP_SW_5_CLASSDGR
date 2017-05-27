@@ -255,7 +255,6 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 			m_CurSelectRect = m_Brush->getResentPolygon();
 			for (; !(m_Brush->polygonBackUp.empty());) {
 				m_Brush->polygonBackUp.pop();
-				printf("a a a.\n");
 			}
 
 		}
@@ -496,7 +495,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties()
 			m_Brush->getResentPolygon()->mpoly->isVisual = false;
 			m_Brush->getResentPolygon()->parentPoly = m_Brush->getResentPolygon();
 			m_CurSelectRect = m_Brush->getResentPolygon();
-			for (; !m_Brush->polygonBackUp.empty();) {
+			for (; !(m_Brush->polygonBackUp.empty());) {
 				m_Brush->polygonBackUp.pop();
 			}
 
@@ -549,7 +548,6 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDelete()
 		m_CurSelectRect = m_Brush->getResentPolygon();
 		for (; !(m_Brush->polygonBackUp.empty());) {
 			m_Brush->polygonBackUp.pop();
-			printf("a a a.\n");
 		}
 
 		m_CurSelectRect = NULL;
