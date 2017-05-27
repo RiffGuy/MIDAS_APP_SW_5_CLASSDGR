@@ -49,7 +49,7 @@ CMIDAS_APP_SW_5_CLASSDGRView::CMIDAS_APP_SW_5_CLASSDGRView()
 	m_Brush->setBrushWnd(this);
 	theApp.viewBrushPtr = m_Brush;
 	m_StartToMove = false;
-	m_CurSelectRect = false;
+	m_CurSelectRect = NULL;
 	m_MakeClass = false;
 	m_drawline = false;
 }
