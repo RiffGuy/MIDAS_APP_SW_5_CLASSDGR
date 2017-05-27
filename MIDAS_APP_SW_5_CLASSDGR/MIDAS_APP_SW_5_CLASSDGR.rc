@@ -83,13 +83,6 @@ IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
 
 IDR_TOOLBAR1            BITMAP                  "res\\toolbar1.bmp"
 
-AR_DOWN                 BITMAP                  "C:\\Users\\kim\\Desktop\\arrow_down.bmp"
-
-AR_LEFT                 BITMAP                  "C:\\Users\\kim\\Desktop\\arrow_left.bmp"
-
-AR_UP                   BITMAP                  "C:\\Users\\kim\\Desktop\\arrow_up.bmp"
-
-AR_RIGHT                BITMAP                  "C:\\Users\\kim\\Desktop\\arrow_right.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////
