@@ -206,9 +206,10 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 			m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
 		}
 	}
-	else{
+	else if (m_MakeClass){
 	//바탕화면 클릭시 그리기(나중에 수정할 부분)
 		printf("선택된 사각형이 없습니다.\n");
+		OnDrawRect();
 		m_CurSelectRect = NULL;
 		m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
 		
