@@ -16,7 +16,6 @@ Line::Line(CPoint start, CPoint end) {
 	drawMode = WAIT;
 	startPoint.SetPoint(start.x, start.y);
 	endPoint.SetPoint(end.x, end.y);
-	type = 'L';
 }
 
 
