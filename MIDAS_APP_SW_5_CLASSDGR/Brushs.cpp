@@ -87,15 +87,15 @@ void Brushs::Undo() {
 void Brushs::setCPenColor() {
 	brushPen.DeleteObject();
 	brushPen.CreatePen(PS_SOLID, 1, RGB(0 , 0 , 0));
-
-	oldPen = brushCDC->SelectObject(&brushPen); // 이전에 선택되어 있던 펜 객체를 리턴한다.
+	printf("setCPenColor()!!!!!!!!!!!!!!!\n");
+	//oldPen = brushCDC->SelectObject(&brushPen); // 이전에 선택되어 있던 펜 객체를 리턴한다.
 }
 
 void Brushs::setPenMode(int MODE) {
 	brushPen.DeleteObject();
 	brushPen.CreatePen(MODE, 1, RGB(0, 0, 0));
 
-	oldPen = brushCDC->SelectObject(&brushPen);
+	//oldPen = brushCDC->SelectObject(&brushPen);
 	printf("Penmode : %d\npsdot : %d\npssolid : %d", MODE, PS_DOT, PS_SOLID);
 }
 

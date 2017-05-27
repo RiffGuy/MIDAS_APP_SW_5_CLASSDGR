@@ -35,7 +35,7 @@ public:
 
 	inline void setCDC(CDC* pDC) {
 		brushCDC = pDC;
-		setCPenColor();
+		//setCPenColor();
 		setCBrushColor();
 	}
 	inline void InValidateAndUpdate() {
