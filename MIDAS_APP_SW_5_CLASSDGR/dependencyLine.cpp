@@ -24,8 +24,14 @@ dependencyLine::~dependencyLine()
 
 void dependencyLine::ReDraw(CDC* pDC) {
 	//printf("Line ReDraw (%d,%d) , (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+	CPen brushPen; // 선 종류를 결정
+	CPen* oldPen;
+	brushPen.DeleteObject();
+	brushPen.CreatePen(PS_DOT, 1, RGB(0, 0, 0));
+	oldPen = pDC->SelectObject(&brushPen); 
 	pDC->MoveTo(startPoint.x, startPoint.y);
 	pDC->LineTo(endPoint.x, endPoint.y);
+	pDC->SelectObject(oldPen);
 }
 
 bool dependencyLine::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector<M_Polygon*>* saveList) {
@@ -73,12 +79,16 @@ void dependencyLine::saveData(CArchive& ar) {
 	printf("Save dependencyLine ! \n");
 	if (ar.IsStoring()) {
 		// save
-		printf("save dependencyLine (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-		ar << startPoint << endPoint;
+		if (isVisual) {
+			printf("save dependencyLine (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+			ar << startPoint << endPoint;
+		}
 	}
 	else {
 		// load
-		printf("load dependencyLine (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-		ar >> startPoint >> endPoint;
+		if (isVisual) {
+			ar >> startPoint >> endPoint;
+			printf("load dependencyLine (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+		}
 	}
 }

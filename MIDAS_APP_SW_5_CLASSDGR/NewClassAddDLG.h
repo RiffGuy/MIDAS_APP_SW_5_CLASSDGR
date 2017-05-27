@@ -21,9 +21,15 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
 	CString className; // 추가하고자 하는 클래스 이름
 	std::vector<CString> attbList; // 속성 리스트에 들어가는 속성 정보
+	std::vector<CString> attbNameList; // 속성 리스트에 들어가는 속성 정보
+	std::vector<CString> attbRangeList; // 속성 리스트에 들어가는 속성 정보
+	std::vector<CString> attbTypeList; // 속성 리스트에 들어가는 속성 정보
 	std::vector<CString> prmtList; // 매개변수 리스트에 들어가는 정보
+	std::vector<CString> prmtTypeList; // 매개변수 리스트에 들어가는 정보
 	std::vector<CString> operationList; // 오퍼레이션 리스트에 들어가는 정보
-
+	std::vector<CString> operationRangeList; // 오퍼레이션 리스트에 들어가는 정보
+	std::vector<CString> operationTypeList; // 오퍼레이션 리스트에 들어가는 정보
+	std::vector<CString> operationNameList; // 오퍼레이션 리스트에 들어가는 정보
 	DECLARE_MESSAGE_MAP()
 public:
 	CString getClassName() { return className; }

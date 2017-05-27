@@ -60,6 +60,7 @@ BOOL CMIDAS_APP_SW_5_CLASSDGRDoc::OnNewDocument()
 void CMIDAS_APP_SW_5_CLASSDGRDoc::Serialize(CArchive& ar)
 {
 	Brushs* brush = theApp.viewBrushPtr;
+	WORD mode = 0xFEFF;
 	if (ar.IsStoring())
 	{
 		// TODO: 여기에 저장 코드를 추가합니다.
