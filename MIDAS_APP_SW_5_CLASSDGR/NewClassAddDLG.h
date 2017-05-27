@@ -1,6 +1,6 @@
 #pragma once
 #include "afxwin.h"
-
+#include <vector>
 
 // NewClassAddDLG 대화 상자입니다.
 
@@ -19,12 +19,16 @@ public:
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
+	CString className; // 추가하고자 하는 클래스 이름
+	std::vector<CString> attbList; // 속성 리스트에 들어가는 속성 정보
+	std::vector<CString> prmtList; // 매개변수 리스트에 들어가는 정보
+	std::vector<CString> operationList; // 오퍼레이션 리스트에 들어가는 정보
 
 	DECLARE_MESSAGE_MAP()
 public:
 	// 클래스 이름을 입력 받는 EditBox 객체
 	CEdit AddNewClass_classNameEdit;
-	CString className;
+	
 
 	/************************ 속성 ************************/
 
@@ -74,4 +78,7 @@ public:
 
 	// 오퍼레이션 - 매개변수 - 추가된 매개변수 리스트
 	CListBox m_AddNewPrmtList;
+	afx_msg void OnBnClickedAddNewClassOpOk();
+	afx_msg void OnBnClickedAddNewClassOpCancel();
+	CListBox m_AddNewOpList;
 };

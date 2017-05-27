@@ -44,6 +44,7 @@ void NewClassAddDLG::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_ADD_NEW_CLASS_PRMT_TYPE, m_AddNewPrmtType);
 	DDX_Control(pDX, ID_ADD_NEW_CLASS_PRMT_OK, m_AddNewPrmtOK);
 	DDX_Control(pDX, IDC_ADD_NEW_CLASS_PRMT_LIST, m_AddNewPrmtList);
+	DDX_Control(pDX, IDC_ADD_NEW_CLASS_OP_LIST, m_AddNewOpList);
 }
 
 
@@ -53,32 +54,93 @@ BEGIN_MESSAGE_MAP(NewClassAddDLG, CDialogEx)
 	ON_BN_CLICKED(ID_ADD_NEW_CLASS_ATTB_CANCEL, &NewClassAddDLG::OnBnClickedAddNewClassAttbCancel)
 	ON_BN_CLICKED(ID_ADD_NEW_CLASS_PRMT_OK, &NewClassAddDLG::OnBnClickedAddNewClassPrmtOk)
 	ON_BN_CLICKED(ID_ADD_NEW_CLASS_PRMT_CANCEL, &NewClassAddDLG::OnBnClickedAddNewClassPrmtCancel)
+	ON_BN_CLICKED(ID_ADD_NEW_CLASS_OP_OK, &NewClassAddDLG::OnBnClickedAddNewClassOpOk)
+	ON_BN_CLICKED(ID_ADD_NEW_CLASS_OP_CANCEL, &NewClassAddDLG::OnBnClickedAddNewClassOpCancel)
 END_MESSAGE_MAP()
 
 
 // NewClassAddDLG 메시지 처리기입니다.
 
 
+// 속성 추가 및 삭제 함수 
 
 void NewClassAddDLG::OnBnClickedAddNewClassAttbOk()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString attbName, attbType, attbRange;
+
+	m_AttbRangeComboBox.GetLBText(m_AttbRangeComboBox.GetCurSel(), attbRange);
+	m_AddNewAttbName.GetWindowTextW(attbName);
+	m_AddNewAttbType.GetWindowTextW(attbType);
+	
+	CString attb = attbRange + " " + attbType + " " + attbName;
+	
+	// add to List
+	m_AddNewAttbList.AddString(attb);
+
+	// add to vector list
+	attbList.push_back(attb);
+	
+
 }
 
 
 void NewClassAddDLG::OnBnClickedAddNewClassAttbCancel()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// remove from list
+	int rmvIndex = m_AddNewAttbList.GetCurSel();
+	if (rmvIndex >= 0) {
+		m_AddNewAttbList.DeleteString(rmvIndex);
+		attbList.erase(attbList.begin() + rmvIndex);
+	}
 }
 
 
+// 오퍼레이션 - 매개변수 추가 및 삭제 함수
 void NewClassAddDLG::OnBnClickedAddNewClassPrmtOk()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString prmtType;
+	m_AddNewPrmtType.GetWindowTextW(prmtType);
+
+	// add to List
+	m_AddNewPrmtList.AddString(prmtType);
+
+	// add to vector list
+	prmtList.push_back(prmtType);
 }
 
 
 void NewClassAddDLG::OnBnClickedAddNewClassPrmtCancel()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// remove from list
+	int rmvIndex = m_AddNewPrmtList.GetCurSel();
+	if (rmvIndex >= 0) {
+		m_AddNewPrmtList.DeleteString(rmvIndex);
+		prmtList.erase(prmtList.begin() + rmvIndex);
+	}
+}
+
+
+// 오퍼레이션 - 추가 및 삭제
+
+void NewClassAddDLG::OnBnClickedAddNewClassOpOk()
+{
+	CString opName, opType, opRange;
+	m_AddNewOpRtType.GetWindowTextW(opType);
+	m_AddNewOpName.GetWindowTextW(opName);
+	m_OperationRangeComboBox.GetLBText(m_OperationRangeComboBox.GetCurSel(), opRange);
+
+	CString operation = opRange + " " + opType + " " + opName + "(";
+	for (int i = 0; i < prmtList.size(); i++) {
+		operation += prmtList[i];
+		if (i + 1 != prmtList.size())operation += ",";
+	}
+	operation += ")";
+
+	m_AddNewOpList.AddString(operation);
+}
+
+
+void NewClassAddDLG::OnBnClickedAddNewClassOpCancel()
+{
+
 }
