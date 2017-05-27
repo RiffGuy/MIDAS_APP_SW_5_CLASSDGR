@@ -306,21 +306,21 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawNone()
 }
 void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawLine()
 {
-	
 	Line* c = new Line();
 	M_Polygon* mp = c;
 	m_Brush->setDrawMode(D_MODE_LINE, mp);
 }
 
-void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawInheritaceLine(CPoint centerPoint) {
+void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawInheritaceLine(CPoint centerPoint){
 	m_drawline = true;
 	InheritanceLine* c = new InheritanceLine(centerPoint);
 	M_Polygon* mp = c;
 	m_Brush->setDrawMode(D_MODE_LINE_INHERITANCE, mp);
 	printf("Inheritace draw mode on , (%d , %d)\n", centerPoint.x, centerPoint.y);
+
 }
 
-void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawDependencyLine(CPoint centerPoint) {
+void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawDependencyLine(CPoint centerPoint){
 	m_drawline = true;
 	dependencyLine* c = new dependencyLine(centerPoint);
 	M_Polygon* mp = c;
