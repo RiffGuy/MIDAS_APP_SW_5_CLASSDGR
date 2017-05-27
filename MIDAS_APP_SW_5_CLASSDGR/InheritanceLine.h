@@ -8,6 +8,7 @@ private:
 	int START = 0;
 	int MOVE = 1;
 	int END = 2;
+	int STOP = 3;
 public:
 	InheritanceLine();
 	InheritanceLine(CPoint centerPoint);

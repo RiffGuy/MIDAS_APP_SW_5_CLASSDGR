@@ -28,8 +28,10 @@ bool InheritanceLine::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vec
 	//printf("DRAW - Line\n");
 	switch (dmode) {
 	case L_MOUSE_UP: {
-		//drawMode = START;
-		break;
+		drawMode = STOP;
+		saveList->pop_back();
+		return true;
+		//break;
 	}
 	case L_MOUSE_DOWN: {
 		// nothing
@@ -38,10 +40,12 @@ bool InheritanceLine::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vec
 	}
 	case MOUSE_MOVE: {
 		//printf("now..in inheritance draw line, move mouse ! \n");
-		if (drawMode != START && (saveList->size() != 0))saveList->pop_back();
-		drawMode = MOVE;
-		saveList->push_back(new InheritanceLine(startPoint, point));// save Polygon
-		return true;
+		if (drawMode != STOP) {
+			if (drawMode != START && (saveList->size() != 0))saveList->pop_back();
+			drawMode = MOVE;
+			saveList->push_back(new InheritanceLine(startPoint, point));// save Polygon
+			return true;
+		}
 	}default: {
 		break;
 	}
