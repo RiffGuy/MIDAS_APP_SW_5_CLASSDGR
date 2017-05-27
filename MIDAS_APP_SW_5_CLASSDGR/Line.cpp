@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "Line.h"
 #include "Brushs.h"
+#include <math.h>
+
+#define PI 3.141592265
 
 Line::Line()
 {
@@ -16,12 +19,20 @@ Line::Line(CPoint start, CPoint end) {
 	drawMode = WAIT;
 	startPoint.SetPoint(start.x, start.y);
 	endPoint.SetPoint(end.x, end.y);
+
+	int x = end.x - start.x;
+	int y = end.y - start.y;
+	double angle = atan2(y, x) * 180 / PI;
+
+
 }
 
 void Line::ReDraw(CDC* pDC) {
 	//printf("Line ReDraw (%d,%d) , (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 	pDC->MoveTo(startPoint.x, startPoint.y);
 	pDC->LineTo(endPoint.x, endPoint.y);
+
+	CRect rec;
 
 
 }

@@ -11,7 +11,7 @@
 #define D_MODE_NONE                     10
 #define D_MODE_LINE                     20
 #define D_MODE_CLASSDIAGRAM             30
-#define D_MODE_RECT						30
+#define D_MODE_RECT                     30
 #define D_MODE_CIRCLE                   40
 #define D_MODE_ARC                      50
 #define D_MODE_PEN                      60
@@ -30,10 +30,6 @@
 #define IDB_BITMAP1                     311
 #define IDD_ADD_CLASS_DLG               312
 #define IDR_MENU1                       314
-#define AR_DOWN                         316
-#define AR_LEFT                         318
-#define AR_UP                           319
-#define AR_RIGHT                        320
 #define IDC_ADD_NEW_CLASS_CLASS_NAME    1000
 #define IDC_ADD_NEW_CLASS_ATTB_RANGE    1001
 #define IDC_ADD_NEW_CLASS_OP_RANGE      1002
