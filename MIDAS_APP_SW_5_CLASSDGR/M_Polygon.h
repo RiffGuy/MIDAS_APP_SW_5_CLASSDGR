@@ -21,6 +21,9 @@ public:
 	inline virtual int getType() { return D_MODE_NONE; }
 	inline CPoint getStartPoint() { return startPoint; }
 	inline CPoint getEndPoint() { return endPoint; }
+	inline void setStartPoint(CPoint point) { startPoint = point; }
+	inline void setEndPoint(CPoint point) { endPoint = point; }
+
 };
 #endif // !M_POLYGON_H
 

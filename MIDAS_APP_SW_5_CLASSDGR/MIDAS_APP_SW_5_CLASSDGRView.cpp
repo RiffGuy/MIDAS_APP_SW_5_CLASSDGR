@@ -3,6 +3,7 @@
 //
 
 #include "stdafx.h"
+#include <iostream>
 // SHARED_HANDLERS는 미리 보기, 축소판 그림 및 검색 필터 처리기를 구현하는 ATL 프로젝트에서 정의할 수 있으며
 // 해당 프로젝트와 문서 코드를 공유하도록 해 줍니다.
 #ifndef SHARED_HANDLERS
@@ -38,6 +39,8 @@ CMIDAS_APP_SW_5_CLASSDGRView::CMIDAS_APP_SW_5_CLASSDGRView()
 	// TODO: 여기에 생성 코드를 추가합니다.
 	m_Brush = new Brushs();
 	m_Brush->setBrushWnd(this);
+	m_StartToMove = false;
+	m_SelectRect = false;
 }
 
 CMIDAS_APP_SW_5_CLASSDGRView::~CMIDAS_APP_SW_5_CLASSDGRView()
@@ -120,8 +123,22 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMouseMove(UINT nFlags, CPoint point)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	
 	CView::OnMouseMove(nFlags, point);
-	
-	if (m_Brush->Draw(point, nFlags, MOUSE_MOVE)) {
+
+//사각형 클릭시 움직이기
+	if (m_StartToMove) {
+		m_EndPos = point;
+		CPoint pos = m_EndPos - m_StartPos;
+		m_StartPos = point;
+		m_SelectRect->setStartPoint(m_SelectRect->getStartPoint() + pos);
+		m_SelectRect->setEndPoint(m_SelectRect->getEndPoint() + pos);
+
+		m_Brush->Draw(point, nFlags, L_MOUSE_UP);
+		Invalidate();
+		UpdateWindow();
+		m_Brush->ReDrawAll();
+	}
+//바탕화면 클릭시 그리기
+	else if (m_Brush->Draw(point, nFlags, MOUSE_MOVE)) {
 		Invalidate();
 		UpdateWindow();
 		m_Brush->ReDrawAll();
@@ -135,6 +152,10 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 
 	CView::OnLButtonUp(nFlags, point);
 
+	if (m_StartToMove == true) {
+		m_EndPos = point;
+		m_StartToMove = false;
+	}
 	m_Brush->Draw(point, nFlags, L_MOUSE_UP);
 }
 
@@ -142,10 +163,53 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	OnDrawLine();
 	CView::OnLButtonDown(nFlags, point);
 
-	m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
+//사각형 클릭시 움직이기 준비
+	if (m_Brush->polygonList.size() > 0) {
+		m_SelectRect = findrect(point);
+	}
+
+	if (m_SelectRect != NULL) {
+		m_StartPos = point;
+		m_StartToMove = true;
+	}else{
+	//바탕화면 클릭시 그리기(나중에 수정할 부분)
+		m_SelectRect = NULL;
+		OnDrawRect();
+		//OnDrawLine();
+		m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
+
+	}
+
+
+	
+}
+
+M_Polygon* CMIDAS_APP_SW_5_CLASSDGRView::findrect(CPoint point) {
+	
+	for (int i = 0; i < m_Brush->polygonList.size(); i++) {
+		CPoint startPos = m_Brush->polygonList[i]->getStartPoint();
+		CPoint endPos = m_Brush->polygonList[i]->getEndPoint();
+		CPoint tmp;
+		if (startPos.x > endPos.x) {
+			tmp = endPos;
+			endPos.x = startPos.x;
+			startPos.x = tmp.x;
+		}
+		if (startPos.y > endPos.y) {
+			tmp = endPos;
+			endPos.y = startPos.y;
+			startPos.y = tmp.y;
+		}
+		
+		CRect rect(startPos, endPos);
+
+		if (rect.PtInRect(point)) {
+			return m_Brush->polygonList[i];
+		}
+	}
+	return NULL;
 }
 /*
 툴바 도형 버튼 이벤트 처리기
