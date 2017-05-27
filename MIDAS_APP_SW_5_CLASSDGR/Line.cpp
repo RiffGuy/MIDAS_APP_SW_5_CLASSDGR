@@ -83,7 +83,7 @@ void Line::saveData(CArchive& ar) {
 }
 
 
-void Line::addConnectedPoint(CPoint* p) {
+void Line::addConnectedPoint(CPoint* p, CPoint* q) {
 
 }
 

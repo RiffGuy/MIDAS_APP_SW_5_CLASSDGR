@@ -1,6 +1,7 @@
 
 // MIDAS_APP_SW_5_CLASSDGRView.cpp : CMIDAS_APP_SW_5_CLASSDGRView 클래스의 구현
 //
+
 #include "stdafx.h"
 #include <iostream>
 // SHARED_HANDLERS는 미리 보기, 축소판 그림 및 검색 필터 처리기를 구현하는 ATL 프로젝트에서 정의할 수 있으며
@@ -196,6 +197,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 
 }
 
+
 void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
@@ -222,10 +224,16 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 				M_Polygon* tempClassRect = findrect(CPoint(
 					m_Brush->polygonList[m_Brush->polygonList.size() - 1]->startPoint
 				));
+
 				// 종료 지점과 연결된 사각형 객체는 이미 저장되어 있음.
-				tempClassRect->addConnectedPoint(&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->startPoint));
-				m_CurSelectRect->addConnectedPoint(&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->endPoint));
-				
+				tempClassRect->addConnectedPoint(
+					&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->startPoint),
+					&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->endPoint)
+				);
+				m_CurSelectRect->addConnectedPoint(
+					&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->endPoint),
+					&(m_Brush->polygonList[m_Brush->polygonList.size() - 1]->startPoint)
+					);
 				Invalidate();
 				UpdateWindow();
 				m_Brush->ReDrawAll();
@@ -334,7 +342,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawInheritaceLine(CPoint centerPoint){
 	M_Polygon* mp = c;
 	m_Brush->setDrawMode(D_MODE_LINE_INHERITANCE, mp);
 	m_Brush->setPenMode(PS_SOLID);
-	printf("\nInheritace draw mode on , (%d , %d)\n", centerPoint.x, centerPoint.y);
+	printf("Inheritace draw mode on , (%d , %d)\n", centerPoint.x, centerPoint.y);
 	//m_CurSelectRect->addConnectedPoint(&(c->startPoint));
 }
 
@@ -344,7 +352,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawDependencyLine(CPoint centerPoint){
 	M_Polygon* mp = c;
 	m_Brush->setDrawMode(D_MODE_LINE_DEPENDENCY, mp);
 	m_Brush->setPenMode(PS_DOT);
-	printf("\nDOT!!!!!!!!");
+	printf("DOT!!!!!!!!");
 }
 
 void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawRect()

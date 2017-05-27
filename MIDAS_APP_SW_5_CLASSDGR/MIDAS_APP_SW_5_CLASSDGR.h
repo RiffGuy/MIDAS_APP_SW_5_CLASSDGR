@@ -24,7 +24,7 @@ public:
 public:
 	virtual BOOL InitInstance();
 	virtual int ExitInstance();
-
+	CMultiDocTemplate* pDocTemplate;
 // 구현입니다.
 	afx_msg void OnAppAbout();
 	DECLARE_MESSAGE_MAP()

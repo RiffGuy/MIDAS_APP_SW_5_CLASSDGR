@@ -173,7 +173,7 @@ void DiagramClass::saveData(CArchive& ar) {
 }
 
 
-void DiagramClass::addConnectedPoint(CPoint* p) {
+void DiagramClass::addConnectedPoint(CPoint* p, CPoint* q) {
 	if (p == NULL) {
 		printf("The Point is NULL\n");
 	}
@@ -182,10 +182,14 @@ void DiagramClass::addConnectedPoint(CPoint* p) {
 		CPoint center((startPoint.x + endPoint.x) / 2, (startPoint.y + endPoint.y) / 2);
 		p->x = (startPoint.x + endPoint.x) / 2;
 		p->y = (startPoint.y + endPoint.y) / 2;
-
+		CPoint* curPoint = getCurPoint(p, q);
+		p->x = curPoint->x;
+		p->y = curPoint->y;
 		printf("Add Point(%d,%d)\n", p->x, p->y);
+		printf("~~~ Add Point(%d,%d)\n", q->x, q->y);
 	}
 	lineList.push_back(p);
+	conntList.push_back(q);
 }
 
 
@@ -199,5 +203,63 @@ void DiagramClass::reConnectedPoint() {
 	for (int i = 0; i < lineList.size(); i++) {
 		lineList[i]->x = (startPoint.x + endPoint.x) / 2;
 		lineList[i]->y = (startPoint.y + endPoint.y) / 2;
+		CPoint* curPoint = getCurPoint(
+			lineList[i], conntList[i]
+		);
+		lineList[i]->x = curPoint->x;
+		lineList[i]->y = curPoint->y;
 	}
+}
+
+CPoint* DiagramClass::getCurPoint(CPoint* p, CPoint* q) {
+	int dx = (endPoint.x - startPoint.x) / 2;
+	if (dx < 0)dx = dx * -1;
+	int dy = (endPoint.y - startPoint.y) / 2;
+	if (dy < 0)dy = dy * -1;
+
+	int defX = p->x - q->x;
+	int defY = p->y - q->y;
+	if (defX >= 0 && defY >= 0) {
+		//1 사분면
+		if (defX > defY) {
+			// p->x = p->x; 
+			p->y = p->y - dy;
+		}
+		else {
+			p->x = p->x - dx;
+		}
+	}
+	else if (defX >= 0 && defY < 0) {
+		// 4 사분면
+		defY = defY*(-1);
+		if (defX > defY) {
+			p->x = p->x - dx;
+		}
+		else {
+			p->y = p->y + dy;
+		}
+	}
+	else if (defX < 0 && defY >= 0) {
+		// 2 사분면
+		defX = defX*(-1);
+		if (defX > defY) {
+			p->x = p->x + dx;
+		}
+		else {
+			p->y = p->y - dy;
+		}
+	}
+	else if (defX < 0 && defY < 0) {
+		// 3 사분면
+		defY = defY*(-1);
+		defX = defX*(-1);
+		if (defX > defY) {
+			p->x = p->x + dx;
+		}
+		else {
+			p->y = p->y + dy;
+		}
+	}
+
+	return new CPoint(p->x, p->y);
 }

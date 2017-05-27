@@ -32,4 +32,5 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnPrint_BTM();
+	afx_msg void OnFileSave();
 };

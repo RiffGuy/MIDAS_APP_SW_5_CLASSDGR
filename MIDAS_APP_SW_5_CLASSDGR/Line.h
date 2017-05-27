@@ -17,7 +17,7 @@ public:
 	virtual bool Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector<M_Polygon*>* saveList);
 	virtual void Draw(CPoint startPoint, CPoint endPoint, CDC* pDC);
 	virtual void ReDraw(CDC* pDC);
-	virtual void addConnectedPoint(CPoint* p);
+	virtual void addConnectedPoint(CPoint* p, CPoint* q);
 	virtual void removeConnectedPoint();
 	virtual void reConnectedPoint();
 	inline virtual int getType() { return D_MODE_LINE; }
