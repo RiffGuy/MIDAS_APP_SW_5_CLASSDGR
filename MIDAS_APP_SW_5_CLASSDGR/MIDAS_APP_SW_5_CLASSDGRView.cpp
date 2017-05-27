@@ -17,6 +17,8 @@
 #define new DEBUG_NEW
 #endif
 
+// printf 함수를 활용해서 표준 출력 결과를 콘솔에 출력 하기 위해 추가된 코드
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console") 
 
 // CMIDAS_APP_SW_5_CLASSDGRView
 
@@ -30,6 +32,7 @@ BEGIN_MESSAGE_MAP(CMIDAS_APP_SW_5_CLASSDGRView, CView)
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONUP()
 	ON_WM_LBUTTONDOWN()
+	ON_COMMAND(ID_ADD_CLASS, &CMIDAS_APP_SW_5_CLASSDGRView::OnAddClass)
 END_MESSAGE_MAP()
 
 // CMIDAS_APP_SW_5_CLASSDGRView 생성/소멸
@@ -163,6 +166,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	
 	CView::OnLButtonDown(nFlags, point);
 
 //사각형 클릭시 움직이기 준비
@@ -264,4 +268,11 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnUndo()
 	Invalidate();
 	UpdateWindow();
 	m_Brush->ReDrawAll();
+}
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnAddClass()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	OnDrawRect();
 }

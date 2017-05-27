@@ -12,20 +12,23 @@
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
 #define L_MOUSE_UP                      100
-#define L_MOUSE_DOWN                    200
-#define MOUSE_MOVE                      300
 #define IDR_MAINFRAME                   128
 #define IDR_MIDAS_APP_SW_5_TYPE         130
 #define ID_WINDOW_MANAGER               131
+#define L_MOUSE_DOWN                    200
+#define MOUSE_MOVE                      300
 #define IDR_TOOLBAR1                    310
 #define IDB_BITMAP1                     311
+#define ID_ADD_CLASS                    32771
+#define ID_TOOL1                        32772
+#define ID_TOOL2                        32773
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        312
-#define _APS_NEXT_COMMAND_VALUE         32771
+#define _APS_NEXT_COMMAND_VALUE         32774
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
