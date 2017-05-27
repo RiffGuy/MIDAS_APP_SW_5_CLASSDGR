@@ -6,7 +6,8 @@
 #include "Brushs.h"
 #include "Line.h"
 #include "DiagramClass.h"
-
+#include "InheritanceLine.h"
+#include "dependencyLine.h"
 class CMIDAS_APP_SW_5_CLASSDGRView : public CView
 {
 protected: // serialization에서만 만들어집니다.
@@ -59,6 +60,8 @@ public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnDrawRect();
 	afx_msg void OnDrawLine();
+	afx_msg void OnDrawInheritaceLine(CPoint centerPoint);
+	afx_msg void OnDrawDependencyLine(CPoint centerPoint);
 	afx_msg void OnEraseAll();
 	afx_msg void OnEraser();
 	afx_msg void OnRedo();

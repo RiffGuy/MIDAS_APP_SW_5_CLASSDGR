@@ -69,6 +69,12 @@
     <ClInclude Include="DiagramClass.h">
       <Filter>헤더 파일\Drawing_Tools</Filter>
     </ClInclude>
+    <ClInclude Include="InheritanceLine.h">
+      <Filter>헤더 파일\Drawing_Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencyLine.h">
+      <Filter>헤더 파일\Drawing_Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MIDAS_APP_SW_5_CLASSDGR.cpp">
@@ -103,6 +109,12 @@
     </ClCompile>
     <ClCompile Include="NewClassAddDLG.cpp">
       <Filter>소스 파일\다이얼로그 클래스</Filter>
+    </ClCompile>
+    <ClCompile Include="InheritanceLine.cpp">
+      <Filter>소스 파일\Drawing_Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencyLine.cpp">
+      <Filter>소스 파일\Drawing_Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -46,7 +46,7 @@ void Brushs::setDrawMode(int MODE, M_Polygon *dPoly) {
 
 void Brushs::ReDrawAll() {
 	if (brushCDC == NULL)return;
-	//intf("Brushs RedrawAll & PolygonList Size : %d\n", polygonList.size());
+	//printf("Brushs RedrawAll & PolygonList Size : %d\n", polygonList.size());
 	for (int i = 0; i < polygonList.size(); i++) {
 		//printf("redrawing.. %d\n", i+1);
 		//polygonList[i]->printPoint();
