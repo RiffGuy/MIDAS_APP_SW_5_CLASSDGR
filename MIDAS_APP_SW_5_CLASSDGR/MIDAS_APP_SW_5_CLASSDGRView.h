@@ -51,10 +51,12 @@ public:
 	CPoint m_EndPos;
 
 	M_Polygon* m_CurSelectRect;
+	M_Polygon* m_CurSelectRect_Temp;
 	bool m_StartToMove;
 	bool m_SelectObject;
 	bool m_MakeClass;
 	bool m_drawline;
+	bool invalidateFlag = false;
 	M_Polygon* findrect(CPoint);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
@@ -74,6 +76,7 @@ public:
 	afx_msg void OnMenuProperties();
 	afx_msg void OnMenuInheritance();
 	afx_msg void OnMenuDelete();
+	afx_msg void OnMenuDependency();
 };
 
 #ifndef _DEBUG  // MIDAS_APP_SW_5_CLASSDGRView.cpp의 디버그 버전

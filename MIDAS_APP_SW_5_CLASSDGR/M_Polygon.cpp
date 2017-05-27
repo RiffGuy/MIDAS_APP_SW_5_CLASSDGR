@@ -31,3 +31,15 @@ void M_Polygon::saveData(CArchive& ar) {
 	// nothing
 	printf("saveData in Polygon..\n");
 }
+
+void M_Polygon::addConnectedPoint(CPoint* p) {
+	
+}
+
+void M_Polygon::removeConnectedPoint() {
+
+}
+
+void M_Polygon::reConnectedPoint() {
+
+}

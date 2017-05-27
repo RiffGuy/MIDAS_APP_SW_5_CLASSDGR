@@ -18,12 +18,12 @@ Line::Line(CPoint start, CPoint end) {
 	endPoint.SetPoint(end.x, end.y);
 }
 
-
-
 void Line::ReDraw(CDC* pDC) {
 	//printf("Line ReDraw (%d,%d) , (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 	pDC->MoveTo(startPoint.x, startPoint.y);
 	pDC->LineTo(endPoint.x, endPoint.y);
+
+
 }
 
 void Line::Draw(CPoint startPoint, CPoint endPoint, CDC* pDC) {
@@ -70,4 +70,18 @@ void Line::saveData(CArchive& ar) {
 		// load
 		ar >> startPoint >> endPoint;
 	}
+}
+
+
+void Line::addConnectedPoint(CPoint* p) {
+
+}
+
+
+void Line::removeConnectedPoint() {
+
+}
+
+void Line::reConnectedPoint() {
+
 }
