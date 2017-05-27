@@ -94,8 +94,11 @@ BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
     BUTTON      ID_FILE_SAVE
+    BUTTON      ID_ADD_CLASS
+    SEPARATOR
+    BUTTON      ID_TOOL1
+    BUTTON      ID_TOOL2
 END
-
 
 
 /////////////////////////////////////////////////////////////////////////////
