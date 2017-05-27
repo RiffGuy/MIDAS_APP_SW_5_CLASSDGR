@@ -74,7 +74,12 @@ void Brushs::Redo() {
 	if (!polygonBackUp.empty()) {
 		polygonList.push_back(polygonBackUp.top());
 		if (polygonList.back()->mpoly != NULL) {
-			polygonList.back()->mpoly->isVisual = false;
+			if (polygonList.back()->mpoly->isVisual == true) {
+				polygonList.back()->mpoly->isVisual == false;
+			}
+			else {
+				polygonList.back()->mpoly->isVisual == true;
+			}
 		}
 		polygonBackUp.pop();
 	}
@@ -87,7 +92,7 @@ void Brushs::Undo() {
 	if (polygonList.size() != 0) {
 		polygonBackUp.push(polygonList[polygonList.size() - 1]);
 		if (polygonList.back()->mpoly != NULL) {
-			polygonList.back()->mpoly->isVisual = true;
+			polygonList.back()->mpoly->isVisual == true;
 		}
 		polygonList.pop_back();
 	}

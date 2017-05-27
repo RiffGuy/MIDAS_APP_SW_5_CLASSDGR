@@ -59,6 +59,7 @@ public:
 	bool m_drawline;
 	bool invalidateFlag = false;
 	M_Polygon* findrect(CPoint);
+	M_Polygon* findLine(CPoint);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);

@@ -198,16 +198,6 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 	m_Brush->Draw(point, nFlags, L_MOUSE_UP);
 
 
-	if (m_StartToMove == true) {
-
-		//move Dummy 생성
-//		Dummy* dummy = new Dummy(m_Brush->polygonList.at(m_CurSelectRectAt));
-
-//		printf("isVisual %d\n", m_Brush->polygonList[0]->isVisual);
-//		m_Brush->polygonList.push_back(dummy);
-
-	}
-
 	m_StartToMove = false;
 	m_MakeClass = false;
 	std::cout << m_Brush->polygonList.size() << std::endl;
@@ -220,16 +210,8 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	
-
-//	printf("find point.x %d\n", point.x);
-//	printf("find point.y %d\n", point.y);
 	if (m_Brush->polygonList.size() > 0) {
 		m_CurSelectRect = findrect(point);
-//		printf("find rect %d\n", m_CurSelectRectAt);
-//		printf("find rect.x %d\n", m_Brush->polygonList.at(0)->getStartPoint().x);
-//		printf("find rect.y %d\n", m_Brush->polygonList.at(0)->getStartPoint().y);
-//		printf("find point.x %d\n", point.x);
-//		printf("find point.y %d\n", point.y);
 
 	}
 	
@@ -238,11 +220,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 		printf("선택된 사각형이 있습니다.\n");
 		m_StartPos = point;
 		m_StartToMove = true;
-		
-		m_Brush->addPolygon(new DiagramClass(*(DiagramClass*)m_CurSelectRect));
-		m_Brush->getResentPolygon()->mpoly = m_Brush->polygonList[m_CurSelectRectAt];
-		m_Brush->getResentPolygon()->mpoly->isVisual = false;
-		m_CurSelectRect = m_Brush->getResentPolygon();
+
 		// 상속 혹은 의존 직선의 경우 클래스에 닿지 않으면 소멸되도록 함.
 		// 해당 경우는 선이 사각형에 포함된 경우
 		if (m_Brush->getDrawMode() == D_MODE_LINE_INHERITANCE || m_Brush->getDrawMode() == D_MODE_LINE_DEPENDENCY) {
@@ -267,6 +245,13 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 			}
 			m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
 			OnDrawRect();
+
+		}
+		else {
+			m_Brush->addPolygon(new DiagramClass(*(DiagramClass*)m_CurSelectRect));
+			m_Brush->getResentPolygon()->mpoly = m_Brush->polygonList[m_CurSelectRectAt];
+			m_Brush->getResentPolygon()->mpoly->isVisual = false;
+			m_CurSelectRect = m_Brush->getResentPolygon();
 
 		}
 
@@ -300,7 +285,6 @@ M_Polygon* CMIDAS_APP_SW_5_CLASSDGRView::findrect(CPoint point) {
 	for (int i = 0; i < m_Brush->polygonList.size(); i++) {
 		if (m_Brush->polygonList[i]->getType() == D_MODE_CLASSDIAGRAM &&
 			m_Brush->polygonList[i]->isVisual == true) {
-			printf("dd %d ", i);
 			CPoint startPos = m_Brush->polygonList[i]->getStartPoint();
 			CPoint endPos = m_Brush->polygonList[i]->getEndPoint();
 			CPoint tmp;
@@ -328,6 +312,37 @@ M_Polygon* CMIDAS_APP_SW_5_CLASSDGRView::findrect(CPoint point) {
 	return NULL;
 }
 
+M_Polygon* CMIDAS_APP_SW_5_CLASSDGRView::findLine(CPoint point) {
+	/*
+	for (int i = 0; i < m_Brush->polygonList.size(); i++) {
+		if ((m_Brush->polygonList[i]->getType() == D_MODE_LINE_DEPENDENCY ||
+			m_Brush->polygonList[i]->getType() == D_MODE_LINE_INHERITANCE )&&
+			m_Brush->polygonList[i]->isVisual == true) {
+			CPoint startPos = m_Brush->polygonList[i]->getStartPoint();
+			CPoint endPos = m_Brush->polygonList[i]->getEndPoint();
+			CPoint tmp;
+			if (startPos.x > endPos.x) {
+				tmp = endPos;
+				endPos.x = startPos.x;
+				startPos.x = tmp.x;
+			}
+			if (startPos.y > endPos.y) {
+				tmp = endPos;
+				endPos.y = startPos.y;
+				startPos.y = tmp.y;
+			}
+
+			
+			printf("find start.x start.y %d %d\n", startPos.x, startPos.y);
+			printf("find end.x end.y %d %d\n", endPos.x, endPos.y);
+			if (rect.PtInRect(point)) {
+				m_CurSelectRectAt = i;
+				return m_Brush->polygonList[i];
+			}
+		}
+	}*/
+	return NULL;
+}
 
 void CMIDAS_APP_SW_5_CLASSDGRView::OnRButtonDown(UINT nFlags, CPoint point)
 {

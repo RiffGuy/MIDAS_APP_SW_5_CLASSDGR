@@ -100,7 +100,7 @@ void DiagramClass::ReDraw(CDC* pDC) {
 			tmp = status->getOperation(i);
 			pDC->TextOutW(startPoint.x + lineSize, curY, tmp);
 			textWidth = pDC->GetTextExtent(tmp).cx;
-			curY += lineSize;
+			curY += textHeight;
 		}
 	}
 }
