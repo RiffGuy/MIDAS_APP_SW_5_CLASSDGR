@@ -16,8 +16,8 @@
 #define D_MODE_ARC                      50
 #define D_MODE_PEN                      60
 #define D_MODE_ERASE                    70
-#define D_MODE_LINE_INHERITANCE			80
-#define D_MODE_LINE_DEPENDENCY			90
+#define D_MODE_LINE_INHERITANCE         80
+#define D_MODE_LINE_DEPENDENCY          90
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
 #define L_MOUSE_UP                      100
@@ -30,6 +30,10 @@
 #define IDB_BITMAP1                     311
 #define IDD_ADD_CLASS_DLG               312
 #define IDR_MENU1                       314
+#define AR_DOWN                         316
+#define AR_LEFT                         318
+#define AR_UP                           319
+#define AR_RIGHT                        320
 #define IDC_ADD_NEW_CLASS_CLASS_NAME    1000
 #define IDC_ADD_NEW_CLASS_ATTB_RANGE    1001
 #define IDC_ADD_NEW_CLASS_OP_RANGE      1002
@@ -62,7 +66,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        315
+#define _APS_NEXT_RESOURCE_VALUE        321
 #define _APS_NEXT_COMMAND_VALUE         32782
 #define _APS_NEXT_CONTROL_VALUE         1017
 #define _APS_NEXT_SYMED_VALUE           310

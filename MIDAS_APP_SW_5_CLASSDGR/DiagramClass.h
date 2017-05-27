@@ -36,15 +36,12 @@ public:
 
 
 	bool isClassContentsEmpty() {
-
-		if (status->isEmpty()) {
-			return true;
-		}
-		else {
-			return false;
-		}
-
+		if (status->isEmpty()) { return true; }
+		else { return false; }
 	}
+
+	NewClassAddDLG* getStatus() { return status; }
+	void setStatus(NewClassAddDLG* s) { status = s; }
 
 	virtual void saveData(CArchive& ar);
 };

@@ -37,6 +37,7 @@ void Brushs::Draw(CPoint startPoint, CPoint endPoint) {
 }
 
 
+
 void Brushs::setDrawMode(int MODE, M_Polygon *dPoly) {
 	DrawMode = MODE;
 	mpoly = dPoly;
@@ -89,6 +90,15 @@ void Brushs::setCPenColor() {
 
 	oldPen = brushCDC->SelectObject(&brushPen); // 이전에 선택되어 있던 펜 객체를 리턴한다.
 }
+
+void Brushs::setPenMode(int MODE) {
+	brushPen.DeleteObject();
+	brushPen.CreatePen(MODE, 1, RGB(0, 0, 0));
+
+	oldPen = brushCDC->SelectObject(&brushPen);
+	printf("Penmode : %d\npsdot : %d\npssolid : %d", MODE, PS_DOT, PS_SOLID);
+}
+
 
 void Brushs::setCBrushColor() {
 	brushBrush.DeleteObject();
