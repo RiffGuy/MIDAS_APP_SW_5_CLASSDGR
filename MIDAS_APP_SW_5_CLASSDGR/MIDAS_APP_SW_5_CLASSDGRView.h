@@ -86,6 +86,7 @@ public:
 	afx_msg void OnIddUndoClass();
 	afx_msg void OnEditUndo();
 	afx_msg void OnEditRedo();
+	afx_msg void OnReconnect();
 	afx_msg void OnDeleteLine();
 };
 

@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++에서 생성한 포함 파일입니다.
-// MIDAS_APP_SW_5_CLASSDGR.rc에서 사용되고 있습니다.
+// Microsoft Visual C++ generated include file.
+// Used by MIDAS_APP_SW_5_CLASSDGR.rc
 //
 #define ID_ADD_NEW_CLASS_ATTB_OK        3
 #define ID_ADD_NEW_CLASS_PRMT_OK        4
@@ -63,6 +63,7 @@
 #define ID_32781                        32781
 #define IDD_UNDO_CLASS                  32782
 #define ID_32783                        32783
+#define ID_RECONNECT                    32786
 #define ID_32786                        32786
 #define ID_DELETE_LINE                  32787
 
@@ -70,8 +71,8 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        322
-#define _APS_NEXT_COMMAND_VALUE         32788
+#define _APS_NEXT_RESOURCE_VALUE        321
+#define _APS_NEXT_COMMAND_VALUE         32786
 #define _APS_NEXT_CONTROL_VALUE         1017
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

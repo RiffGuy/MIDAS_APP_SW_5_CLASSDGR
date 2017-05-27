@@ -257,7 +257,14 @@ void NewClassAddDLG::saveData(CArchive& ar) {
 			attbRangeList.push_back(attbRange);
 			attbTypeList.push_back(attbType);
 			attbNameList.push_back(attbName);
+			CString attb = attbRange + " " + attbType + " " + attbName;
+			attbList.push_back(attb);
 		}
+
+		// Test
+		//for (int i = 0; i < attbSize; i++) {
+		//	std::cout << CT2CA(attbRangeList[i]) << CT2CA(attbTypeList[i]) << CT2CA(attbNameList[i]) << std::endl;
+		//}
 
 		ar >> prmtSize;
 		printf("Load : prmtSize : %d\n", prmtSize);
@@ -277,6 +284,7 @@ void NewClassAddDLG::saveData(CArchive& ar) {
 			operationRangeList.push_back(opRange);
 			operationTypeList.push_back(opType);
 			operationNameList.push_back(opName);
+			operationList.push_back(opRange + " " + opType + " " + opName);
 		}
 	}
 }
