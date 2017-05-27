@@ -121,6 +121,7 @@ void CMIDAS_APP_SW_5_CLASSDGRDoc::Serialize(CArchive& ar)
 		brush->reConnectLinesForLoadData();
 		
 	}
+	
 }
 
 #ifdef SHARED_HANDLERS

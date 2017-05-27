@@ -25,6 +25,9 @@ void Brushs::setBrushWnd(CWnd* pWnd) {
 bool Brushs::Draw(CPoint point, int flag, int dmode) {
 	bool rst = mpoly->Draw(point, flag, dmode, brushCDC, &polygonList);
 
+	if (mpoly->getType() == D_MODE_DUMMY) {
+		return true;
+	}
 	//brushCDC->SelectObject(oldPen);
 	//brushCDC->SelectObject(oldBrush);
 	return rst;
@@ -51,15 +54,18 @@ void Brushs::ReDrawAll() {
 	for (int i = 0; i < polygonList.size(); i++) {
 		//printf("redrawing.. %d\n", i+1);
 		//polygonList[i]->printPoint();
-		
-		if (polygonList[i]->getType() == D_MODE_LINE_DEPENDENCY || polygonList[i]->getType() == D_MODE_LINE_INHERITANCE) {
-			polygonList[i]->ReDraw(brushCDC);
+		if (polygonList[i]->isVisual) {
+			if (polygonList[i]->getType() == D_MODE_LINE_DEPENDENCY || polygonList[i]->getType() == D_MODE_LINE_INHERITANCE) {
+				polygonList[i]->ReDraw(brushCDC);
+			}
 		}//brushCDC->SelectObject(oldPen);
 		//brushCDC->SelectObject(oldBrush);
 	}
 	for (int i = 0; i < polygonList.size(); i++) {
-		if (polygonList[i]->getType() == D_MODE_CLASSDIAGRAM) {
-			polygonList[i]->ReDraw(brushCDC);
+		if (polygonList[i]->isVisual) {
+			if (polygonList[i]->getType() == D_MODE_CLASSDIAGRAM) {
+				polygonList[i]->ReDraw(brushCDC);
+			}
 		}
 	}
 }
@@ -67,6 +73,14 @@ void Brushs::ReDrawAll() {
 void Brushs::Redo() {
 	if (!polygonBackUp.empty()) {
 		polygonList.push_back(polygonBackUp.top());
+		if (polygonList.back()->mpoly != NULL) {
+			if (polygonList.back()->mpoly->isVisual == true) {
+				polygonList.back()->mpoly->isVisual == false;
+			}
+			else {
+				polygonList.back()->mpoly->isVisual == true;
+			}
+		}
 		polygonBackUp.pop();
 	}
 	else {
@@ -77,6 +91,9 @@ void Brushs::Redo() {
 void Brushs::Undo() {
 	if (polygonList.size() != 0) {
 		polygonBackUp.push(polygonList[polygonList.size() - 1]);
+		if (polygonList.back()->mpoly != NULL) {
+			polygonList.back()->mpoly->isVisual == true;
+		}
 		polygonList.pop_back();
 	}
 	else {
