@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++에서 생성한 포함 파일입니다.
-// MIDAS_APP_SW_5_CLASSDGR.rc에서 사용되고 있습니다.
+// Microsoft Visual C++ generated include file.
+// Used by MIDAS_APP_SW_5_CLASSDGR.rc
 //
 #define ID_ADD_NEW_CLASS_ATTB_OK        3
 #define ID_ADD_NEW_CLASS_PRMT_OK        4
@@ -26,6 +26,7 @@
 #define IDR_TOOLBAR1                    310
 #define IDB_BITMAP1                     311
 #define IDD_ADD_CLASS_DLG               312
+#define IDR_MENU1                       314
 #define IDC_ADD_NEW_CLASS_CLASS_NAME    1000
 #define IDC_ADD_NEW_CLASS_ATTB_RANGE    1001
 #define IDC_ADD_NEW_CLASS_OP_RANGE      1002
@@ -47,13 +48,17 @@
 #define ID_TOOL2                        32773
 #define ID_32774                        32774
 #define ID_ADD_NEW_CLASS_ON_MENU        32775
+#define ID_MENU_ADDLINE                 32776
+#define ID_MENU_PROPERTIES              32777
+#define ID_MENU_INHERITANCE             32778
+#define ID_MENU_DEPENDENCY              32779
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        314
-#define _APS_NEXT_COMMAND_VALUE         32776
+#define _APS_NEXT_RESOURCE_VALUE        315
+#define _APS_NEXT_COMMAND_VALUE         32780
 #define _APS_NEXT_CONTROL_VALUE         1017
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

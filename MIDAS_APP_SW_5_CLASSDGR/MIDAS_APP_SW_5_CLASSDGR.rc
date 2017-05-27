@@ -17,7 +17,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// 한국어(대한민국) resources
+// Korean (Korea) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_KOR)
 LANGUAGE LANG_KOREAN, SUBLANG_DEFAULT
@@ -173,6 +173,17 @@ BEGIN
     POPUP "도움말(&H)"
     BEGIN
         MENUITEM "MIDAS_APP_SW_5_CLASSDGR 정보(&A)...", ID_APP_ABOUT
+    END
+END
+
+IDR_MENU1 MENU
+BEGIN
+    POPUP "menu"
+    BEGIN
+        MENUITEM "addline",                     ID_MENU_ADDLINE
+        MENUITEM "properties",                  ID_MENU_PROPERTIES
+        MENUITEM "inheritance",                 ID_MENU_INHERITANCE
+        MENUITEM "dependency",                  ID_MENU_DEPENDENCY
     END
 END
 
@@ -464,7 +475,7 @@ BEGIN
     AFX_IDS_PREVIEW_CLOSE   "인쇄 미리 보기 모드를 닫습니다.\n미리 보기 취소"
 END
 
-#endif    // 한국어(대한민국) resources
+#endif    // Korean (Korea) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

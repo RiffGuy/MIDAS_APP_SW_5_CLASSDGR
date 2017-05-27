@@ -81,4 +81,6 @@ public:
 	afx_msg void OnBnClickedAddNewClassOpOk();
 	afx_msg void OnBnClickedAddNewClassOpCancel();
 	CListBox m_AddNewOpList;
+	afx_msg void OnBnClickedAddNewClassCancel();
+	afx_msg void OnBnClickedAddNewClassOk();
 };

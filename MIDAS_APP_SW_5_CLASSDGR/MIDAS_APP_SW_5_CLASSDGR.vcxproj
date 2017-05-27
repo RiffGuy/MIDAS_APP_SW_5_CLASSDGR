@@ -229,4 +229,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="MIDAS_APP_SW_5_CLASSDGR.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
