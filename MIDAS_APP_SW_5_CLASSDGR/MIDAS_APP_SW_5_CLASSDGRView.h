@@ -3,8 +3,9 @@
 //
 
 #pragma once
-
-
+#include "Brushs.h"
+#include "Line.h"
+#include "mRectangle.h"
 class CMIDAS_APP_SW_5_CLASSDGRView : public CView
 {
 protected: // serialization에서만 만들어집니다.
@@ -40,6 +41,19 @@ protected:
 // 생성된 메시지 맵 함수
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	//Brush
+	Brushs* m_Brush;
+
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnDrawRect();
+	afx_msg void OnDrawLine();
+	afx_msg void OnEraseAll();
+	afx_msg void OnEraser();
+	afx_msg void OnRedo();
+	afx_msg void OnUndo();
 };
 
 #ifndef _DEBUG  // MIDAS_APP_SW_5_CLASSDGRView.cpp의 디버그 버전
