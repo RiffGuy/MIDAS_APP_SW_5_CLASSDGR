@@ -33,15 +33,15 @@ void InheritanceLine::ReDraw(CDC* pDC) {
 	CPoint p1_new = transformation(endPoint, p1, angle);
 	CPoint p2_new = transformation(endPoint, p2, angle);
 	pDC->LineTo(p1_new.x, p1_new.y);
-	pDC->MoveTo(endPoint.x, endPoint.y);
 	pDC->LineTo(p2_new.x, p2_new.y);
+	pDC->LineTo(endPoint.x, endPoint.y);
 }
 
 CPoint transformation(CPoint centerP, CPoint moveP, double angle)
 {
 	double rx = (moveP.x - centerP.x)*cos(angle) - (moveP.y - centerP.y)*sin(angle) + centerP.x;
 	double ry = (moveP.x - centerP.x)*sin(angle) + (moveP.y - centerP.y)*cos(angle) + centerP.y;
-	return CPoint(rx, ry);
+	return CPoint((int)rx, (int)ry);
 }
 
 bool InheritanceLine::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector<M_Polygon*>* saveList) {
