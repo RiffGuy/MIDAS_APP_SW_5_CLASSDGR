@@ -295,12 +295,12 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnAddClass()
 // 메뉴에서 편집 > 새 클래스 추가 버튼 클릭시 발생 이벤트 함수
 void CMIDAS_APP_SW_5_CLASSDGRView::OnAddNewClassOnMenu()
 {
-	NewClassAddDLG dlg = new NewClassAddDLG();
-	dlg.DoModal();
+	DiagramClass* dc;
 
-	OnDrawRect();
-	m_Brush->Draw(CPoint(0, 0), NULL, L_MOUSE_DOWN);
-	m_Brush->Draw(CPoint(100,100), NULL, L_MOUSE_UP);
+	m_Brush->addPolygon(new DiagramClass(CPoint(0,0),CPoint(100,100)));
+	dc = (DiagramClass *)m_Brush->getResentPolygon();
+	dc->setClassContents();
+
 
 }
 
