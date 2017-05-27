@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++에서 생성한 포함 파일입니다.
-// MIDAS_APP_SW_5_CLASSDGR.rc에서 사용되고 있습니다.
+// Microsoft Visual C++ generated include file.
+// Used by MIDAS_APP_SW_5_CLASSDGR.rc
 //
 #define ID_ADD_NEW_CLASS_ATTB_OK        3
 #define ID_ADD_NEW_CLASS_PRMT_OK        4
