@@ -34,6 +34,7 @@ BEGIN_MESSAGE_MAP(CMIDAS_APP_SW_5_CLASSDGRView, CView)
 	ON_WM_LBUTTONDOWN()
 	ON_COMMAND(ID_ADD_CLASS, &CMIDAS_APP_SW_5_CLASSDGRView::OnAddClass)
 	ON_COMMAND(ID_ADD_NEW_CLASS_ON_MENU, &CMIDAS_APP_SW_5_CLASSDGRView::OnAddNewClassOnMenu)
+	ON_WM_RBUTTONDOWN()
 END_MESSAGE_MAP()
 
 // CMIDAS_APP_SW_5_CLASSDGRView »ý¼º/¼Ò¸ê
@@ -285,4 +286,25 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnAddNewClassOnMenu()
 {
 	NewClassAddDLG dlg = new NewClassAddDLG();
 	dlg.DoModal();
+}
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+
+	CView::OnRButtonDown(nFlags, point);
+	if (m_Brush->polygonList.size() > 0) {
+		m_CurSelectRect = findrect(point);
+	}
+
+	if (m_CurSelectRect != NULL) {
+		CMenu popup;
+		CMenu* pMenu;
+		popup.LoadMenuW(IDR_MENU1);
+		pMenu = popup.GetSubMenu(0);
+		CPoint pos;
+		GetCursorPos(&pos);
+		pMenu->TrackPopupMenu(TPM_LEFTALIGN || TPM_RIGHTBUTTON, pos.x, pos.y, this);
+	}
 }
