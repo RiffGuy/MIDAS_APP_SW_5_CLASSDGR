@@ -25,6 +25,7 @@ public:
 			status = new NewClassAddDLG();
 		}
 		status->DoModal();
+
 	}
 
 };

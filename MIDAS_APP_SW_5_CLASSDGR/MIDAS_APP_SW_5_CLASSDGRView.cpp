@@ -164,14 +164,15 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 
 	if (m_StartToMove == true) {
 		m_EndPos = point;
-		m_StartToMove = false;
+	}
+	if (m_MakeClass == true && m_Brush->polygonList.size() > 0) {
+		m_Brush->polygonList[m_Brush->polygonList.size() - 1]->setClassContents();
 	}
 	m_Brush->Draw(point, nFlags, L_MOUSE_UP);
 
-	if (m_MakeClass == true) {
-		m_Brush->polygonList[m_Brush->polygonList.size() - 1]->setClassContents();
-		m_MakeClass = false;
-	}
+	m_StartToMove = false;
+	m_MakeClass = false;
+
 }
 
 
@@ -181,10 +182,11 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 	
 	CView::OnLButtonDown(nFlags, point);
 
+
+
 	if (m_Brush->polygonList.size() > 0) {
 		m_CurSelectRect = findrect(point);
 	}
-
 	//사각형 클릭시 움직이기 준비
 	if (m_CurSelectRect != NULL) {
 		m_StartPos = point;
@@ -293,6 +295,11 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnAddNewClassOnMenu()
 {
 	NewClassAddDLG dlg = new NewClassAddDLG();
 	dlg.DoModal();
+
+	OnDrawRect();
+	m_Brush->Draw(CPoint(0, 0), NULL, L_MOUSE_DOWN);
+	m_Brush->Draw(CPoint(100,100), NULL, L_MOUSE_UP);
+
 }
 
 
@@ -301,9 +308,11 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnRButtonDown(UINT nFlags, CPoint point)
 	// TODO: Add your message handler code here and/or call default
 
 	CView::OnRButtonDown(nFlags, point);
+	
 	if (m_Brush->polygonList.size() > 0) {
 		m_CurSelectRect = findrect(point);
 	}
+	
 
 	if (m_CurSelectRect != NULL) {
 		CMenu popup;
@@ -320,9 +329,15 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnRButtonDown(UINT nFlags, CPoint point)
 void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties()
 {
 	// TODO: Add your command handler code here
+	
+	if (m_CurSelectRect != NULL) {
+		m_CurSelectRect->setClassContents();
+	}
+	/*
 	NewClassAddDLG childDlg;
 	childDlg.DoModal();
 	childDlg.DestroyWindow();
+	*/
 }
 
 
