@@ -19,6 +19,12 @@
     <Filter Include="소스 파일\Drawing_Tools">
       <UniqueIdentifier>{970808de-0c2d-4044-a9ec-4858569ea090}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\다이얼로그 클래스">
+      <UniqueIdentifier>{fd2e9217-8354-4c11-8386-25322fb7e747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\다이얼로그 클래스">
+      <UniqueIdentifier>{749fce79-ff00-4029-afd1-d77a3ec64d89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -60,6 +66,9 @@
     <ClInclude Include="mRectangle.h">
       <Filter>헤더 파일\Drawing_Tools</Filter>
     </ClInclude>
+    <ClInclude Include="NewClassAddDLG.h">
+      <Filter>헤더 파일\다이얼로그 클래스</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MIDAS_APP_SW_5_CLASSDGR.cpp">
@@ -91,6 +100,9 @@
     </ClCompile>
     <ClCompile Include="mRectangle.cpp">
       <Filter>소스 파일\Drawing_Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="NewClassAddDLG.cpp">
+      <Filter>소스 파일\다이얼로그 클래스</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

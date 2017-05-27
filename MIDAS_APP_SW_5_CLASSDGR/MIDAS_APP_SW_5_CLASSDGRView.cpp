@@ -11,7 +11,7 @@
 
 #include "MIDAS_APP_SW_5_CLASSDGRDoc.h"
 #include "MIDAS_APP_SW_5_CLASSDGRView.h"
-
+#include "NewClassAddDLG.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -32,6 +32,7 @@ BEGIN_MESSAGE_MAP(CMIDAS_APP_SW_5_CLASSDGRView, CView)
 	ON_WM_LBUTTONUP()
 	ON_WM_LBUTTONDOWN()
 	ON_COMMAND(ID_ADD_CLASS, &CMIDAS_APP_SW_5_CLASSDGRView::OnAddClass)
+	ON_COMMAND(ID_ADD_NEW_CLASS_ON_MENU, &CMIDAS_APP_SW_5_CLASSDGRView::OnAddNewClassOnMenu)
 END_MESSAGE_MAP()
 
 // CMIDAS_APP_SW_5_CLASSDGRView 생성/소멸
@@ -208,6 +209,13 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnUndo()
 
 void CMIDAS_APP_SW_5_CLASSDGRView::OnAddClass()
 {
-	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	OnDrawRect();
+}
+
+
+// 메뉴에서 편집 > 새 클래스 추가 버튼 클릭시 발생 이벤트 함수
+void CMIDAS_APP_SW_5_CLASSDGRView::OnAddNewClassOnMenu()
+{
+	NewClassAddDLG dlg = new NewClassAddDLG();
+	dlg.DoModal();
 }
