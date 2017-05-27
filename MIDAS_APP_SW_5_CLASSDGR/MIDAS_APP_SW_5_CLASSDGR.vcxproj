@@ -225,6 +225,11 @@
     <None Include="res\MIDAS_APP_SW_5_CLASSDGR.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\Desktop\arrow_down.bmp" />
+    <Image Include="..\..\Desktop\arrow_left.bmp" />
+    <Image Include="..\..\Desktop\arrow_right.bmp" />
+    <Image Include="..\..\Desktop\arrow_up.bmp" />
+    <Image Include="res\bitmap2.bmp" />
     <Image Include="res\MIDAS_APP_SW_5_CLASSDGR.ico" />
     <Image Include="res\MIDAS_APP_SW_5_CLASSDGRDoc.ico" />
     <Image Include="res\Toolbar.bmp" />

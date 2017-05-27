@@ -25,6 +25,7 @@ public:
 
 	bool Draw(CPoint point, int flag, int dmode);
 	void Draw(CPoint startPoint, CPoint endPoint);
+	void setPenMode(int MODE);
 	void setDrawMode(int MODE, M_Polygon *dPoly);
 	int getDrawMode() { return DrawMode; }
 	inline void TestDrawDot(CPoint point) {

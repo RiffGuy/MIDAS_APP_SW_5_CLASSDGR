@@ -38,6 +38,7 @@ BEGIN_MESSAGE_MAP(CMIDAS_APP_SW_5_CLASSDGRView, CView)
 	ON_COMMAND(ID_MENU_PROPERTIES, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties)
 	ON_COMMAND(ID_MENU_INHERITANCE, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuInheritance)
 	ON_COMMAND(ID_MENU_DELETE, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDelete)
+	ON_COMMAND(ID_MENU_DEPENDENCY, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDependency)
 END_MESSAGE_MAP()
 
 // CMIDAS_APP_SW_5_CLASSDGRView 생성/소멸
@@ -317,6 +318,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawInheritaceLine(CPoint centerPoint) {
 	InheritanceLine* c = new InheritanceLine(centerPoint);
 	M_Polygon* mp = c;
 	m_Brush->setDrawMode(D_MODE_LINE_INHERITANCE, mp);
+	m_Brush->setPenMode(PS_SOLID);
 	printf("Inheritace draw mode on , (%d , %d)\n", centerPoint.x, centerPoint.y);
 }
 
@@ -325,6 +327,8 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawDependencyLine(CPoint centerPoint) {
 	dependencyLine* c = new dependencyLine(centerPoint);
 	M_Polygon* mp = c;
 	m_Brush->setDrawMode(D_MODE_LINE_DEPENDENCY, mp);
+	m_Brush->setPenMode(PS_DOT);
+	printf("DOT!!!!!!!!");
 }
 
 void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawRect()
@@ -422,9 +426,22 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuInheritance()
 	OnDrawInheritaceLine(center_point); // 상속 선 설정
 }
 
+void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDependency()
+{
+	// TODO: Add your command handler code here
+	CPoint start_point = m_CurSelectRect->getStartPoint();
+	CPoint end_point = m_CurSelectRect->getEndPoint();
+	CPoint center_point;
+	center_point.x = (start_point.x + end_point.x) / 2;
+	center_point.y = (start_point.y + end_point.y) / 2;
+	OnDrawDependencyLine(center_point); // 상속 선 설정
 
+}
 
 void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDelete()
 {
 	// TODO: Add your command handler code here
 }
+
+
+

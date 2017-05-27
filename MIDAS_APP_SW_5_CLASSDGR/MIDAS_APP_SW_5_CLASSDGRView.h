@@ -73,6 +73,7 @@ public:
 	afx_msg void OnMenuProperties();
 	afx_msg void OnMenuInheritance();
 	afx_msg void OnMenuDelete();
+	afx_msg void OnMenuDependency();
 };
 
 #ifndef _DEBUG  // MIDAS_APP_SW_5_CLASSDGRView.cpp의 디버그 버전

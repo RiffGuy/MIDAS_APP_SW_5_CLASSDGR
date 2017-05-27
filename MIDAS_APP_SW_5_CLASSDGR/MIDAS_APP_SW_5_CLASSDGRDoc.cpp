@@ -77,7 +77,7 @@ void CMIDAS_APP_SW_5_CLASSDGRDoc::Serialize(CArchive& ar)
 			int PolyType;
 			ar >> PolyType;
 			switch (PolyType) {
-			case D_MODE_RECT: {
+			case D_MODE_CLASSDIAGRAM: {
 				printf("load ClassDiagram!\n");
 				brush->polygonList.push_back(new DiagramClass());
 				
