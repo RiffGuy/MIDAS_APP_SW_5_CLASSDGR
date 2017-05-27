@@ -19,6 +19,9 @@ public:
 	DiagramClass();
 	DiagramClass(CPoint start, CPoint end);
 	~DiagramClass();
+	virtual void addConnectedPoint(CPoint* p);
+	virtual void removeConnectedPoint();
+	virtual void reConnectedPoint();
 	inline virtual void printPoint() { printf("Diagram -> (%d,%d) ~ (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y); }
 	virtual bool Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector<M_Polygon*>* saveList);
 	virtual void Draw(CPoint startPoint, CPoint endPoint, CDC* pDC);

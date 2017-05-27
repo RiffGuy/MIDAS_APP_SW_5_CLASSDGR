@@ -17,5 +17,8 @@ public:
 	~InheritanceLine();
 	virtual bool Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector<M_Polygon*>* saveList);
 	virtual void ReDraw(CDC* pDC);
+	virtual void addConnectedPoint(CPoint* p);
+	virtual void removeConnectedPoint();
+	virtual void reConnectedPoint();
 };
 

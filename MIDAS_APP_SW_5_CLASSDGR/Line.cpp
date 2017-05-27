@@ -71,3 +71,17 @@ void Line::saveData(CArchive& ar) {
 		ar >> startPoint >> endPoint;
 	}
 }
+
+
+void Line::addConnectedPoint(CPoint* p) {
+
+}
+
+
+void Line::removeConnectedPoint() {
+
+}
+
+void Line::reConnectedPoint() {
+
+}
