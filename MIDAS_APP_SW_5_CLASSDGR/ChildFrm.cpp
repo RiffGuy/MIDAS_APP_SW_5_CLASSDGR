@@ -4,6 +4,7 @@
 
 #include "stdafx.h"
 #include "MIDAS_APP_SW_5_CLASSDGR.h"
+#include "MainFrm.h"
 
 #include "ChildFrm.h"
 
@@ -63,19 +64,11 @@ void CChildFrame::Dump(CDumpContext& dc) const
 void CChildFrame::OnPrint_BTM()
 {
 	// TODO: Add your command handler code here
-	HDC h_screen_dc = ::GetDC(NULL);
 	CRect rec;
-
-	// 현재 스크린의 해상도를 얻는다.
-	//int width = ::GetDeviceCaps(h_screen_dc, HORZRES);
-	//int height = ::GetDeviceCaps(h_screen_dc, VERTRES);
-	GetClientRect(rec);
-
-	int width = rec.Width();
-	int height = rec.Height();
-	//int x = width - rec.CenterPoint().x;
-	//int y = height - rec.CenterPoint().y;
-
+	HDC h_screen_dc = ::GetWindowDC(NULL);
+	GetWindowRect(rec);
+	int width = rec.Width() - 40;
+	int height = rec.Height() - 90;
 	// DIB의 형식을 정의한다.
 	BITMAPINFO dib_define;
 	dib_define.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
@@ -85,8 +78,8 @@ void CChildFrame::OnPrint_BTM()
 	dib_define.bmiHeader.biBitCount = 24;
 	dib_define.bmiHeader.biCompression = BI_RGB;
 	dib_define.bmiHeader.biSizeImage = (((width * 24 + 31) & ~31) >> 3) * height;
-	dib_define.bmiHeader.biXPelsPerMeter = 0;
-	dib_define.bmiHeader.biYPelsPerMeter = 0;
+	dib_define.bmiHeader.biXPelsPerMeter = rec.TopLeft().x;
+	dib_define.bmiHeader.biYPelsPerMeter = rec.TopLeft().y;
 	dib_define.bmiHeader.biClrImportant = 0;
 	dib_define.bmiHeader.biClrUsed = 0;
 
@@ -105,8 +98,7 @@ void CChildFrame::OnPrint_BTM()
 
 	// 현재 스크린 화면을 캡쳐한다.
 	Sleep(1000);
-	//printf("%d %d !!!!!!!!!!!!!!", x, y);
-	::BitBlt(h_memory_dc, 0, 0, width, height, h_screen_dc, 0, 0, SRCCOPY);
+	::BitBlt(h_memory_dc, 0, 0, width, height, h_screen_dc, rec.TopLeft().x + 20, rec.TopLeft().y + 70, SRCCOPY);
 
 	// 본래의 비트맵으로 복구한다.
 	::SelectObject(h_memory_dc, h_old_bitmap);
