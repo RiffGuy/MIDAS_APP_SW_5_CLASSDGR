@@ -3,6 +3,7 @@
 #define BRUSHS_H
 
 #include "M_Polygon.h"
+#include "Dummy.h"
 #include <vector>
 #include <stack>
 class Brushs
