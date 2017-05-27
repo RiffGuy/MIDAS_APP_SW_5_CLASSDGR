@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "Line.h"
 #include "Brushs.h"
+#include <math.h>
+
+#define PI 3.141592265
+
+//CPoint transformation(CPoint centerP, CPoint moveP, double angle);
 
 Line::Line()
 {
@@ -16,6 +21,7 @@ Line::Line(CPoint start, CPoint end) {
 	drawMode = WAIT;
 	startPoint.SetPoint(start.x, start.y);
 	endPoint.SetPoint(end.x, end.y);
+	
 }
 
 void Line::ReDraw(CDC* pDC) {
@@ -23,12 +29,16 @@ void Line::ReDraw(CDC* pDC) {
 	pDC->MoveTo(startPoint.x, startPoint.y);
 	pDC->LineTo(endPoint.x, endPoint.y);
 
+	CRect rec;
+
 
 }
 
 void Line::Draw(CPoint startPoint, CPoint endPoint, CDC* pDC) {
 	pDC->MoveTo(startPoint.x, startPoint.y);
 	pDC->LineTo(endPoint.x, endPoint.y);
+
+
 }
 
 bool Line::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector<M_Polygon*>* saveList) {

@@ -84,7 +84,6 @@ IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
 IDR_TOOLBAR1            BITMAP                  "res\\toolbar1.bmp"
 
 
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // Toolbar

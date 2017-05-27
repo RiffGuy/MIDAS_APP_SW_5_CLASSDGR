@@ -178,8 +178,8 @@ void DiagramClass::addConnectedPoint(CPoint* p, CPoint* q) {
 		printf("The Point is NULL\n");
 	}
 	else {
-		
 		// 센터 좌표로 보정
+		CPoint center((startPoint.x + endPoint.x) / 2, (startPoint.y + endPoint.y) / 2);
 		p->x = (startPoint.x + endPoint.x) / 2;
 		p->y = (startPoint.y + endPoint.y) / 2;
 		CPoint* curPoint = getCurPoint(p, q);
