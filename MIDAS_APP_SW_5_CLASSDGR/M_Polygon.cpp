@@ -4,7 +4,8 @@
 
 M_Polygon::M_Polygon()
 {
-
+	startPoint = CPoint(0, 0);
+	endPoint = CPoint(0, 0);
 }
 
 

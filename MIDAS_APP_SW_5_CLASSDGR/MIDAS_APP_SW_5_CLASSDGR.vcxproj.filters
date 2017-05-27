@@ -75,6 +75,9 @@
     <ClInclude Include="dependencyLine.h">
       <Filter>헤더 파일\Drawing_Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Dummy.h">
+      <Filter>헤더 파일\Drawing_Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MIDAS_APP_SW_5_CLASSDGR.cpp">
@@ -114,6 +117,9 @@
       <Filter>소스 파일\Drawing_Tools</Filter>
     </ClCompile>
     <ClCompile Include="dependencyLine.cpp">
+      <Filter>소스 파일\Drawing_Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Dummy.cpp">
       <Filter>소스 파일\Drawing_Tools</Filter>
     </ClCompile>
   </ItemGroup>

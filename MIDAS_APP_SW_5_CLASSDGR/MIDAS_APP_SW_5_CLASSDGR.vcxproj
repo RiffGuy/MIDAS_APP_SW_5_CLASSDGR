@@ -185,6 +185,7 @@
     <ClInclude Include="Brushs.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="dependencyLine.h" />
+    <ClInclude Include="Dummy.h" />
     <ClInclude Include="InheritanceLine.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="MainFrm.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="Brushs.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="dependencyLine.cpp" />
+    <ClCompile Include="Dummy.cpp" />
     <ClCompile Include="InheritanceLine.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="MainFrm.cpp" />
