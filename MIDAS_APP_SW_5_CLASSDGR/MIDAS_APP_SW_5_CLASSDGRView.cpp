@@ -494,7 +494,6 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties()
 	
 	if (m_CurSelectRect != NULL) {
 		m_CurSelectRect->setContents();
-//DELETE Dummy »ý¼º
 		if (((DiagramClass *)m_CurSelectRect)->isClassContentsEmpty()) {
 
 			m_Brush->addPolygon(new DiagramClass(*(DiagramClass*)m_CurSelectRect));
