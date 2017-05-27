@@ -204,7 +204,7 @@
     <ClCompile Include="MIDAS_APP_SW_5_CLASSDGR.cpp" />
     <ClCompile Include="MIDAS_APP_SW_5_CLASSDGRDoc.cpp" />
     <ClCompile Include="MIDAS_APP_SW_5_CLASSDGRView.cpp" />
-    <ClCompile Include="mRectangle.cpp" />
+    <ClCompile Include="DiagramClass.cpp" />
     <ClCompile Include="M_Polygon.cpp" />
     <ClCompile Include="NewClassAddDLG.cpp" />
     <ClCompile Include="stdafx.cpp">

@@ -44,7 +44,14 @@ protected:
 public:
 	//Brush
 	Brushs* m_Brush;
+	CPoint m_StartPos;
+	CPoint m_EndPos;
 
+	M_Polygon* m_CurSelectRect;
+	bool m_StartToMove;
+	bool m_SelectObject;
+
+	M_Polygon* findrect(CPoint);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
