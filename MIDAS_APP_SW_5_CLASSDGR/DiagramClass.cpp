@@ -27,7 +27,7 @@ void DiagramClass::ReDraw(CDC* pDC) {
 	//printf("mRectangle ReDraw (%d,%d) , (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 	pDC->Rectangle(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 
-//start -> TopLeft, end -> BottomRight로 재설정 
+	//start -> TopLeft, end -> BottomRight로 재설정 
 	CPoint newStartPos;
 	CPoint newEndPos;
 	if (endPoint.y < startPoint.y) {
