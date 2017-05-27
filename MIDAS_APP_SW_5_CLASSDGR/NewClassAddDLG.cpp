@@ -80,8 +80,8 @@ void NewClassAddDLG::OnBnClickedAddNewClassAttbOk()
 	m_AddNewAttbName.GetWindowTextW(attbName);
 	m_AddNewAttbType.GetWindowTextW(attbType);
 	
-	CString attb = attbName + _T(" : ") + attbRange + " " + attbType + " " + attbName;
-	
+	//CString attb = attbName + _T(" : ") + attbRange + " " + attbType + " " + attbName;
+	CString attb = attbRange + " " + attbType + " " + attbName;
 	// add to List
 	m_AddNewAttbList.AddString(attb);
 
@@ -137,14 +137,12 @@ void NewClassAddDLG::OnBnClickedAddNewClassOpOk()
 	m_AddNewOpName.GetWindowTextW(opName);
 	m_OperationRangeComboBox.GetLBText(m_OperationRangeComboBox.GetCurSel(), opRange);
 
-	CString operation = opName + "(";
+	CString operation = opRange + " " + opType +" " + opName + "(";
 	for (int i = 0; i < prmtList.size(); i++) {
 		operation += prmtList[i];
 		if (i + 1 != prmtList.size())operation += ",";
 	}
-	operation += ") : ";
-	operation += opRange + " " + opType;
-
+	operation += ")";
 	m_AddNewOpList.AddString(operation);
 	operationList.push_back(operation);
 }
@@ -182,7 +180,7 @@ void NewClassAddDLG::saveData(CArchive& ar) {
 	
 	if (ar.IsStoring()) {
 		// save
-		printf("save Dialog !\n");
+		// printf("save Dialog !\n");
 		int attbSize = attbList.size();
 		int prmtSize = prmtList.size();
 		int operationSize = operationList.size();
@@ -210,7 +208,7 @@ void NewClassAddDLG::saveData(CArchive& ar) {
 	}
 	else {
 		// load
-		printf("Load Dialog !!\n");
+		// printf("Load Dialog !!\n");
 		int attbSize = 0;
 		int prmtSize =0;
 		int operationSize = 0;

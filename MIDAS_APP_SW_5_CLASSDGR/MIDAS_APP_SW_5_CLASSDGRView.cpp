@@ -344,8 +344,8 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawInheritaceLine(CPoint centerPoint){
 	InheritanceLine* c = new InheritanceLine(centerPoint);
 	M_Polygon* mp = c;
 	m_Brush->setDrawMode(D_MODE_LINE_INHERITANCE, mp);
-	m_Brush->setPenMode(PS_SOLID);
-	printf("Inheritace draw mode on , (%d , %d)\n", centerPoint.x, centerPoint.y);
+	//m_Brush->setPenMode(PS_SOLID);
+	//printf("Inheritace draw mode on , (%d , %d)\n", centerPoint.x, centerPoint.y);
 	//m_CurSelectRect->addConnectedPoint(&(c->startPoint));
 }
 
@@ -354,8 +354,8 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawDependencyLine(CPoint centerPoint){
 	dependencyLine* c = new dependencyLine(centerPoint);
 	M_Polygon* mp = c;
 	m_Brush->setDrawMode(D_MODE_LINE_DEPENDENCY, mp);
-	m_Brush->setPenMode(PS_DOT);
-	printf("DOT!!!!!!!!");
+	//m_Brush->setPenMode(PS_DOT);
+	//printf("DOT!!!!!!!!");
 }
 
 void CMIDAS_APP_SW_5_CLASSDGRView::OnDrawRect()
