@@ -95,3 +95,6 @@ void Brushs::saveData(CArchive& ar) {
 		polygonList[i]->saveData(ar);
 	}
 }
+void Brushs::addPolygon(M_Polygon* newPoly) {
+	polygonList.push_back(newPoly);
+}
