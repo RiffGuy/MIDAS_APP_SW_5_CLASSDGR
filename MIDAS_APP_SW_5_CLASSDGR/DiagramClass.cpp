@@ -1,6 +1,7 @@
 #include "stdafx.h"
-#include "mRectangle.h"
+#include "DiagramClass.h"
 #include "Brushs.h"
+#include <iostream>
 
 DiagramClass::DiagramClass()
 {
@@ -17,16 +18,47 @@ DiagramClass::DiagramClass(CPoint start, CPoint end) {
 	startPoint.SetPoint(start.x, start.y);
 	endPoint.SetPoint(end.x, end.y);
 	type = 'C';
+	str = "hello";
+	status = new NewClassAddDLG;
 }
 
 
 void DiagramClass::ReDraw(CDC* pDC) {
 	//printf("mRectangle ReDraw (%d,%d) , (%d,%d)\n", startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 	pDC->Rectangle(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+	//string text 출력
+	CPoint newStartPos;
+	CPoint newEndPos;
+	if (endPoint.y < startPoint.y) {
+		newStartPos = endPoint;
+		newEndPos = startPoint;
+	}
+	else {
+		newStartPos = startPoint;
+		newEndPos = endPoint;
+	}
+	int centerWidth = newStartPos.x + (newEndPos.x - newStartPos.x) / 2;
+	int textWidth = pDC->GetTextExtent(str).cx;
+	pDC->TextOutW(centerWidth - textWidth / 2, newStartPos.y, str);
+	
 }
 
 void DiagramClass::Draw(CPoint startPoint, CPoint endPoint, CDC* pDC) {
 	pDC->Rectangle(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+	//string text 출력
+	CPoint newStartPos;
+	CPoint newEndPos;
+	if (endPoint.y < startPoint.y) {
+		newStartPos = endPoint;
+		newEndPos = startPoint;
+	}else { newStartPos = startPoint;
+			newEndPos = endPoint;
+	}
+	int centerWidth = newStartPos.x + (newEndPos.x - newStartPos.x) / 2;
+	int textWidth = pDC->GetTextExtent(str).cx;
+	pDC->TextOutW(centerWidth - textWidth / 2, newStartPos.y, str);
+
+
 }
 
 bool DiagramClass::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector<M_Polygon*>* saveList) {

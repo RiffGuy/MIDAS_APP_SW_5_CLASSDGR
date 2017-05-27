@@ -182,6 +182,8 @@ BEGIN
     BEGIN
         MENUITEM "addline",                     ID_MENU_ADDLINE
         MENUITEM "properties",                  ID_MENU_PROPERTIES
+        MENUITEM "inheritance",                 ID_MENU_INHERITANCE
+        MENUITEM "dependency",                  ID_MENU_DEPENDENCY
     END
 END
 

@@ -36,6 +36,7 @@ BEGIN_MESSAGE_MAP(CMIDAS_APP_SW_5_CLASSDGRView, CView)
 	ON_COMMAND(ID_ADD_NEW_CLASS_ON_MENU, &CMIDAS_APP_SW_5_CLASSDGRView::OnAddNewClassOnMenu)
 	ON_WM_RBUTTONDOWN()
 	ON_COMMAND(ID_MENU_PROPERTIES, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties)
+	ON_COMMAND(ID_MENU_INHERITANCE, &CMIDAS_APP_SW_5_CLASSDGRView::OnMenuInheritance)
 END_MESSAGE_MAP()
 
 // CMIDAS_APP_SW_5_CLASSDGRView 생성/소멸
@@ -48,6 +49,7 @@ CMIDAS_APP_SW_5_CLASSDGRView::CMIDAS_APP_SW_5_CLASSDGRView()
 	theApp.viewBrushPtr = m_Brush;
 	m_StartToMove = false;
 	m_CurSelectRect = false;
+	m_MakeClass = false;
 }
 
 CMIDAS_APP_SW_5_CLASSDGRView::~CMIDAS_APP_SW_5_CLASSDGRView()
@@ -164,6 +166,11 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 		m_StartToMove = false;
 	}
 	m_Brush->Draw(point, nFlags, L_MOUSE_UP);
+
+	if (m_MakeClass == true) {
+		m_Brush->polygonList[m_Brush->polygonList.size() - 1]->setClassContents();
+		m_MakeClass = false;
+	}
 }
 
 
@@ -184,9 +191,10 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 	}else{
 	//바탕화면 클릭시 그리기(나중에 수정할 부분)
 		m_CurSelectRect = NULL;
+		m_MakeClass = true;
 		OnDrawRect();
-		//OnDrawLine();
 		m_Brush->Draw(point, nFlags, L_MOUSE_DOWN);
+
 
 	}
 
@@ -319,4 +327,10 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties()
 	childDlg.DoModal();
 
 	childDlg.DestroyWindow();
+}
+
+
+void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuInheritance()
+{
+	// TODO: Add your command handler code here
 }

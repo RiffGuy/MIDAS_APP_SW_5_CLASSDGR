@@ -189,7 +189,7 @@
     <ClInclude Include="MIDAS_APP_SW_5_CLASSDGR.h" />
     <ClInclude Include="MIDAS_APP_SW_5_CLASSDGRDoc.h" />
     <ClInclude Include="MIDAS_APP_SW_5_CLASSDGRView.h" />
-    <ClInclude Include="mRectangle.h" />
+    <ClInclude Include="DiagramClass.h" />
     <ClInclude Include="M_Polygon.h" />
     <ClInclude Include="NewClassAddDLG.h" />
     <ClInclude Include="Resource.h" />
