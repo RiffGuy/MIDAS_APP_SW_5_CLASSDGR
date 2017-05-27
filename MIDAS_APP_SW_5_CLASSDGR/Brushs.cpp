@@ -88,4 +88,3 @@ void Brushs::setCBrushColor() {
 	oldBrush = brushCDC->SelectObject(&brushBrush); // 이전에 선택되어 있던 브러시 객체를 리턴한다.
 }
 
-

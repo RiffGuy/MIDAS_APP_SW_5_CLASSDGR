@@ -8,7 +8,7 @@
 #endif
 
 #include "resource.h"       // 주 기호입니다.
-
+#include "Brushs.h"
 
 // CMIDAS_APP_SW_5_CLASSDGRApp:
 // 이 클래스의 구현에 대해서는 MIDAS_APP_SW_5_CLASSDGR.cpp을 참조하십시오.
@@ -18,7 +18,7 @@ class CMIDAS_APP_SW_5_CLASSDGRApp : public CWinApp
 {
 public:
 	CMIDAS_APP_SW_5_CLASSDGRApp();
-
+	Brushs* viewBrushPtr;
 
 // 재정의입니다.
 public:

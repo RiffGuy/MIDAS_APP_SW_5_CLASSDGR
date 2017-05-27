@@ -26,7 +26,6 @@ public:
 
 	inline void setStartPoint(CPoint point) { startPoint = point; }
 	inline void setEndPoint(CPoint point) { endPoint = point; }
-
 };
 #endif // !M_POLYGON_H
 

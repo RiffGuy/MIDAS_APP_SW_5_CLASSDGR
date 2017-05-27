@@ -45,6 +45,7 @@ CMIDAS_APP_SW_5_CLASSDGRView::CMIDAS_APP_SW_5_CLASSDGRView()
 	// TODO: 여기에 생성 코드를 추가합니다.
 	m_Brush = new Brushs();
 	m_Brush->setBrushWnd(this);
+	theApp.viewBrushPtr = m_Brush;
 	m_StartToMove = false;
 	m_CurSelectRect = false;
 }
