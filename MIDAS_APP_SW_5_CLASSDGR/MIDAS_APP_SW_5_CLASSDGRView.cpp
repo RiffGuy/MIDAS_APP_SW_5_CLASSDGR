@@ -595,11 +595,13 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMoveClass()
 
 void CMIDAS_APP_SW_5_CLASSDGRView::OnIddRedoClass()
 {
+	OnRedo();
 }
 
 
 void CMIDAS_APP_SW_5_CLASSDGRView::OnIddUndoClass()
 {
+	OnUndo();
 }
 
 
