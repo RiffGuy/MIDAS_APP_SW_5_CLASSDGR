@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "dependencyLine.h"
+#include <math.h>
+
+CPoint transformation(CPoint centerP, CPoint moveP, double angle);
 
 
 dependencyLine::dependencyLine()
@@ -32,6 +35,20 @@ void dependencyLine::ReDraw(CDC* pDC) {
 	pDC->MoveTo(startPoint.x, startPoint.y);
 	pDC->LineTo(endPoint.x, endPoint.y);
 	pDC->SelectObject(oldPen);
+
+	CPoint p1(endPoint.x - 20, endPoint.y + 20);
+	CPoint p2(endPoint.x - 20, endPoint.y - 20);
+	int x = endPoint.x - startPoint.x;
+	int y = endPoint.y - startPoint.y;
+	double angle = atan2(y, x);
+
+	CPoint p1_new = transformation(endPoint, p1, angle);
+	CPoint p2_new = transformation(endPoint, p2, angle);
+	pDC->LineTo(p1_new.x, p1_new.y);
+	pDC->MoveTo(endPoint.x, endPoint.y);
+	pDC->LineTo(p2_new.x, p2_new.y);
+	
+
 }
 
 bool dependencyLine::Draw(CPoint point, int flag, int dmode, CDC* pDC, std::vector<M_Polygon*>* saveList) {
