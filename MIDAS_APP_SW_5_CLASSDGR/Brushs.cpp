@@ -187,8 +187,8 @@ void Brushs::reConnectLinesForLoadData() {
 			}
 			
 			// End Line
-			tempRect = findRect(polygonList[i]->endPoint);
-			if (tempRect != NULL)tempRect->addConnectedPoint(&(polygonList[i]->endPoint), &(polygonList[i]->startPoint));
+			M_Polygon* tempRect2 = findRect(polygonList[i]->endPoint);
+			if (tempRect2 != NULL)tempRect2->addConnectedPoint(&(polygonList[i]->endPoint), &(polygonList[i]->startPoint));
 			
 		}
 

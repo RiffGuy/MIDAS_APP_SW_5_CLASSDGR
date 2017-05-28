@@ -99,6 +99,7 @@ BEGIN
     BUTTON      ID_MOVE_CLASS
     BUTTON      IDD_UNDO_CLASS
     BUTTON      IDD_REDO_CLASS
+    BUTTON      ID_RECONNECT
 END
 
 
@@ -187,6 +188,14 @@ BEGIN
         MENUITEM "inheritance",                 ID_MENU_INHERITANCE
         MENUITEM "dependency",                  ID_MENU_DEPENDENCY
         MENUITEM "delete",                      ID_MENU_DELETE
+    END
+END
+
+IDR_MENU2 MENU
+BEGIN
+    POPUP "menu"
+    BEGIN
+        MENUITEM "Áö¿ì±â",                         ID_DELETE_LINE
     END
 END
 
