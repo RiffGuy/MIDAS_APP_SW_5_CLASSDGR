@@ -189,6 +189,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonUp(UINT nFlags, CPoint point)
 		m_EndPos = point;
 
 	}
+	//사각형 그리기
 	if (m_MakeClass == true && m_Brush->polygonList.size() > 0) {
 		m_Brush->polygonList[m_Brush->polygonList.size() - 1]->setContents();
 		if (((DiagramClass *)m_Brush->polygonList[m_Brush->polygonList.size() - 1])->isClassContentsEmpty()) {
@@ -214,6 +215,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	
+	//마우스 위에 있는 사각형 찾기
 	if (m_Brush->polygonList.size() > 0) {
 		m_CurSelectRect = findrect(point);
 
@@ -252,6 +254,8 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 
 		}
 		else {
+		//상속 혹은 의존 직선을 그리는 경우가 아니라면
+		//undo 기능 구현을 위해 선택된 사각형을 깊은 복사하여 도형을 한개 만든다. 
 			m_Brush->addPolygon(new DiagramClass(*(DiagramClass*)m_CurSelectRect));
 			m_Brush->getResentPolygon()->mpoly = m_Brush->polygonList[m_CurSelectRectAt];
 			m_Brush->getResentPolygon()->mpoly->isVisual = false;
@@ -264,8 +268,8 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 		}
 
 	}
+	//사각형 그리기
 	else if (m_MakeClass){
-		//바탕화면 클릭시 그리기(나중에 수정할 부분)
 		printf("선택된 사각형이 없습니다.\n");
 		OnDrawRect();
 		m_CurSelectRect = NULL;
@@ -290,6 +294,9 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnLButtonDown(UINT nFlags, CPoint point)
 
 M_Polygon* CMIDAS_APP_SW_5_CLASSDGRView::findrect(CPoint point) {
 	
+	//undo를 위한 도형 리스트 전체를 훑어보며
+	//외부에 그려져 있는 것 중에서 사각형만 검색하여
+	//화살표 위치가 사각형 내에 있는 사각형을 찾는다.
 	for (int i = 0; i < m_Brush->polygonList.size(); i++) {
 		if (m_Brush->polygonList[i]->getType() == D_MODE_CLASSDIAGRAM &&
 			m_Brush->polygonList[i]->isVisual == true) {
@@ -309,8 +316,8 @@ M_Polygon* CMIDAS_APP_SW_5_CLASSDGRView::findrect(CPoint point) {
 
 			CRect rect(startPos, endPos);
 
-			printf("find start.x start.y %d %d\n", startPos.x, startPos.y);
-			printf("find end.x end.y %d %d\n", endPos.x, endPos.y);
+			//printf("find start.x start.y %d %d\n", startPos.x, startPos.y);
+			//printf("find end.x end.y %d %d\n", endPos.x, endPos.y);
 			if (rect.PtInRect(point)) {
 				m_CurSelectRectAt = i;
 				return m_Brush->polygonList[i];
@@ -321,7 +328,10 @@ M_Polygon* CMIDAS_APP_SW_5_CLASSDGRView::findrect(CPoint point) {
 }
 
 M_Polygon* CMIDAS_APP_SW_5_CLASSDGRView::findLine(CPoint point) {
-	
+
+	//undo를 위한 도형 리스트 전체를 훑어보며
+	//외부에 그려져 있는 것 중에서 선만 검색하여
+	//화살표 위치가 선 위에 있는 선을 찾는다.
 	for (int i = 0; i < m_Brush->polygonList.size(); i++) {
 		if ((m_Brush->polygonList[i]->getType() == D_MODE_LINE_DEPENDENCY ||
 			m_Brush->polygonList[i]->getType() == D_MODE_LINE_INHERITANCE )&&
@@ -354,13 +364,16 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnRButtonDown(UINT nFlags, CPoint point)
 
 	CView::OnRButtonDown(nFlags, point);
 
+	// 화살표 위의 사각형 찾기
 	if (m_Brush->polygonList.size() > 0) {
 		m_CurSelectRect = findrect(point);
 	}
+	//화살표 위의 선분 찾기
 	if (m_Brush->polygonList.size() > 0) {
 		m_CurSelectLine = findLine(point);
 	}
 
+	//사각형이 선택될 때 오른쪽 팝업메뉴 출력
 	if (m_CurSelectRect != NULL) {
 		CMenu popup;
 		CMenu* pMenu;
@@ -370,6 +383,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnRButtonDown(UINT nFlags, CPoint point)
 		GetCursorPos(&pos);
 		pMenu->TrackPopupMenu(TPM_LEFTALIGN || TPM_RIGHTBUTTON, pos.x, pos.y, this);
 	}
+	//선이 선택될 때 오른쪽 팝업메뉴 출력
 	if (m_CurSelectLine != NULL) {
 		CMenu popup;
 		CMenu* pMenu;
@@ -487,7 +501,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnAddNewClassOnMenu()
 }
 
 
-
+//사각형 오른쪽 메뉴에서 속성 부분
 void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties()
 {
 	// TODO: Add your command handler code here
@@ -518,6 +532,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuProperties()
 }
 
 
+//사각형 오른쪽 메뉴에서 상속 부분
 void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuInheritance()
 {
 	// TODO: Add your command handler code here
@@ -529,6 +544,7 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuInheritance()
 	OnDrawInheritaceLine(center_point); // 상속 선 설정
 }
 
+//사각형 오른쪽 메뉴에서 의존 부분
 void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDependency()
 {
 	// TODO: Add your command handler code here
@@ -541,12 +557,13 @@ void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDependency()
 
 }
 
+//사각형 오른쪽 메뉴에서 삭제 부분
 void CMIDAS_APP_SW_5_CLASSDGRView::OnMenuDelete()
 {
 	// TODO: Add your command handler code here
 	if (m_CurSelectRect != NULL) {
 
-
+		//undo기능을 
 		m_Brush->addPolygon(new DiagramClass(*(DiagramClass*)m_CurSelectRect));
 		m_Brush->getResentPolygon()->isVisual = false;
 
